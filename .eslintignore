@@ -1,0 +1,6 @@
+app/scripts/apartment.js
+app/scripts/infobox.js
+app/scripts/property.js
+app/scripts/selectFx.js
+app/scripts/util.js
+node_modules/**/*.js
