@@ -19,12 +19,7 @@ var propertySchema = new mongoose.Schema({
   bond: String,
   availableStart: String,
   minTerm: { type: Number, default: 4 },
-  furnished: Boolean,
-  femalePrefer: Boolean,
-  nonSmoker: Boolean,
-  petAllowed: Boolean,
-  billInclude: Boolean,
-  fastInternet: Boolean
+  propertyFeature: []
 });
 
 module.exports = mongoose.model('Property', propertySchema);

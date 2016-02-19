@@ -44,7 +44,7 @@ var AddPropertyActions = function () {
 
 exports.default = _alt2.default.createActions(AddPropertyActions);
 
-},{"../alt":5}],2:[function(require,module,exports){
+},{"../alt":6}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67,7 +67,7 @@ var FooterActions = function FooterActions() {
 
 exports.default = _alt2.default.createActions(FooterActions);
 
-},{"../alt":5}],3:[function(require,module,exports){
+},{"../alt":6}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -109,7 +109,7 @@ var HomeActions = function () {
 
 exports.default = _alt2.default.createActions(HomeActions);
 
-},{"../alt":5}],4:[function(require,module,exports){
+},{"../alt":6}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -168,7 +168,30 @@ var NavbarActions = function () {
 
 exports.default = _alt2.default.createActions(NavbarActions);
 
-},{"../alt":5,"underscore":"underscore"}],5:[function(require,module,exports){
+},{"../alt":6,"underscore":"underscore"}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PropertyFeatureActions = function PropertyFeatureActions() {
+  _classCallCheck(this, PropertyFeatureActions);
+
+  this.generateActions();
+};
+
+exports.default = _alt2.default.createActions(PropertyFeatureActions);
+
+},{"../alt":6}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -183,7 +206,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = new _alt2.default();
 
-},{"alt":"alt"}],6:[function(require,module,exports){
+},{"alt":"alt"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -348,7 +371,7 @@ var AddProperty = function (_React$Component) {
 
 exports.default = AddProperty;
 
-},{"../actions/AddPropertyActions":1,"../stores/AddPropertyStore":13,"react":"react"}],7:[function(require,module,exports){
+},{"../actions/AddPropertyActions":1,"../stores/AddPropertyStore":15,"react":"react"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -404,7 +427,7 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":8,"./Navbar":10,"react":"react"}],8:[function(require,module,exports){
+},{"./Footer":9,"./Navbar":11,"react":"react"}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -547,7 +570,7 @@ var Footer = function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":2,"../stores/FooterStore":14,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../stores/FooterStore":16,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -569,6 +592,10 @@ var _HomeStore2 = _interopRequireDefault(_HomeStore);
 var _HomeActions = require('../actions/HomeActions');
 
 var _HomeActions2 = _interopRequireDefault(_HomeActions);
+
+var _PropertyFeature = require('./PropertyFeature');
+
+var _PropertyFeature2 = _interopRequireDefault(_PropertyFeature);
 
 var _underscore = require('underscore');
 
@@ -681,15 +708,11 @@ var Home = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'grid-offer-params' },
-                _react2.default.createElement('ul', null)
+                _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
               )
             )
           )
-        )
-        //<div key={property.id} className={index === 0 ? 'col-xs-6 col-sm-6 col-md-5 col-md-offset-1' : 'col-xs-6 col-sm-6 col-md-5'}>
-        //  {property.suburb}
-        //</div>
-        ;
+        );
       });
 
       return _react2.default.createElement(
@@ -714,7 +737,7 @@ var Home = function (_React$Component) {
 
 exports.default = Home;
 
-},{"../actions/HomeActions":3,"../stores/HomeStore":15,"react":"react","react-router":"react-router","underscore":"underscore"}],10:[function(require,module,exports){
+},{"../actions/HomeActions":3,"../stores/HomeStore":17,"./PropertyFeature":12,"react":"react","react-router":"react-router","underscore":"underscore"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -892,7 +915,101 @@ var Navbar = function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":4,"../stores/NavbarStore":16,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../stores/NavbarStore":18,"react":"react","react-router":"react-router"}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _PropertyFeatureStore = require('../stores/PropertyFeatureStore');
+
+var _PropertyFeatureStore2 = _interopRequireDefault(_PropertyFeatureStore);
+
+var _PropertyFeatureActions = require('../actions/PropertyFeatureActions');
+
+var _PropertyFeatureActions2 = _interopRequireDefault(_PropertyFeatureActions);
+
+var _underscore = require('underscore');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PropertyFeature = function (_React$Component) {
+  _inherits(PropertyFeature, _React$Component);
+
+  function PropertyFeature(props) {
+    _classCallCheck(this, PropertyFeature);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PropertyFeature).call(this, props));
+
+    _this.state = _PropertyFeatureStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(PropertyFeature, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _PropertyFeatureStore2.default.listen(this.onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _PropertyFeatureStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var propertyFeatureNames = {
+        furnished: "Furnished",
+        femalePrefer: "Female Prefer",
+        nonSmoker: "Non-smoking",
+        petAllowed: "Pet Allowed",
+        billInclude: "Bill Included",
+        fastInternet: "Fast Internet"
+      };
+
+      var propertyFeatureNodes = this.props.propertyFeatures.map(function (propertyFeature, index) {
+        return _react2.default.createElement(
+          'li',
+          { key: propertyFeature },
+          propertyFeatureNames[propertyFeature]
+        );
+      });
+
+      return _react2.default.createElement(
+        'ul',
+        null,
+        propertyFeatureNodes
+      );
+    }
+  }]);
+
+  return PropertyFeature;
+}(_react2.default.Component);
+
+exports.default = PropertyFeature;
+
+},{"../actions/PropertyFeatureActions":5,"../stores/PropertyFeatureStore":19,"react":"react","react-router":"react-router","underscore":"underscore"}],13:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -925,7 +1042,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":12,"history/lib/createBrowserHistory":25,"react":"react","react-dom":"react-dom","react-router":"react-router"}],12:[function(require,module,exports){
+},{"./routes":14,"history/lib/createBrowserHistory":28,"react":"react","react-dom":"react-dom","react-router":"react-router"}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -959,7 +1076,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/add', component: _AddProperty2.default })
 );
 
-},{"./components/AddProperty":6,"./components/App":7,"./components/Home":9,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
+},{"./components/AddProperty":7,"./components/App":8,"./components/Home":10,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1035,7 +1152,7 @@ var AddPropertyStore = function () {
 
 exports.default = _alt2.default.createStore(AddPropertyStore);
 
-},{"../actions/AddPropertyActions":1,"../alt":5}],14:[function(require,module,exports){
+},{"../actions/AddPropertyActions":1,"../alt":6}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1062,7 +1179,7 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":2,"../alt":5}],15:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../alt":6}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1108,7 +1225,7 @@ var HomeStore = function () {
 
 exports.default = _alt2.default.createStore(HomeStore);
 
-},{"../actions/HomeActions":3,"../alt":5}],16:[function(require,module,exports){
+},{"../actions/HomeActions":3,"../alt":6}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1179,7 +1296,34 @@ var NavbarStore = function () {
 
 exports.default = _alt2.default.createStore(NavbarStore);
 
-},{"../actions/NavbarActions":4,"../alt":5}],17:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../alt":6}],19:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+var _PropertyFeatureActions = require('../actions/PropertyFeatureActions');
+
+var _PropertyFeatureActions2 = _interopRequireDefault(_PropertyFeatureActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PropertyFeatureStore = function PropertyFeatureStore() {
+  _classCallCheck(this, PropertyFeatureStore);
+
+  this.bindActions(_PropertyFeatureActions2.default);
+};
+
+exports.default = _alt2.default.createStore(PropertyFeatureStore);
+
+},{"../actions/PropertyFeatureActions":5,"../alt":6}],20:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1275,7 +1419,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":18,"./lib/keys.js":19}],18:[function(require,module,exports){
+},{"./lib/is_arguments.js":21,"./lib/keys.js":22}],21:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1297,7 +1441,7 @@ function unsupported(object){
     false;
 };
 
-},{}],19:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1308,7 +1452,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],20:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -1340,7 +1484,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],21:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1367,7 +1511,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -1439,7 +1583,7 @@ function readState(key) {
 }
 }).call(this,require('_process'))
 
-},{"_process":34,"warning":35}],23:[function(require,module,exports){
+},{"_process":37,"warning":38}],26:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1520,13 +1664,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],25:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1708,7 +1852,7 @@ exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./Actions":20,"./DOMStateStorage":22,"./DOMUtils":23,"./ExecutionEnvironment":24,"./createDOMHistory":26,"./parsePath":31,"_process":34,"invariant":33}],26:[function(require,module,exports){
+},{"./Actions":23,"./DOMStateStorage":25,"./DOMUtils":26,"./ExecutionEnvironment":27,"./createDOMHistory":29,"./parsePath":34,"_process":37,"invariant":36}],29:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1752,7 +1896,7 @@ exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./DOMUtils":23,"./ExecutionEnvironment":24,"./createHistory":27,"_process":34,"invariant":33}],27:[function(require,module,exports){
+},{"./DOMUtils":26,"./ExecutionEnvironment":27,"./createHistory":30,"_process":37,"invariant":36}],30:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -2044,7 +2188,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":20,"./AsyncUtils":21,"./createLocation":28,"./deprecate":29,"./parsePath":31,"./runTransitionHook":32,"deep-equal":17}],28:[function(require,module,exports){
+},{"./Actions":23,"./AsyncUtils":24,"./createLocation":31,"./deprecate":32,"./parsePath":34,"./runTransitionHook":35,"deep-equal":20}],31:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -2099,7 +2243,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":20,"./parsePath":31}],29:[function(require,module,exports){
+},{"./Actions":23,"./parsePath":34}],32:[function(require,module,exports){
 //import warning from 'warning'
 
 "use strict";
@@ -2115,7 +2259,7 @@ function deprecate(fn) {
 
 exports["default"] = deprecate;
 module.exports = exports["default"];
-},{}],30:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -2129,7 +2273,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],31:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2177,7 +2321,7 @@ exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./extractPath":30,"_process":34,"warning":35}],32:[function(require,module,exports){
+},{"./extractPath":33,"_process":37,"warning":38}],35:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2205,7 +2349,7 @@ exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"_process":34,"warning":35}],33:[function(require,module,exports){
+},{"_process":37,"warning":38}],36:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2261,7 +2405,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":34}],34:[function(require,module,exports){
+},{"_process":37}],37:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2354,7 +2498,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],35:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -2419,7 +2563,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 
-},{"_process":34}]},{},[11])
+},{"_process":37}]},{},[13])
 
 
 //# sourceMappingURL=bundle.js.map

@@ -89,7 +89,8 @@ body {
       .grid-offer-col .grid-offer .panel-body .grid-offer-params {
         background: #1b2835;
         float: left;
-        width: 100%; }
+        width: 100%;
+        color: #fff; }
         .grid-offer-col .grid-offer .panel-body .grid-offer-params ul {
           display: block;
           margin: 0;

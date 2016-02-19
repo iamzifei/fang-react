@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import HomeStore from '../stores/HomeStore'
 import HomeActions from '../actions/HomeActions';
+import PropertyFeature from './PropertyFeature';
 import {first, without, findWhere} from 'underscore';
 
 class Home extends React.Component {
@@ -53,14 +54,11 @@ class Home extends React.Component {
                 <div className="clearfix"></div>
               </div>
               <div className="grid-offer-params">
-                <ul></ul>
+                <PropertyFeature propertyFeatures={property.propertyFeature} />
               </div>
             </div>
           </div>
         </div>
-        //<div key={property.id} className={index === 0 ? 'col-xs-6 col-sm-6 col-md-5 col-md-offset-1' : 'col-xs-6 col-sm-6 col-md-5'}>
-        //  {property.suburb}
-        //</div>
       );
     });
 
