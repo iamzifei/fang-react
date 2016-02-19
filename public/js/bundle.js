@@ -519,18 +519,7 @@ var Footer = function (_React$Component) {
               _react2.default.createElement(
                 'p',
                 null,
-                'You may view the ',
-                _react2.default.createElement(
-                  'a',
-                  { href: 'https://github.com/sahat/newedenfaces-react' },
-                  'Source Code'
-                ),
-                ' behind this project on GitHub.'
-              ),
-              _react2.default.createElement(
-                'p',
-                null,
-                '© 2015 Sahat Yalkabov.'
+                '© 2015 Fang.'
               )
             ),
             _react2.default.createElement(
@@ -542,9 +531,8 @@ var Footer = function (_React$Component) {
                 _react2.default.createElement(
                   'strong',
                   null,
-                  'Leaderboard'
-                ),
-                ' Top 5 Characters'
+                  'Latest Properties'
+                )
               ),
               _react2.default.createElement('ul', { className: 'list-inline' })
             )
