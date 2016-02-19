@@ -1,0 +1,115 @@
+@charset "UTF-8";
+.grid-offer-col .grid-offer .panel-body .grid-offer-text .grid-offer-h2, .grid-offer-col .grid-offer .panel-body .grid-offer-text .grid-offer-h4, .grid-offer-col .grid-offer .panel-body .grid-offer-params ul, .grid-offer-col .grid-offer .panel-body .grid-offer-params ul li {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+
+body {
+  background-color: #fff; }
+
+.grid-offer-col {
+  padding: 15px; }
+  .grid-offer-col .grid-offer {
+    border: 5px solid #ececec;
+    overflow: hidden;
+    -webkit-transition: 1s;
+    transition: 1s;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    position: relative;
+    margin: auto;
+    width: 100%; }
+    .grid-offer-col .grid-offer:hover {
+      background: #f8f8f8;
+      cursor: pointer;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3); }
+    .grid-offer-col .grid-offer .panel-body {
+      padding: 0; }
+      .grid-offer-col .grid-offer .panel-body .grid-offer-photo {
+        border-bottom: 2px solid #e36159;
+        overflow: hidden;
+        position: relative; }
+        .grid-offer-col .grid-offer .panel-body .grid-offer-photo img {
+          width: 100%;
+          vertical-align: middle;
+          border: none; }
+        .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container {
+          position: absolute;
+          top: 5px;
+          left: 5px;
+          text-transform: uppercase;
+          font-weight: bold;
+          color: #fff; }
+          .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container .estate-type {
+            float: left;
+            margin-right: 5px;
+            padding: 0 10px 0 10px;
+            background-color: #ee7e23; }
+          .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container .ads-flag {
+            float: left;
+            padding: 0 10px;
+            background-color: #22a41c; }
+      .grid-offer-col .grid-offer .panel-body .grid-offer-text {
+        font-size: 1.1em;
+        color: #999;
+        padding: 20px 5px 0 5px;
+        border: none;
+        height: 120px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 1.67em; }
+        .grid-offer-col .grid-offer .panel-body .grid-offer-text .grid-offer-h2 {
+          display: inline;
+          font-size: 1.6em;
+          color: #000;
+          font-weight: 700; }
+        .grid-offer-col .grid-offer .panel-body .grid-offer-text .grid-offer-h4 {
+          float: left;
+          width: 90%;
+          margin-top: 2px;
+          display: inline;
+          font-size: 1.2em;
+          color: #999;
+          font-weight: 700; }
+      .grid-offer-col .grid-offer .panel-body .price-grid-cont {
+        border-top: 1px solid #ebebeb;
+        padding: 0 30px 0 30px; }
+        .grid-offer-col .grid-offer .panel-body .price-grid-cont .grid-price-label {
+          line-height: 42px;
+          font-weight: bold;
+          font-size: 1.17em;
+          width: 40%; }
+        .grid-offer-col .grid-offer .panel-body .price-grid-cont .grid-price {
+          width: 60%;
+          height: 42px;
+          font-size: 1.38em;
+          font-weight: bold;
+          text-align: right;
+          line-height: 42px; }
+      .grid-offer-col .grid-offer .panel-body .grid-offer-params {
+        background: #1b2835;
+        float: left;
+        width: 100%; }
+        .grid-offer-col .grid-offer .panel-body .grid-offer-params ul {
+          display: block;
+          margin: 0;
+          padding: 0 10px;
+          list-style: disc;
+          width: 100%;
+          font-weight: bold;
+          height: 42px; }
+          .grid-offer-col .grid-offer .panel-body .grid-offer-params ul li {
+            display: inline;
+            float: none;
+            margin: 0;
+            padding: 0;
+            line-height: 42px; }
+            @media screen and (min-width: 320px) {
+              .grid-offer-col .grid-offer .panel-body .grid-offer-params ul li:before {
+                content: "• ";
+                font-weight: bold; } }
+            @media screen and (min-width: 640px) {
+              .grid-offer-col .grid-offer .panel-body .grid-offer-params ul li:before {
+                content: ""; }
+              .grid-offer-col .grid-offer .panel-body .grid-offer-params ul li:after {
+                content: ", "; } }
