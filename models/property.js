@@ -15,11 +15,11 @@ var propertySchema = new mongoose.Schema({
   contactNumber: String,
   contactEmail: String,
   contactSocial: String,
-  preferedContact: String,
+  preferredContact: String,
   bond: String,
   availableStart: String,
   minTerm: { type: Number, default: 4 },
   propertyFeature: []
 });
 
-module.exports = mongoose.model('Property', propertySchema);
+module.exports = mongoose.model('Property', propertySchema, 'property');

@@ -16,7 +16,7 @@ class NavbarActions {
   findProperty(payload) {
     $.ajax({
       url: '/api/properties/search',
-      data: { name: payload.searchQuery }
+      data: { suburb: payload.searchQuery }
     })
       .done((data) => {
         assign(payload, data);

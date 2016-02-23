@@ -10,7 +10,7 @@ class NavbarStore {
     }
 
     onFindPropertySuccess(payload) {
-        payload.history.pushState(null, '/properties/' + payload.propertyId);
+        payload.history.pushState(null, '/properties/' + payload.suburb);
     }
 
     onFindPropertyFail(payload) {

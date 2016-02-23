@@ -44,7 +44,7 @@ var AddPropertyActions = function () {
 
 exports.default = _alt2.default.createActions(AddPropertyActions);
 
-},{"../alt":6}],2:[function(require,module,exports){
+},{"../alt":7}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67,7 +67,7 @@ var FooterActions = function FooterActions() {
 
 exports.default = _alt2.default.createActions(FooterActions);
 
-},{"../alt":6}],3:[function(require,module,exports){
+},{"../alt":7}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -109,7 +109,7 @@ var HomeActions = function () {
 
 exports.default = _alt2.default.createActions(HomeActions);
 
-},{"../alt":6}],4:[function(require,module,exports){
+},{"../alt":7}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -142,7 +142,7 @@ var NavbarActions = function () {
 
       $.ajax({
         url: '/api/properties/search',
-        data: { name: payload.searchQuery }
+        data: { suburb: payload.searchQuery }
       }).done(function (data) {
         (0, _underscore.assign)(payload, data);
         _this.actions.findPropertySuccess(payload);
@@ -168,7 +168,7 @@ var NavbarActions = function () {
 
 exports.default = _alt2.default.createActions(NavbarActions);
 
-},{"../alt":6,"underscore":"underscore"}],5:[function(require,module,exports){
+},{"../alt":7,"underscore":"underscore"}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -191,7 +191,49 @@ var PropertyFeatureActions = function PropertyFeatureActions() {
 
 exports.default = _alt2.default.createActions(PropertyFeatureActions);
 
-},{"../alt":6}],6:[function(require,module,exports){
+},{"../alt":7}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SearchActions = function () {
+    function SearchActions() {
+        _classCallCheck(this, SearchActions);
+
+        this.generateActions('getResultSuccess', 'getResultFail');
+    }
+
+    _createClass(SearchActions, [{
+        key: 'getPropertiesInSuburb',
+        value: function getPropertiesInSuburb(suburb) {
+            var _this = this;
+
+            $.ajax({ url: '/api/properties/' + suburb }).done(function (data) {
+                _this.actions.getResultSuccess(data);
+            }).fail(function (jqXhr) {
+                _this.actions.getResultFail(jqXhr.responseJSON.message);
+            });
+        }
+    }]);
+
+    return SearchActions;
+}();
+
+exports.default = _alt2.default.createActions(SearchActions);
+
+},{"../alt":7}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -206,7 +248,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = new _alt2.default();
 
-},{"alt":"alt"}],7:[function(require,module,exports){
+},{"alt":"alt"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -371,7 +413,7 @@ var AddProperty = function (_React$Component) {
 
 exports.default = AddProperty;
 
-},{"../actions/AddPropertyActions":1,"../stores/AddPropertyStore":15,"react":"react"}],8:[function(require,module,exports){
+},{"../actions/AddPropertyActions":1,"../stores/AddPropertyStore":17,"react":"react"}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -427,7 +469,7 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":9,"./Navbar":11,"react":"react"}],9:[function(require,module,exports){
+},{"./Footer":10,"./Navbar":12,"react":"react"}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -570,7 +612,7 @@ var Footer = function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":2,"../stores/FooterStore":16,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../stores/FooterStore":18,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -642,7 +684,7 @@ var Home = function (_React$Component) {
       var propertyNodes = this.state.properties.map(function (property, index) {
         return _react2.default.createElement(
           'div',
-          { key: property.id, className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
+          { key: property.propertyId, className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
           _react2.default.createElement(
             'div',
             { className: 'panel grid-offer' },
@@ -652,7 +694,7 @@ var Home = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'grid-offer-photo' },
-                _react2.default.createElement('img', { src: 'img/grid-offer.jpg', alt: '' }),
+                _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
                 _react2.default.createElement(
                   'div',
                   { className: 'type-container' },
@@ -737,7 +779,7 @@ var Home = function (_React$Component) {
 
 exports.default = Home;
 
-},{"../actions/HomeActions":3,"../stores/HomeStore":17,"./PropertyFeature":12,"react":"react","react-router":"react-router","underscore":"underscore"}],11:[function(require,module,exports){
+},{"../actions/HomeActions":3,"../stores/HomeStore":19,"./PropertyFeature":13,"react":"react","react-router":"react-router","underscore":"underscore"}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -915,7 +957,7 @@ var Navbar = function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":4,"../stores/NavbarStore":18,"react":"react","react-router":"react-router"}],12:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../stores/NavbarStore":20,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1009,7 +1051,203 @@ var PropertyFeature = function (_React$Component) {
 
 exports.default = PropertyFeature;
 
-},{"../actions/PropertyFeatureActions":5,"../stores/PropertyFeatureStore":19,"react":"react","react-router":"react-router","underscore":"underscore"}],13:[function(require,module,exports){
+},{"../actions/PropertyFeatureActions":5,"../stores/PropertyFeatureStore":21,"react":"react","react-router":"react-router","underscore":"underscore"}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _SearchStore = require('../stores/SearchStore');
+
+var _SearchStore2 = _interopRequireDefault(_SearchStore);
+
+var _SearchActions = require('../actions/SearchActions');
+
+var _SearchActions2 = _interopRequireDefault(_SearchActions);
+
+var _PropertyFeature = require('./PropertyFeature');
+
+var _PropertyFeature2 = _interopRequireDefault(_PropertyFeature);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Search = function (_React$Component) {
+  _inherits(Search, _React$Component);
+
+  function Search(props) {
+    _classCallCheck(this, Search);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Search).call(this, props));
+
+    _this.state = _SearchStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(Search, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _SearchStore2.default.listen(this.onChange);
+      _SearchActions2.default.getPropertiesInSuburb(this.props.params.suburb);
+      $('.magnific-popup').magnificPopup({
+        type: 'image',
+        mainClass: 'mfp-zoom-in',
+        closeOnContentClick: true,
+        midClick: true,
+        zoom: {
+          enabled: true,
+          duration: 300
+        }
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _SearchStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      // Fetch new properties data when URL path changes
+      if (prevProps.params.suburb !== this.props.params.suburb) {
+        _SearchActions2.default.getPropertiesInSuburb(this.props.params.suburb);
+      }
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      _underscore2.default.mixin({
+        capitalize: function capitalize(string) {
+          return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+        }
+      });
+      var suburbName = this.props.params.suburb;
+      var propertyNodes = this.state.properties.map(function (property, index) {
+        suburbName = property.suburb;
+        return _react2.default.createElement(
+          'div',
+          { key: property.propertyId, className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
+          _react2.default.createElement(
+            'div',
+            { className: 'panel grid-offer' },
+            _react2.default.createElement(
+              'div',
+              { className: 'panel-body' },
+              _react2.default.createElement(
+                'div',
+                { className: 'grid-offer-photo' },
+                _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'type-container' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'estate-type' },
+                    property.propertyType
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'ads-flag' },
+                    'new'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'grid-offer-text' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-h2' },
+                  property.suburb
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-h4' },
+                  property.address
+                ),
+                _react2.default.createElement('div', { className: 'clearfix' }),
+                _react2.default.createElement(
+                  'p',
+                  null,
+                  property.details
+                ),
+                _react2.default.createElement('div', { className: 'clearfix' })
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'price-grid-cont' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-price-label pull-left' },
+                  'Price:'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-price pull-right' },
+                  '$',
+                  property.price
+                ),
+                _react2.default.createElement('div', { className: 'clearfix' })
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'grid-offer-params' },
+                _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
+              )
+            )
+          )
+        );
+      });
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'h3',
+          { className: 'text-center' },
+          propertyNodes.length,
+          ' Properties in ',
+          (0, _underscore2.default)(suburbName).capitalize()
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          propertyNodes
+        )
+      );
+    }
+  }]);
+
+  return Search;
+}(_react2.default.Component);
+
+exports.default = Search;
+
+},{"../actions/SearchActions":6,"../stores/SearchStore":22,"./PropertyFeature":13,"react":"react","react-router":"react-router","underscore":"underscore"}],15:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -1042,7 +1280,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":14,"history/lib/createBrowserHistory":28,"react":"react","react-dom":"react-dom","react-router":"react-router"}],14:[function(require,module,exports){
+},{"./routes":16,"history/lib/createBrowserHistory":31,"react":"react","react-dom":"react-dom","react-router":"react-router"}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1063,6 +1301,10 @@ var _Home = require('./components/Home');
 
 var _Home2 = _interopRequireDefault(_Home);
 
+var _Search = require('./components/Search');
+
+var _Search2 = _interopRequireDefault(_Search);
+
 var _AddProperty = require('./components/AddProperty');
 
 var _AddProperty2 = _interopRequireDefault(_AddProperty);
@@ -1073,10 +1315,11 @@ exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _App2.default },
   _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/add', component: _AddProperty2.default })
+  _react2.default.createElement(_reactRouter.Route, { path: '/add', component: _AddProperty2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/properties/:suburb', component: _Search2.default })
 );
 
-},{"./components/AddProperty":7,"./components/App":8,"./components/Home":10,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
+},{"./components/AddProperty":8,"./components/App":9,"./components/Home":11,"./components/Search":14,"react":"react","react-router":"react-router"}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1152,7 +1395,7 @@ var AddPropertyStore = function () {
 
 exports.default = _alt2.default.createStore(AddPropertyStore);
 
-},{"../actions/AddPropertyActions":1,"../alt":6}],16:[function(require,module,exports){
+},{"../actions/AddPropertyActions":1,"../alt":7}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1179,7 +1422,7 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":2,"../alt":6}],17:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../alt":7}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1225,7 +1468,7 @@ var HomeStore = function () {
 
 exports.default = _alt2.default.createStore(HomeStore);
 
-},{"../actions/HomeActions":3,"../alt":6}],18:[function(require,module,exports){
+},{"../actions/HomeActions":3,"../alt":7}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1259,7 +1502,7 @@ var NavbarStore = function () {
     _createClass(NavbarStore, [{
         key: 'onFindPropertySuccess',
         value: function onFindPropertySuccess(payload) {
-            payload.history.pushState(null, '/properties/' + payload.propertyId);
+            payload.history.pushState(null, '/properties/' + payload.suburb);
         }
     }, {
         key: 'onFindPropertyFail',
@@ -1296,7 +1539,7 @@ var NavbarStore = function () {
 
 exports.default = _alt2.default.createStore(NavbarStore);
 
-},{"../actions/NavbarActions":4,"../alt":6}],19:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../alt":7}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1323,7 +1566,53 @@ var PropertyFeatureStore = function PropertyFeatureStore() {
 
 exports.default = _alt2.default.createStore(PropertyFeatureStore);
 
-},{"../actions/PropertyFeatureActions":5,"../alt":6}],20:[function(require,module,exports){
+},{"../actions/PropertyFeatureActions":5,"../alt":7}],22:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+var _SearchActions = require('../actions/SearchActions');
+
+var _SearchActions2 = _interopRequireDefault(_SearchActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SearchStore = function () {
+    function SearchStore() {
+        _classCallCheck(this, SearchStore);
+
+        this.bindActions(_SearchActions2.default);
+        this.properties = [];
+    }
+
+    _createClass(SearchStore, [{
+        key: 'onGetResultSuccess',
+        value: function onGetResultSuccess(data) {
+            this.properties = data;
+        }
+    }, {
+        key: 'onGetResultFail',
+        value: function onGetResultFail(errorMessage) {
+            toastr.error(errorMessage);
+        }
+    }]);
+
+    return SearchStore;
+}();
+
+exports.default = _alt2.default.createStore(SearchStore);
+
+},{"../actions/SearchActions":6,"../alt":7}],23:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1419,7 +1708,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":21,"./lib/keys.js":22}],21:[function(require,module,exports){
+},{"./lib/is_arguments.js":24,"./lib/keys.js":25}],24:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1441,7 +1730,7 @@ function unsupported(object){
     false;
 };
 
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1452,7 +1741,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],23:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -1484,7 +1773,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],24:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1511,7 +1800,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],25:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -1583,7 +1872,7 @@ function readState(key) {
 }
 }).call(this,require('_process'))
 
-},{"_process":37,"warning":38}],26:[function(require,module,exports){
+},{"_process":40,"warning":41}],29:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1664,13 +1953,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],27:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],28:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1852,7 +2141,7 @@ exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./Actions":23,"./DOMStateStorage":25,"./DOMUtils":26,"./ExecutionEnvironment":27,"./createDOMHistory":29,"./parsePath":34,"_process":37,"invariant":36}],29:[function(require,module,exports){
+},{"./Actions":26,"./DOMStateStorage":28,"./DOMUtils":29,"./ExecutionEnvironment":30,"./createDOMHistory":32,"./parsePath":37,"_process":40,"invariant":39}],32:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1896,7 +2185,7 @@ exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./DOMUtils":26,"./ExecutionEnvironment":27,"./createHistory":30,"_process":37,"invariant":36}],30:[function(require,module,exports){
+},{"./DOMUtils":29,"./ExecutionEnvironment":30,"./createHistory":33,"_process":40,"invariant":39}],33:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -2188,7 +2477,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":23,"./AsyncUtils":24,"./createLocation":31,"./deprecate":32,"./parsePath":34,"./runTransitionHook":35,"deep-equal":20}],31:[function(require,module,exports){
+},{"./Actions":26,"./AsyncUtils":27,"./createLocation":34,"./deprecate":35,"./parsePath":37,"./runTransitionHook":38,"deep-equal":23}],34:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -2243,7 +2532,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":23,"./parsePath":34}],32:[function(require,module,exports){
+},{"./Actions":26,"./parsePath":37}],35:[function(require,module,exports){
 //import warning from 'warning'
 
 "use strict";
@@ -2259,7 +2548,7 @@ function deprecate(fn) {
 
 exports["default"] = deprecate;
 module.exports = exports["default"];
-},{}],33:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -2273,7 +2562,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],34:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2321,7 +2610,7 @@ exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./extractPath":33,"_process":37,"warning":38}],35:[function(require,module,exports){
+},{"./extractPath":36,"_process":40,"warning":41}],38:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2349,7 +2638,7 @@ exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"_process":37,"warning":38}],36:[function(require,module,exports){
+},{"_process":40,"warning":41}],39:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -2405,7 +2694,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":37}],37:[function(require,module,exports){
+},{"_process":40}],40:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2498,7 +2787,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],38:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -2563,7 +2852,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 
-},{"_process":37}]},{},[13])
+},{"_process":40}]},{},[15])
 
 
 //# sourceMappingURL=bundle.js.map

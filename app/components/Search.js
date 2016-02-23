@@ -1,33 +1,57 @@
 import React from 'react';
 import {Link} from 'react-router';
-import HomeStore from '../stores/HomeStore'
-import HomeActions from '../actions/HomeActions';
+import SearchStore from '../stores/SearchStore'
+import SearchActions from '../actions/SearchActions';
 import PropertyFeature from './PropertyFeature';
-import {first, without, findWhere} from 'underscore';
+import _ from 'underscore';
 
-class Home extends React.Component {
+class Search extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = HomeStore.getState();
+    this.state = SearchStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    HomeStore.listen(this.onChange);
-    HomeActions.getAllProperties();
+    SearchStore.listen(this.onChange);
+    SearchActions.getPropertiesInSuburb(this.props.params.suburb);
+    $('.magnific-popup').magnificPopup({
+      type: 'image',
+      mainClass: 'mfp-zoom-in',
+      closeOnContentClick: true,
+      midClick: true,
+      zoom: {
+        enabled: true,
+        duration: 300
+      }
+    });
   }
 
   componentWillUnmount() {
-    HomeStore.unlisten(this.onChange);
+    SearchStore.unlisten(this.onChange);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Fetch new properties data when URL path changes
+    if (prevProps.params.suburb !== this.props.params.suburb) {
+      SearchActions.getPropertiesInSuburb(this.props.params.suburb);
+    }
   }
 
   onChange(state) {
     this.setState(state);
   }
 
-  render() {
+render() {
+    _.mixin({
+      capitalize: function(string) {
+        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+      }
+    });
+    var suburbName = this.props.params.suburb;
     var propertyNodes = this.state.properties.map((property, index) => {
+      suburbName = property.suburb;
       return (
         <div key={property.propertyId} className="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col">
           <div className="panel grid-offer">
@@ -64,7 +88,7 @@ class Home extends React.Component {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>All Properties</h3>
+        <h3 className='text-center'>{propertyNodes.length} Properties in {_(suburbName).capitalize()}</h3>
         <div className='row'>
           {propertyNodes}
         </div>
@@ -73,4 +97,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Search;
