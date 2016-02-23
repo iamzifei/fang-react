@@ -196,6 +196,11 @@ app.post('/api/properties', function(req, res, next) {
   ]);
 });
 
+/**
+ * GET /api/load
+ * Load test data into database, for testing purpose
+ * TODO: this needs removed in prod environment
+ */
 app.get('/api/load', function(req, res, next) {
   var PROPERTIES = [
     {"suburb": "Sydney CBD", "postcode": "2000", "price": "120", "address": "1 George Street", "imageCount": 6, "title": "", "details": "gender,nationality,studying or line of work you do etc and text me.", "propertyType":"apartment", "roomType":"singleRoom","propertyFeature":["furnished", "femalePrefer","nonSmoker","petAllowed","billInclude","fastInternet"],"contactName":"James Gong","contactNumber":"0414000123","contactEmail":"fake@email.com","contactSocial":"JamesG0ng","preferredContact":"wechact","bond":"4","availableStart":"2016-01-12","minTerm":"6"},
