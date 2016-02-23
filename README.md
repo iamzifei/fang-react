@@ -10,7 +10,7 @@
 
 ## import testing data
 
-run `mongoimport --db nef --collection property --drop --file data.json` under root folder
+call `http://localhost:3000/api/load` to load testing data
 
 ## a few mongodb command for help
 
@@ -19,3 +19,8 @@ run `mongoimport --db nef --collection property --drop --file data.json` under r
 * run `db.getCollectionNames()` to list all collections in the database
 * run `db.property.find()` to list all data in collection 'property'
 * run `db.property.drop()` to delete the collection 'property'
+
+## references:
+
+* [a walkthrough of the project structure](http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/)
+* [ALT for Flux](http://alt.js.org/guide/)

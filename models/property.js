@@ -1,8 +1,9 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
-var propertySchema = new mongoose.Schema({
-  propertyId: { type: String, unique: true, index: true },
-  suburb: String,
+var propertySchema = new Schema({
+  updated: { type: Date, default: Date.now },
+  suburb: { type: String, lowercase: true, trim: true },
   postcode: String,
   price: String,
   address: String,

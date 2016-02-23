@@ -683,74 +683,78 @@ var Home = function (_React$Component) {
     value: function render() {
       var propertyNodes = this.state.properties.map(function (property, index) {
         return _react2.default.createElement(
-          'div',
-          { key: property.propertyId, className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
+          _reactRouter.Link,
+          { key: property._id, to: '/property/' + property._id },
           _react2.default.createElement(
             'div',
-            { className: 'panel grid-offer' },
+            { className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
             _react2.default.createElement(
               'div',
-              { className: 'panel-body' },
+              { className: 'panel grid-offer' },
               _react2.default.createElement(
                 'div',
-                { className: 'grid-offer-photo' },
-                _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
+                { className: 'panel-body' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'type-container' },
+                  { className: 'grid-offer-photo' },
+                  _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
                   _react2.default.createElement(
                     'div',
-                    { className: 'estate-type' },
-                    property.propertyType
+                    { className: 'type-container' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'estate-type' },
+                      property.propertyType
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'ads-flag' },
+                      'new'
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-text' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-offer-h2' },
+                    property.suburb
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'ads-flag' },
-                    'new'
-                  )
+                    { className: 'grid-offer-h4' },
+                    property.address
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' }),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    property.details
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'price-grid-cont' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-price-label pull-left' },
+                    'Price:'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-price pull-right' },
+                    '$',
+                    property.price
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-params' },
+                  _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
                 )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'grid-offer-text' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-offer-h2' },
-                  property.suburb
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-offer-h4' },
-                  property.address
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' }),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  property.details
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'price-grid-cont' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-price-label pull-left' },
-                  'Price:'
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-price pull-right' },
-                  '$',
-                  property.price
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'grid-offer-params' },
-                _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
               )
             )
           )
@@ -1149,74 +1153,78 @@ var Search = function (_React$Component) {
       var propertyNodes = this.state.properties.map(function (property, index) {
         suburbName = property.suburb;
         return _react2.default.createElement(
-          'div',
-          { key: property.propertyId, className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
+          _reactRouter.Link,
+          { key: property._id, to: '/property/' + property._id },
           _react2.default.createElement(
             'div',
-            { className: 'panel grid-offer' },
+            { className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col' },
             _react2.default.createElement(
               'div',
-              { className: 'panel-body' },
+              { className: 'panel grid-offer' },
               _react2.default.createElement(
                 'div',
-                { className: 'grid-offer-photo' },
-                _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
+                { className: 'panel-body' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'type-container' },
+                  { className: 'grid-offer-photo' },
+                  _react2.default.createElement('img', { src: '/img/grid-offer.jpg', alt: '' }),
                   _react2.default.createElement(
                     'div',
-                    { className: 'estate-type' },
-                    property.propertyType
+                    { className: 'type-container' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'estate-type' },
+                      property.propertyType
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'ads-flag' },
+                      'new'
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-text' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-offer-h2' },
+                    property.suburb
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'ads-flag' },
-                    'new'
-                  )
+                    { className: 'grid-offer-h4' },
+                    property.address
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' }),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    property.details
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'price-grid-cont' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-price-label pull-left' },
+                    'Price:'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'grid-price pull-right' },
+                    '$',
+                    property.price
+                  ),
+                  _react2.default.createElement('div', { className: 'clearfix' })
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'grid-offer-params' },
+                  _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
                 )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'grid-offer-text' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-offer-h2' },
-                  property.suburb
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-offer-h4' },
-                  property.address
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' }),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  property.details
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'price-grid-cont' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-price-label pull-left' },
-                  'Price:'
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'grid-price pull-right' },
-                  '$',
-                  property.price
-                ),
-                _react2.default.createElement('div', { className: 'clearfix' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'grid-offer-params' },
-                _react2.default.createElement(_PropertyFeature2.default, { propertyFeatures: property.propertyFeature })
               )
             )
           )
