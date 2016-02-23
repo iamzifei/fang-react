@@ -527,13 +527,15 @@ label {
   background: #fff
 }
 
-.radio {
+.radio,
+.checkbox {
   margin-bottom: 10px;
   margin-top: 10px;
   padding-left: 20px;
 }
 
-.radio-inline + .radio-inline {
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
   margin-top: 10px;
 }
 
@@ -542,7 +544,8 @@ label {
   cursor: default;
 }
 
-.radio label {
+.radio label,
+.checkbox label {
   display: inline-block;
   cursor: pointer;
   position: relative;
@@ -550,7 +553,8 @@ label {
   margin-right: 10px;
 }
 
-.radio label:before {
+.radio label:before,
+.checkbox label:before {
   content: '';
   display: inline-block;
   width: 17px;
@@ -568,19 +572,28 @@ label {
   transition: border .2s 0s cubic-bezier(.45,.04,.22,1.30);
 }
 
-.radio input[type=radio]:checked + label:before {
+.checkbox label:before {
+  bottom: 2.5px;
+  transition: border .2s 0s cubic-bezier(.45,.04,.22,1.30);
+}
+
+.radio input[type=radio]:checked + label:before,
+.checkbox input[type=checkbox]:checked + label:before {
   border-width: 5px;
 }
 
-.radio input[type=radio] {
+.radio input[type=radio],
+.checkbox input[type=checkbox] {
   display: none;
 }
 
-.radio input[type=radio][disabled] + label {
+.radio input[type=radio][disabled] + label,
+.checkbox input[type=checkbox][disabled] + label {
   opacity: .65;
 }
 
-.radio input[type=radio]:checked + label:before {
+.radio input[type=radio]:checked + label:before,
+.checkbox input[type=checkbox]:checked + label:before {
   border-color: #10cebd;
 }
 

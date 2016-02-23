@@ -19,18 +19,37 @@ var AddPropertyActions = function () {
     function AddPropertyActions() {
         _classCallCheck(this, AddPropertyActions);
 
-        this.generateActions('AddPropertySuccess', 'AddPropertyFail', 'updateName', 'updateGender', 'invalidName', 'invalidGender');
+        this.generateActions('AddPropertySuccess', 'AddPropertyFail', 'updateSuburb', 'updatePostcode', 'updatePrice', 'updateAddress', 'updateImageCount', 'updateTitle', 'updateDetails', 'updatePropertyType', 'updateRoomType', 'updateContactName', 'updateContactNumber', 'updateContactEmail', 'updateContactSocial', 'updatePreferredContact', 'updateBond', 'updateAvailableStart', 'updateMinTerm', 'updatePropertyFeature', 'invalidSuburb', 'invalidPostcode', 'invalidPrice', 'invalidAddress', 'invalidImageCount', 'invalidTitle', 'invalidDetails', 'invalidPropertyType', 'invalidRoomType', 'invalidContactName', 'invalidContactNumber', 'invalidContactEmail', 'invalidContactSocial', 'invalidPreferredContact', 'invalidBond', 'invalidAvailableStart', 'invalidMinTerm', 'invalidPropertyFeature');
     }
 
     _createClass(AddPropertyActions, [{
         key: 'AddProperty',
-        value: function AddProperty(name, gender) {
+        value: function AddProperty(suburb, postcode, price, address, imageCount, title, details, propertyType, roomType, contactName, contactNumber, contactEmail, contactSocial, preferredContact, bond, availableStart, minTerm, propertyFeature) {
             var _this = this;
 
             $.ajax({
                 type: 'POST',
                 url: '/api/properties',
-                data: { name: name, gender: gender }
+                data: {
+                    suburb: suburb,
+                    postcode: postcode,
+                    price: price,
+                    address: address,
+                    imageCount: imageCount,
+                    title: title,
+                    details: details,
+                    propertyType: propertyType,
+                    roomType: roomType,
+                    contactName: contactName,
+                    contactNumber: contactNumber,
+                    contactEmail: contactEmail,
+                    contactSocial: contactSocial,
+                    preferredContact: preferredContact,
+                    bond: bond,
+                    availableStart: availableStart,
+                    minTerm: minTerm,
+                    propertyFeature: propertyFeature
+                }
             }).done(function (data) {
                 _this.actions.AddPropertySuccess(data.message);
             }).fail(function (jqXhr) {
@@ -252,7 +271,7 @@ exports.default = new _alt2.default();
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -278,137 +297,531 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var AddProperty = function (_React$Component) {
-    _inherits(AddProperty, _React$Component);
+  _inherits(AddProperty, _React$Component);
 
-    function AddProperty(props) {
-        _classCallCheck(this, AddProperty);
+  function AddProperty(props) {
+    _classCallCheck(this, AddProperty);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddProperty).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddProperty).call(this, props));
 
-        _this.state = _AddPropertyStore2.default.getState();
-        _this.onChange = _this.onChange.bind(_this);
-        return _this;
+    _this.state = _AddPropertyStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AddProperty, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _AddPropertyStore2.default.listen(this.onChange);
     }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _AddPropertyStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
 
-    _createClass(AddProperty, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            _AddPropertyStore2.default.listen(this.onChange);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            _AddPropertyStore2.default.unlisten(this.onChange);
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(state) {
-            this.setState(state);
-        }
-    }, {
-        key: 'handleSubmit',
-        value: function handleSubmit(event) {
-            event.preventDefault();
+      var name = this.state.name.trim();
+      var gender = this.state.gender;
 
-            var name = this.state.name.trim();
-            var gender = this.state.gender;
+      if (!name) {
+        _AddPropertyActions2.default.invalidName();
+        this.refs.nameTextField.getDOMNode().focus();
+      }
 
-            if (!name) {
-                _AddPropertyActions2.default.invalidName();
-                this.refs.nameTextField.getDOMNode().focus();
-            }
+      if (!gender) {
+        _AddPropertyActions2.default.invalidGender();
+      }
 
-            if (!gender) {
-                _AddPropertyActions2.default.invalidGender();
-            }
-
-            if (name && gender) {
-                _AddPropertyActions2.default.AddProperty(name, gender);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
+      if (name && gender) {
+        _AddPropertyActions2.default.AddProperty(name, gender);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'div',
+          { className: 'row flipInX animated' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-8' },
+            _react2.default.createElement(
+              'div',
+              { className: 'panel panel-default' },
+              _react2.default.createElement(
                 'div',
-                { className: 'container' },
+                { className: 'panel-heading' },
+                'Add Property'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'panel-body' },
                 _react2.default.createElement(
+                  'form',
+                  { onSubmit: this.handleSubmit.bind(this) },
+                  _react2.default.createElement(
                     'div',
-                    { className: 'row flipInX animated' },
+                    { className: 'form-group ' + this.state.suburbValidateState },
                     _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-8' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'panel panel-default' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'panel-heading' },
-                                'Add Character'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'panel-body' },
-                                _react2.default.createElement(
-                                    'form',
-                                    { onSubmit: this.handleSubmit.bind(this) },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group ' + this.state.nameValidationState },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { className: 'control-label' },
-                                            'Character Name'
-                                        ),
-                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'nameTextField', value: this.state.name,
-                                            onChange: _AddPropertyActions2.default.updateName, autoFocus: true }),
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'help-block' },
-                                            this.state.helpBlock
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group ' + this.state.genderValidationState },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'radio radio-inline' },
-                                            _react2.default.createElement('input', { type: 'radio', name: 'gender', id: 'female', value: 'Female', checked: this.state.gender === 'Female',
-                                                onChange: _AddPropertyActions2.default.updateGender }),
-                                            _react2.default.createElement(
-                                                'label',
-                                                { htmlFor: 'female' },
-                                                'Female'
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'radio radio-inline' },
-                                            _react2.default.createElement('input', { type: 'radio', name: 'gender', id: 'male', value: 'Male', checked: this.state.gender === 'Male',
-                                                onChange: _AddPropertyActions2.default.updateGender }),
-                                            _react2.default.createElement(
-                                                'label',
-                                                { htmlFor: 'male' },
-                                                'Male'
-                                            )
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'button',
-                                        { type: 'submit', className: 'btn btn-primary' },
-                                        'Submit'
-                                    )
-                                )
-                            )
-                        )
+                      'label',
+                      { className: 'control-label' },
+                      'Suburb'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'suburbTextField', value: this.state.suburb,
+                      onChange: _AddPropertyActions2.default.updateSuburb, autoFocus: true }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.suburbHelpBlock
                     )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.postcodeValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Postcode'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'postcodeTextField', value: this.state.postcode,
+                      onChange: _AddPropertyActions2.default.updatePostcode }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.postcodeHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.priceValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Price'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'priceTextField', value: this.state.price,
+                      onChange: _AddPropertyActions2.default.updatePrice }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.priceHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.addressValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Address'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'addressTextField', value: this.state.address,
+                      onChange: _AddPropertyActions2.default.updateAddress }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.addressHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.titleValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Title'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'titleTextField', value: this.state.title,
+                      onChange: _AddPropertyActions2.default.updateTitle }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.titleHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.detailsValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Details'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'detailsTextField', value: this.state.details,
+                      onChange: _AddPropertyActions2.default.updateDetails }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.detailsHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.propertyTypeValidateState },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'control-label' },
+                      'Property Type'
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'propertyType', id: 'apartment', value: 'apartment',
+                        checked: this.state.propertyType === 'apartment',
+                        onChange: _AddPropertyActions2.default.updatePropertyType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'apartment' },
+                        'Apartment'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'propertyType', id: 'unit', value: 'unit',
+                        checked: this.state.propertyType === 'unit',
+                        onChange: _AddPropertyActions2.default.updatePropertyType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'unit' },
+                        'Unit'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'propertyType', id: 'house', value: 'house',
+                        checked: this.state.propertyType === 'house',
+                        onChange: _AddPropertyActions2.default.updatePropertyType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'house' },
+                        'House/Townhouse'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.roomTypeValidateState },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'control-label' },
+                      'Room Type'
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'roomType', id: 'single', value: 'single',
+                        checked: this.state.roomType === 'single',
+                        onChange: _AddPropertyActions2.default.updateRoomType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'single' },
+                        'Single Room'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'roomType', id: 'shared', value: 'shared',
+                        checked: this.state.roomType === 'shared',
+                        onChange: _AddPropertyActions2.default.updateRoomType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'shared' },
+                        'Shared Room'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'roomType', id: 'living', value: 'living',
+                        checked: this.state.roomType === 'living',
+                        onChange: _AddPropertyActions2.default.updateRoomType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'living' },
+                        'Living Room'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'roomType', id: 'master', value: 'master',
+                        checked: this.state.roomType === 'master',
+                        onChange: _AddPropertyActions2.default.updateRoomType }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'master' },
+                        'Master Room'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.contactNameValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Contact Name'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'contactNameTextField', value: this.state.contactName,
+                      onChange: _AddPropertyActions2.default.updateContactName }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.contactNameHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.contactNumberValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Contact Name'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'contactNumberTextField', value: this.state.contactNumber,
+                      onChange: _AddPropertyActions2.default.updateContactNumber }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.contactNumberHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.contactEmailValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Contact Email'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'contactEmailTextField', value: this.state.contactEmail,
+                      onChange: _AddPropertyActions2.default.updateContactEmail }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.contactEmailHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.contactSocialValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Wechat'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'contactNameTextField', value: this.state.contactSocial,
+                      onChange: _AddPropertyActions2.default.updateContactSocial }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.contactSocialHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.preferredContactValidateState },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'control-label' },
+                      'Preferred Contact Method'
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'preferredContact', id: 'phone', value: 'phone',
+                        checked: this.state.preferredContact === 'phone',
+                        onChange: _AddPropertyActions2.default.updatePreferredContact }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'phone' },
+                        'Phone'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'preferredContact', id: 'email', value: 'email',
+                        checked: this.state.preferredContact === 'email',
+                        onChange: _AddPropertyActions2.default.updatePreferredContact }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'email' },
+                        'Email'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'radio radio-inline' },
+                      _react2.default.createElement('input', { type: 'radio', name: 'preferredContact', id: 'social', value: 'social',
+                        checked: this.state.preferredContact === 'social',
+                        onChange: _AddPropertyActions2.default.updatePreferredContact }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'social' },
+                        'Wechat'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.bondValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Bond'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'bondTextField', value: this.state.bond,
+                      onChange: _AddPropertyActions2.default.updateBond }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.bondHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.availableStartValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Available Date'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'availableStartTextField', value: this.state.availableStart,
+                      onChange: _AddPropertyActions2.default.updateAvailableStart }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.availableStartHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.minTermValidateState },
+                    _react2.default.createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Available Date'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'minTermTextField', value: this.state.minTerm,
+                      onChange: _AddPropertyActions2.default.updateMinTerm }),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.minTermHelpBlock
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.propertyFeatureValidateState },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'control-label' },
+                      'Property Features'
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'furnished', value: 'furnished',
+                        checked: this.state.propertyFeature === 'furnished',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'furnished' },
+                        'Furnished'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'femalePrefer', value: 'femalePrefer',
+                        checked: this.state.propertyFeature === 'femalePrefer',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'femalePrefer' },
+                        'Female Prefer'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'nonSmoker', value: 'nonSmoker',
+                        checked: this.state.propertyFeature === 'nonSmoker',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'nonSmoker' },
+                        'Non Smoker'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'petAllowed', value: 'petAllowed',
+                        checked: this.state.propertyFeature === 'petAllowed',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'petAllowed' },
+                        'Pet Allowed'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'billInclude', value: 'billInclude',
+                        checked: this.state.propertyFeature === 'billInclude',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'billInclude' },
+                        'Bill Included'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'checkbox checkbox-inline' },
+                      _react2.default.createElement('input', { type: 'checkbox', name: 'propertyFeature', id: 'fastInternet', value: 'fastInternet',
+                        checked: this.state.propertyFeature === 'fastInternet',
+                        onChange: _AddPropertyActions2.default.updatePropertyFeature }),
+                      _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'fastInternet' },
+                        'Fast Internet'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    { type: 'submit', className: 'btn btn-primary' },
+                    'Submit'
+                  )
                 )
-            );
-        }
-    }]);
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-    return AddProperty;
+  return AddProperty;
 }(_react2.default.Component);
 
 exports.default = AddProperty;
@@ -1331,7 +1744,7 @@ exports.default = _react2.default.createElement(
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1349,56 +1762,351 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var AddPropertyStore = function () {
-    function AddPropertyStore() {
-        _classCallCheck(this, AddPropertyStore);
+  function AddPropertyStore() {
+    _classCallCheck(this, AddPropertyStore);
 
-        this.bindActions(_AddPropertyActions2.default);
-        this.name = '';
-        this.gender = '';
-        this.helpBlock = '';
-        this.nameValidationState = '';
-        this.genderValidationState = '';
+    this.bindActions(_AddPropertyActions2.default);
+    this.suburb = '';
+    this.postcode = '';
+    this.price = '';
+    this.address = '';
+    this.imageCount = '';
+    this.title = '';
+    this.details = '';
+    this.propertyType = '';
+    this.roomType = '';
+    this.contactName = '';
+    this.contactNumber = '';
+    this.contactEmail = '';
+    this.contactSocial = '';
+    this.preferredContact = '';
+    this.bond = '';
+    this.availableStart = '';
+    this.minTerm = '';
+    this.propertyFeature = '';
+
+    this.helpBlock = '';
+    this.suburbHelpBlock = '';
+    this.postcodeHelpBlock = '';
+    this.priceHelpBlock = '';
+    this.addressHelpBlock = '';
+    this.imageCountHelpBlock = '';
+    this.titleHelpBlock = '';
+    this.detailsHelpBlock = '';
+    this.propertyTypeHelpBlock = '';
+    this.roomTypeHelpBlock = '';
+    this.contactNameHelpBlock = '';
+    this.contactNumberHelpBlock = '';
+    this.contactEmailHelpBlock = '';
+    this.contactSocialHelpBlock = '';
+    this.preferredContactHelpBlock = '';
+    this.bondHelpBlock = '';
+    this.availableStartHelpBlock = '';
+    this.minTermHelpBlock = '';
+    this.propertyFeatureHelpBlock = '';
+
+    this.suburbValidateState = '';
+    this.postcodeValidateState = '';
+    this.priceValidateState = '';
+    this.addressValidateState = '';
+    this.imageCountValidateState = '';
+    this.titleValidateState = '';
+    this.detailsValidateState = '';
+    this.propertyTypeValidateState = '';
+    this.roomTypeValidateState = '';
+    this.contactNameValidateState = '';
+    this.contactNumberValidateState = '';
+    this.contactEmailValidateState = '';
+    this.contactSocialValidateState = '';
+    this.preferredContactValidateState = '';
+    this.bondValidateState = '';
+    this.availableStartValidateState = '';
+    this.minTermValidateState = '';
+    this.propertyFeatureValidateState = '';
+  }
+
+  _createClass(AddPropertyStore, [{
+    key: 'onAddPropertySuccess',
+    value: function onAddPropertySuccess(successMessage) {
+      this.suburbValidateState = 'has-success';
+      this.postcodeValidateState = 'has-success';
+      this.priceValidateState = 'has-success';
+      this.addressValidateState = 'has-success';
+      this.imageCountValidateState = 'has-success';
+      this.titleValidateState = 'has-success';
+      this.detailsValidateState = 'has-success';
+      this.propertyTypeValidateState = 'has-success';
+      this.roomTypeValidateState = 'has-success';
+      this.contactNameValidateState = 'has-success';
+      this.contactNumberValidateState = 'has-success';
+      this.contactEmailValidateState = 'has-success';
+      this.contactSocialValidateState = 'has-success';
+      this.preferredContactValidateState = 'has-success';
+      this.bondValidateState = 'has-success';
+      this.availableStartValidateState = 'has-success';
+      this.minTermValidateState = 'has-success';
+      this.propertyFeatureValidateState = 'has-success';
+      this.helpBlock = successMessage;
     }
+  }, {
+    key: 'onAddPropertyFail',
+    value: function onAddPropertyFail(errorMessage) {
+      this.suburbValidateState = 'has-error';
+      this.postcodeValidateState = 'has-error';
+      this.priceValidateState = 'has-error';
+      this.addressValidateState = 'has-error';
+      this.imageCountValidateState = 'has-error';
+      this.titleValidateState = 'has-error';
+      this.detailsValidateState = 'has-error';
+      this.propertyTypeValidateState = 'has-error';
+      this.roomTypeValidateState = 'has-error';
+      this.contactNameValidateState = 'has-error';
+      this.contactNumberValidateState = 'has-error';
+      this.contactEmailValidateState = 'has-error';
+      this.contactSocialValidateState = 'has-error';
+      this.preferredContactValidateState = 'has-error';
+      this.bondValidateState = 'has-error';
+      this.availableStartValidateState = 'has-error';
+      this.minTermValidateState = 'has-error';
+      this.propertyFeatureValidateState = 'has-error';
+      this.helpBlock = errorMessage;
+    }
+  }, {
+    key: 'onUpdateSuburb',
+    value: function onUpdateSuburb(event) {
+      this.suburb = event.target.value;
+      this.suburbValidateState = '';
+      this.suburbHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdatePostcode',
+    value: function onUpdatePostcode(event) {
+      this.postcode = event.target.value;
+      this.postcodeValidateState = '';
+      this.postcodeHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdatePrice',
+    value: function onUpdatePrice(event) {
+      this.price = event.target.value;
+      this.priceValidateState = '';
+      this.priceHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateAddress',
+    value: function onUpdateAddress(event) {
+      this.address = event.target.value;
+      this.addressValidateState = '';
+      this.addressHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateImageCount',
+    value: function onUpdateImageCount(event) {
+      this.imageCount = event.target.value;
+      this.imageCountValidateState = '';
+      this.imageCountHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateTitle',
+    value: function onUpdateTitle(event) {
+      this.title = event.target.value;
+      this.titleValidateState = '';
+      this.titleHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateDetails',
+    value: function onUpdateDetails(event) {
+      this.details = event.target.value;
+      this.detailsValidateState = '';
+      this.detailsHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdatePropertyType',
+    value: function onUpdatePropertyType(event) {
+      this.propertyType = event.target.value;
+      this.propertyTypeValidateState = '';
+      this.propertyTypeHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateRoomType',
+    value: function onUpdateRoomType(event) {
+      this.roomType = event.target.value;
+      this.roomTypeValidateState = '';
+      this.roomTypeHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateContactName',
+    value: function onUpdateContactName(event) {
+      this.contactName = event.target.value;
+      this.contactNameValidateState = '';
+      this.contactNameHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateContactNumber',
+    value: function onUpdateContactNumber(event) {
+      this.contactNumber = event.target.value;
+      this.contactNumberValidateState = '';
+      this.contactNumberHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateContactEmail',
+    value: function onUpdateContactEmail(event) {
+      this.contactEmail = event.target.value;
+      this.contactEmailValidateState = '';
+      this.contactEmailHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateContactSocial',
+    value: function onUpdateContactSocial(event) {
+      this.contactSocial = event.target.value;
+      this.contactSocialValidateState = '';
+      this.contactSocialHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdatePreferredContact',
+    value: function onUpdatePreferredContact(event) {
+      this.preferredContact = event.target.value;
+      this.preferredContactValidateState = '';
+      this.preferredContactHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateBond',
+    value: function onUpdateBond(event) {
+      this.bond = event.target.value;
+      this.bondValidateState = '';
+      this.bondHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateAvailableStart',
+    value: function onUpdateAvailableStart(event) {
+      this.availableStart = event.target.value;
+      this.availableStartValidateState = '';
+      this.availableStartHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdateMinTerm',
+    value: function onUpdateMinTerm(event) {
+      this.minTerm = event.target.value;
+      this.minTermValidateState = '';
+      this.minTermHelpBlock = '';
+    }
+  }, {
+    key: 'onUpdatePropertyFeature',
+    value: function onUpdatePropertyFeature(event) {
+      this.propertyFeature = event.target.value;
+      this.propertyFeatureValidateState = '';
+      this.propertyFeatureHelpBlock = '';
+    }
+  }, {
+    key: 'onInvalidSuburb',
+    value: function onInvalidSuburb() {
+      this.suburbValidateState = 'has-error';
+      this.suburbHelpBlock = 'Please enter the suburb of the property';
+    }
+  }, {
+    key: 'onInvalidPostcode',
+    value: function onInvalidPostcode() {
+      this.postcodeValidateState = 'has-error';
+      this.postcodeHelpBlock = 'Please enter the postcode of the property';
+    }
+  }, {
+    key: 'onInvalidPrice',
+    value: function onInvalidPrice() {
+      this.priceValidateState = 'has-error';
+      this.priceHelpBlock = 'Please enter the price per week of the property';
+    }
+  }, {
+    key: 'onInvalidAddress',
+    value: function onInvalidAddress() {
+      this.addressValidateState = 'has-error';
+      this.addressHelpBlock = 'Please enter the address of the property';
+    }
+  }, {
+    key: 'onInvalidImageCount',
+    value: function onInvalidImageCount() {
+      this.imageCountValidateState = 'has-error';
+    }
+  }, {
+    key: 'onInvalidTitle',
+    value: function onInvalidTitle() {
+      this.titleValidateState = 'has-error';
+      this.titleHelpBlock = 'Please enter the advert title';
+    }
+  }, {
+    key: 'onInvalidDetails',
+    value: function onInvalidDetails() {
+      this.detailsValidateState = 'has-error';
+      this.detailsHelpBlock = 'Please put some details of the property';
+    }
+  }, {
+    key: 'onInvalidPropertyType',
+    value: function onInvalidPropertyType() {
+      this.propertyTypeValidateState = 'has-error';
+      this.propertyTypeHelpBlock = 'Please select the property type';
+    }
+  }, {
+    key: 'onInvalidRoomType',
+    value: function onInvalidRoomType() {
+      this.roomTypeValidateState = 'has-error';
+      this.roomTypeHelpBlock = 'Please select the room type';
+    }
+  }, {
+    key: 'onInvalidContactName',
+    value: function onInvalidContactName() {
+      this.contactNameValidateState = 'has-error';
+      this.contactNameHelpBlock = 'Please enter the contact name';
+    }
+  }, {
+    key: 'onInvalidContactNumber',
+    value: function onInvalidContactNumber() {
+      this.contactNumberValidateState = 'has-error';
+      this.contactNumberHelpBlock = 'Please enter the contact number';
+    }
+  }, {
+    key: 'onInvalidContactEmail',
+    value: function onInvalidContactEmail() {
+      this.contactEmailValidateState = 'has-error';
+      this.contactEmailHelpBlock = 'Please enter the contact email';
+    }
+  }, {
+    key: 'onInvalidContactSocial',
+    value: function onInvalidContactSocial() {
+      this.contactSocialValidateState = 'has-error';
+      this.contactSocialHelpBlock = 'Please enter your social network details';
+    }
+  }, {
+    key: 'onInvalidPreferredContact',
+    value: function onInvalidPreferredContact() {
+      this.preferredContactValidateState = 'has-error';
+      this.preferredContactHelpBlock = 'Please select your preferred contact method';
+    }
+  }, {
+    key: 'onInvalidBond',
+    value: function onInvalidBond() {
+      this.bondValidateState = 'has-error';
+      this.bondHelpBlock = 'Please choose how many weeks bond required';
+    }
+  }, {
+    key: 'onInvalidAvailableStart',
+    value: function onInvalidAvailableStart() {
+      this.availableStartValidateState = 'has-error';
+      this.availableStartHelpBlock = 'Please select the available date of the property';
+    }
+  }, {
+    key: 'onInvalidMinTerm',
+    value: function onInvalidMinTerm() {
+      this.minTermValidateState = 'has-error';
+      this.minTermHelpBlock = 'Please enter the minimum lease term';
+    }
+  }, {
+    key: 'onInvalidPropertyFeature',
+    value: function onInvalidPropertyFeature() {
+      this.propertyFeatureValidateState = 'has-error';
+      this.propertyFeatureHelpBlock = 'Please select the property features';
+    }
+  }]);
 
-    _createClass(AddPropertyStore, [{
-        key: 'onAddPropertySuccess',
-        value: function onAddPropertySuccess(successMessage) {
-            this.nameValidationState = 'has-success';
-            this.helpBlock = successMessage;
-        }
-    }, {
-        key: 'onAddPropertyFail',
-        value: function onAddPropertyFail(errorMessage) {
-            this.nameValidationState = 'has-error';
-            this.helpBlock = errorMessage;
-        }
-    }, {
-        key: 'onUpdateName',
-        value: function onUpdateName(event) {
-            this.name = event.target.value;
-            this.nameValidationState = '';
-            this.helpBlock = '';
-        }
-    }, {
-        key: 'onUpdateGender',
-        value: function onUpdateGender(event) {
-            this.gender = event.target.value;
-            this.genderValidationState = '';
-        }
-    }, {
-        key: 'onInvalidName',
-        value: function onInvalidName() {
-            this.nameValidationState = 'has-error';
-            this.helpBlock = 'Please enter a character name.';
-        }
-    }, {
-        key: 'onInvalidGender',
-        value: function onInvalidGender() {
-            this.genderValidationState = 'has-error';
-        }
-    }]);
-
-    return AddPropertyStore;
+  return AddPropertyStore;
 }();
 
 exports.default = _alt2.default.createStore(AddPropertyStore);

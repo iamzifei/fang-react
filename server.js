@@ -14,7 +14,6 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 var config = require('./config');
-var Character = require('./models/character');
 var Property = require('./models/property');
 
 
@@ -59,7 +58,7 @@ app.get('/api/properties/search', function(req, res, next) {
 
 /**
  * GET /api/properties/:suburb
- * Returns detailed character information.
+ * List all properties in suburb.
  */
 app.get('/api/properties/:suburb', function(req, res, next) {
   var suburb = req.params.suburb;
@@ -132,68 +131,54 @@ app.get('/api/properties', function(req, res, next) {
  * Adds new property to the database.
  */
 app.post('/api/properties', function(req, res, next) {
-  var gender = req.body.gender;
-  var characterName = req.body.name;
-  var characterIdLookupUrl = 'https://api.eveonline.com/eve/CharacterID.xml.aspx?names=' + characterName;
+  var suburb = req.body.suburb;
+  var postcode = req.body.postcode;
+  var price = req.body.price;
+  var address = req.body.address;
+  var title = req.body.title;
+  var details = req.body.details;
+  var propertyType = req.body.propertyType;
+  var roomType = req.body.roomType;
+  var contactName = req.body.contactName;
+  var contactNumber = req.body.contactNumber;
+  var contactEmail = req.body.contactEmail;
+  var contactSocial = req.body.contactSocial;
+  var preferredContact = req.body.preferredContact;
+  var bond = req.body.bond;
+  var availableStart = req.body.availableStart;
+  var minTerm = req.body.minTerm;
+  var imageCount = 0;
+  var propertyFeature = [];
 
-  var parser = new xml2js.Parser();
+  var property = new Property({
+    suburb: suburb,
+    postcode: postcode,
+    price: price,
+    address: address,
+    imageCount: imageCount,
+    title: title,
+    details: details,
+    propertyType: propertyType,
+    roomType: roomType,
+    contactName: contactName,
+    contactNumber: contactNumber,
+    contactEmail: contactEmail,
+    contactSocial: contactSocial,
+    preferredContact: preferredContact,
+    bond: bond,
+    availableStart: availableStart,
+    minTerm: minTerm,
+    propertyFeature: propertyFeature
+  });
 
-  async.waterfall([
-    function(callback) {
-      request.get(characterIdLookupUrl, function(err, request, xml) {
-        if (err) return next(err);
-        parser.parseString(xml, function(err, parsedXml) {
-          if (err) return next(err);
-          try {
-            var characterId = parsedXml.eveapi.result[0].rowset[0].row[0].$.characterID;
-
-            Character.findOne({ characterId: characterId }, function(err, character) {
-              if (err) return next(err);
-
-              if (character) {
-                return res.status(409).send({ message: character.name + ' is already in the database.' });
-              }
-
-              callback(err, characterId);
-            });
-          } catch (e) {
-            return res.status(400).send({ message: 'XML Parse Error' });
-          }
-        });
-      });
-    },
-    function(characterId) {
-      var characterInfoUrl = 'https://api.eveonline.com/eve/CharacterInfo.xml.aspx?characterID=' + characterId;
-
-      request.get({ url: characterInfoUrl }, function(err, request, xml) {
-        if (err) return next(err);
-        parser.parseString(xml, function(err, parsedXml) {
-          if (err) return res.send(err);
-          try {
-            var name = parsedXml.eveapi.result[0].characterName[0];
-            var race = parsedXml.eveapi.result[0].race[0];
-            var bloodline = parsedXml.eveapi.result[0].bloodline[0];
-
-            var character = new Character({
-              characterId: characterId,
-              name: name,
-              race: race,
-              bloodline: bloodline,
-              gender: gender,
-              random: [Math.random(), 0]
-            });
-
-            character.save(function(err) {
-              if (err) return next(err);
-              res.send({ message: characterName + ' has been added successfully!' });
-            });
-          } catch (e) {
-            res.status(404).send({ message: characterName + ' is not a registered citizen of New Eden.' });
-          }
-        });
-      });
-    }
-  ]);
+  try {
+    property.save(function(err) {
+      if (err) return next(err);
+      res.send({ message: 'Property at ' + address + ' has been added successfully!' });
+    });
+  } catch (e) {
+    res.status(404).send({ message: ' Could not add the property.' });
+  }
 });
 
 /**
