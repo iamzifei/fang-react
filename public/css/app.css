@@ -7,6 +7,23 @@
 body {
   background-color: #fff; }
 
+.type-container {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff; }
+  .type-container .estate-type {
+    float: left;
+    margin-right: 5px;
+    padding: 0 10px 0 10px;
+    background-color: #ee7e23; }
+  .type-container .ads-flag {
+    float: left;
+    padding: 0 10px;
+    background-color: #22a41c; }
+
 .grid-offer-col {
   padding: 15px; }
   .grid-offer-col .grid-offer {
@@ -33,22 +50,6 @@ body {
           width: 100%;
           vertical-align: middle;
           border: none; }
-        .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container {
-          position: absolute;
-          top: 5px;
-          left: 5px;
-          text-transform: uppercase;
-          font-weight: bold;
-          color: #fff; }
-          .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container .estate-type {
-            float: left;
-            margin-right: 5px;
-            padding: 0 10px 0 10px;
-            background-color: #ee7e23; }
-          .grid-offer-col .grid-offer .panel-body .grid-offer-photo .type-container .ads-flag {
-            float: left;
-            padding: 0 10px;
-            background-color: #22a41c; }
       .grid-offer-col .grid-offer .panel-body .grid-offer-text {
         font-size: 1.1em;
         color: #999;

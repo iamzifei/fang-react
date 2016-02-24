@@ -53,7 +53,7 @@ render() {
     var propertyNodes = this.state.properties.map((property, index) => {
       suburbName = property.suburb;
       return (
-        <PropertyGrid property={property} />
+        <PropertyGrid property={property} key={property._id} />
       );
     });
 

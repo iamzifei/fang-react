@@ -28,7 +28,7 @@ class Home extends React.Component {
   render() {
     var propertyNodes = this.state.properties.map((property, index) => {
       return (
-        <PropertyGrid property={property} />
+        <PropertyGrid property={property} key={property._id} />
       );
     });
 

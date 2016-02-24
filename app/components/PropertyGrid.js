@@ -7,7 +7,7 @@ class PropertyGrid extends React.Component {
   render() {
     var property = this.props.property;
     return (
-      <Link key={property._id} to={'/property/' + property._id}>
+      <Link to={'/property/' + property._id}>
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col">
           <div className="panel grid-offer">
             <div className="panel-body">
@@ -33,7 +33,7 @@ class PropertyGrid extends React.Component {
                 <div className="clearfix"></div>
               </div>
               <div className="grid-offer-params">
-                <PropertyFeature propertyFeatures={property.propertyFeature} />
+                <PropertyFeature propertyFeatures={property.propertyFeature} key={property._id}/>
               </div>
             </div>
           </div>

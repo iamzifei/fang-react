@@ -3,6 +3,7 @@ import {Route} from 'react-router';
 import App from './components/App';
 import Home from './components/Home';
 import Search from './components/Search';
+import Property from './components/Property';
 import AddProperty from './components/AddProperty';
 
 export default (
@@ -10,5 +11,6 @@ export default (
     <Route path='/' component={Home} />
       <Route path='/add' component={AddProperty} />
       <Route path='/properties/:suburb' component={Search} />
+      <Route path='/property/:id' component={Property} />
   </Route>
 );
