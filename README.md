@@ -23,4 +23,5 @@ call `http://localhost:3000/api/load` to load testing data
 ## references:
 
 * [a walkthrough of the project structure](http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/)
+* [React Eco System](http://www.toptal.com/react/navigating-the-react-ecosystem)
 * [ALT for Flux](http://alt.js.org/guide/)
