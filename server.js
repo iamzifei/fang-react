@@ -97,7 +97,7 @@ app.get('/api/properties/:suburb', function(req, res, next) {
 app.get('/api/property/:id', function(req, res, next) {
   var id = req.params.id;
 
-  Property.findOne({ propertyId: id }, function(err, property) {
+  Property.findOne({ _id: id }, function(err, property) {
     if (err) return next(err);
 
     if (!property) {

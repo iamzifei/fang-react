@@ -1,28 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
-import PropertyFeatureStore from '../stores/PropertyFeatureStore'
-import PropertyFeatureActions from '../actions/PropertyFeatureActions';
-import {first, without, findWhere} from 'underscore';
 
 class PropertyFeature extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = PropertyFeatureStore.getState();
-    this.onChange = this.onChange.bind(this);
-  }
-
-  componentDidMount() {
-    PropertyFeatureStore.listen(this.onChange);
-  }
-
-  componentWillUnmount() {
-    PropertyFeatureStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
 
   render() {
     var propertyFeatureNames = {
