@@ -2,6 +2,9 @@
   "name": "fang",
   "description": "web app for fang",
   "version": "1.0.0",
+  "engines": {
+    "node": "5.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/iamzifei/fang-react.git"
