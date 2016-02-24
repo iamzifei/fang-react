@@ -57,13 +57,14 @@
     "vinyl-source-stream": "^1.1.0",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
-    "watchify": "^3.6.0"
-  },
-  "devDependencies": {
+    "watchify": "^3.6.0",
     "babel-core": "^6.1.19",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-register": "^6.3.13"
+  },
+  "devDependencies": {
+
   },
   "license": "MIT"
 }
