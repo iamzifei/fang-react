@@ -3,7 +3,8 @@
   "description": "web app for fang",
   "version": "1.0.0",
   "engines": {
-    "node": "5.1.0"
+    "node": "5.1.0",
+    "npm": "3.5.3"
   },
   "repository": {
     "type": "git",
