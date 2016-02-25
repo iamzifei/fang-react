@@ -36,7 +36,8 @@ bower_components
 dist
 
 # Database
-data
+data/db/*
+!data/db/README.md
 
 # Compiled files
 public/css/*
