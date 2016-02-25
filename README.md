@@ -10,7 +10,7 @@
 
 ## import testing data
 
-call `http://localhost:3000/api/load` to load testing data
+call `http://localhost:3000/api/load` to load testing data, you only need to do this once
 
 ## a few mongodb command for help
 
@@ -19,6 +19,29 @@ call `http://localhost:3000/api/load` to load testing data
 * run `db.getCollectionNames()` to list all collections in the database
 * run `db.property.find()` to list all data in collection 'property'
 * run `db.property.drop()` to delete the collection 'property'
+
+## Branching strategy
+
+* please create a branch for each feature
+* use pull request to merge back to dev branch
+* master branch for deployment
+* tag the production version
+
+## Todo:
+
+### stage 1
+* pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))
+* add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
+* display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
+* suburb/postcode search auto-complete
+* google map integration for property details page
+* property details form enhancement
+* style polish
+
+### stage 2
+* user register/login
+* user profile
+* social network login integration
 
 ## references:
 
