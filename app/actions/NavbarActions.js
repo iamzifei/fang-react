@@ -6,8 +6,6 @@ class NavbarActions {
     this.generateActions(
       'updateAjaxAnimation',
       'updateSearchQuery',
-      'getPropertyCountSuccess',
-      'getPropertyCountFail',
       'findPropertySuccess',
       'findPropertyFail'
     );
@@ -24,16 +22,6 @@ class NavbarActions {
       })
       .fail(() => {
         this.actions.findPropertyFail(payload);
-      });
-  }
-
-  getPropertyCount() {
-    $.ajax({ url: '/api/properties/count' })
-      .done((data) => {
-        this.actions.getPropertyCountSuccess(data)
-      })
-      .fail((jqXhr) => {
-        this.actions.getPropertyCountFail(jqXhr)
       });
   }
 }

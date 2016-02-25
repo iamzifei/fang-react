@@ -12,8 +12,6 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-    NavbarActions.getPropertyCount();
-
 
     $(document).ajaxStart(() => {
       NavbarActions.updateAjaxAnimation('fadeIn');
@@ -76,7 +74,7 @@ class Navbar extends React.Component {
         <div id='navbar' className='navbar-collapse collapse'>
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder={this.state.totalProperties + ' properties'} value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
+              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
               <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
               </span>

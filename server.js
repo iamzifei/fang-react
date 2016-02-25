@@ -113,8 +113,11 @@ app.get('/api/property/:id', function(req, res, next) {
  * Returns all properties.
  */
 app.get('/api/properties', function(req, res, next) {
+  var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
   Property.find()
     .sort({'_id': 'desc'})
+    .skip(offset)
+    .limit(config.perPage)
     .exec(function(err, properties) {
       if (err) return next(err);
 
@@ -122,7 +125,7 @@ app.get('/api/properties', function(req, res, next) {
         return res.status(404).send({ message: 'Properties not found.' });
       }
 
-      res.send(properties);
+      res.send({limit: config.perPage, properties: properties});
   })
 });
 

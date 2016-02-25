@@ -4,7 +4,6 @@ import NavbarActions from '../actions/NavbarActions';
 class NavbarStore {
     constructor() {
         this.bindActions(NavbarActions);
-        this.totalProperties = 0;
         this.searchQuery = '';
         this.ajaxAnimationClass = '';
     }
@@ -26,14 +25,6 @@ class NavbarStore {
 
     onUpdateSearchQuery(event) {
         this.searchQuery = event.target.value;
-    }
-
-    onGetPropertyCountSuccess(data) {
-        this.totalProperties = data.count;
-    }
-
-    onGetPropertyCountFail(jqXhr) {
-        toastr.error(jqXhr.responseJSON.message);
     }
 }
 
