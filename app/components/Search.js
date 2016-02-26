@@ -1,22 +1,24 @@
 import React from 'react';
 import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import SearchStore from '../stores/SearchStore'
-import SearchActions from '../actions/SearchActions';
+import PropertiesListingStore from '../stores/PropertiesListingStore'
+import PropertiesListingActions from '../actions/PropertiesListingActions';
 import PropertyGrid from './PropertyGrid';
+import ReactPaginate from 'react-paginate';
 import _ from 'underscore';
 
 class Search extends React.Component {
   static getStores() {
-    return [SearchStore];
+    return [PropertiesListingStore];
   }
 
   static getPropsFromStores() {
-    return SearchStore.getState();
+    return PropertiesListingStore.getState();
   }
 
   componentDidMount() {
-    SearchActions.getPropertiesInSuburb(this.props.params.suburb);
+    PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, 0);
+    PropertiesListingActions.getPropertyCount(this.props.params.suburb);
     $('.magnific-popup').magnificPopup({
       type: 'image',
       mainClass: 'mfp-zoom-in',
@@ -32,11 +34,18 @@ class Search extends React.Component {
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
     if (prevProps.params.suburb !== this.props.params.suburb) {
-      SearchActions.getPropertiesInSuburb(this.props.params.suburb);
+      PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, 0);
+      PropertiesListingActions.getPropertyCount(this.props.params.suburb);
     }
   }
 
-render() {
+  handlePageClick (page) {
+    let selected = page.selected;
+    let offset = Math.ceil(selected * this.props.limit);
+    PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, offset);
+  };
+
+  render() {
     _.mixin({
       capitalize: function(string) {
         return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
@@ -52,9 +61,21 @@ render() {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>{propertyNodes.length} Properties in {_(suburbName).capitalize()}</h3>
+        <h3 className='text-center'>{this.props.propertiesCount} Properties in {_(suburbName).capitalize()}</h3>
         <div className='row'>
           {propertyNodes}
+        </div>
+        <div id="react-paginate">
+          <ReactPaginate previousLabel={"previous"}
+                         nextLabel={"next"}
+                         breakLabel={<li className="break"><a href="">...</a></li>}
+                         pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+                         marginPagesDisplayed={2}
+                         pageRangeDisplayed={5}
+                         clickCallback={this.handlePageClick.bind(this)}
+                         containerClassName={"pagination"}
+                         subContainerClassName={"pages pagination"}
+                         activeClassName={"active"} />
         </div>
       </div>
     );

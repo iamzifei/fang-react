@@ -1,31 +1,31 @@
 import React from 'react';
 import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import HomeStore from '../stores/HomeStore'
-import HomeActions from '../actions/HomeActions';
+import PropertiesListingStore from '../stores/PropertiesListingStore'
+import PropertiesListingActions from '../actions/PropertiesListingActions';
 import PropertyGrid from './PropertyGrid';
 import ReactPaginate from 'react-paginate';
 
 class Home extends React.Component {
   static getStores() {
-    return [HomeStore];
+    return [PropertiesListingStore];
   }
 
   static getPropsFromStores() {
-    return HomeStore.getState();
+    return PropertiesListingStore.getState();
   }
 
   componentDidMount() {
-    HomeActions.getAllProperties(0);
-    HomeActions.getPropertyCount();
+    PropertiesListingActions.getAllProperties(0);
+    PropertiesListingActions.getPropertyCount();
 
     $(document).ajaxStart(() => {
-      HomeActions.updateAjaxAnimation('fadeIn');
+      PropertiesListingActions.updateAjaxAnimation('fadeIn');
     });
 
     $(document).ajaxComplete(() => {
       setTimeout(() => {
-        HomeActions.updateAjaxAnimation('fadeOut');
+        PropertiesListingActions.updateAjaxAnimation('fadeOut');
       }, 750);
     });
   }
@@ -33,7 +33,7 @@ class Home extends React.Component {
   handlePageClick (page) {
     let selected = page.selected;
     let offset = Math.ceil(selected * this.props.limit);
-    HomeActions.getAllProperties(offset);
+    PropertiesListingActions.getAllProperties(offset);
   };
 
   render() {
@@ -45,7 +45,7 @@ class Home extends React.Component {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>All {this.props.totalProperties} Properties</h3>
+        <h3 className='text-center'>All {this.props.propertiesCount} Properties</h3>
         <div className='row'>
           {propertyNodes}
         </div>
@@ -53,7 +53,7 @@ class Home extends React.Component {
           <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<li className="break"><a href="">...</a></li>}
-                       pageNum={Math.ceil(this.props.totalProperties / this.props.limit)}
+                       pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
                        clickCallback={this.handlePageClick.bind(this)}
