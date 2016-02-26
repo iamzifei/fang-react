@@ -8,7 +8,6 @@ class PropertiesListingStore {
     this.ajaxAnimationClass = '';
     this.properties = [];
     this.propertiesCount = 0;
-    this.searchQuery = '';
   }
 
   onGetPropertiesListSuccess(data) {
@@ -30,21 +29,6 @@ class PropertiesListingStore {
 
   onGetPropertyCountFail(jqXhr) {
     toastr.error(jqXhr.responseJSON.message);
-  }
-
-  onSearchPropertiesSuccess(payload) {
-    payload.history.pushState(null, '/properties/' + payload.suburb);
-  }
-
-  onSearchPropertiesFail(payload) {
-    payload.searchForm.classList.add('shake');
-    setTimeout(() => {
-      payload.searchForm.classList.remove('shake');
-    }, 1000);
-  }
-
-  onUpdateSearchQuery(event) {
-    this.searchQuery = event.target.value;
   }
 }
 

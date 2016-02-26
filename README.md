@@ -31,6 +31,7 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 
 * PropertyActions -> PropertyStore (handle all CRUD actions and states for property/properties)
 * ListingActions -> ListingStore (handle all properties listing actions and states)
+* SearchActions -> SearchStore (handle all search including search narrow downs)
 
 ## Todo:
 
@@ -41,12 +42,21 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * suburb/postcode search auto-complete
 * google map integration for property details page
 * property details form enhancement
-* style polish
+* narrow down search results by price, type & features
+* style polish & responsive
 
 ### stage 2
+* nearby facilities for property
+* search by facilities
+
+### stage 3
 * user register/login
 * user profile
 * social network login integration
+
+### stage 4
+* property management
+* property rating/comment
 
 ## references:
 

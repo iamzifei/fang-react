@@ -1,5 +1,4 @@
 import alt from '../alt';
-import {assign} from 'underscore';
 
 class PropertiesListingActions {
   constructor() {
@@ -8,10 +7,7 @@ class PropertiesListingActions {
       'getPropertiesListSuccess',
       'getPropertiesListFail',
       'getPropertyCountSuccess',
-      'getPropertyCountFail',
-      'updateSearchQuery',
-      'searchPropertiesSuccess',
-      'searchPropertiesFail'
+      'getPropertyCountFail'
     );
   }
 
@@ -51,20 +47,6 @@ class PropertiesListingActions {
       })
       .fail(jqXhr => {
         this.actions.getPropertiesListFail(jqXhr.responseJSON.message);
-      });
-  }
-
-  searchProperties(payload) {
-    $.ajax({
-        url: '/api/properties/search',
-        data: { suburb: payload.searchQuery }
-      })
-      .done((data) => {
-        assign(payload, data);
-        this.actions.searchPropertiesSuccess(payload);
-      })
-      .fail(() => {
-        this.actions.searchPropertiesFail(payload);
       });
   }
 }

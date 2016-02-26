@@ -1,27 +1,27 @@
 import React from 'react';
 import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import PropertiesListingStore from '../stores/PropertiesListingStore';
-import PropertiesListingActions from '../actions/PropertiesListingActions';
+import SearchStore from '../stores/SearchStore';
+import SearchActions from '../actions/SearchActions';
 
 class Navbar extends React.Component {
 
   static getStores() {
-    return [PropertiesListingStore];
+    return [SearchStore];
   }
 
   static getPropsFromStores() {
-    return PropertiesListingStore.getState();
+    return SearchStore.getState();
   }
 
   componentDidMount() {
     $(document).ajaxStart(() => {
-      PropertiesListingActions.updateAjaxAnimation('fadeIn');
+      SearchActions.updateAjaxAnimation('fadeIn');
     });
 
     $(document).ajaxComplete(() => {
       setTimeout(() => {
-        PropertiesListingActions.updateAjaxAnimation('fadeOut');
+        SearchActions.updateAjaxAnimation('fadeOut');
       }, 750);
     });
   }
@@ -32,7 +32,7 @@ class Navbar extends React.Component {
     let searchQuery = this.props.searchQuery.trim();
 
     if (searchQuery) {
-      PropertiesListingActions.searchProperties({
+      SearchActions.searchProperties({
         searchQuery: searchQuery,
         searchForm: this.refs.searchForm,
         history: this.props.history
@@ -68,7 +68,7 @@ class Navbar extends React.Component {
         <div id='navbar' className='navbar-collapse collapse'>
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.props.searchQuery} onChange={PropertiesListingActions.updateSearchQuery} />
+              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.props.searchQuery} onChange={SearchActions.updateSearchQuery} />
               <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
               </span>
