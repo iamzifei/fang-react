@@ -1,20 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions';
 import PropertyGrid from './PropertyGrid';
 import _ from 'underscore';
 
 class Search extends React.Component {
+  static getStores() {
+    return [SearchStore];
+  }
 
-  constructor(props) {
-    super(props);
-    this.state = SearchStore.getState();
-    this.onChange = this.onChange.bind(this);
+  static getPropsFromStores() {
+    return SearchStore.getState();
   }
 
   componentDidMount() {
-    SearchStore.listen(this.onChange);
     SearchActions.getPropertiesInSuburb(this.props.params.suburb);
     $('.magnific-popup').magnificPopup({
       type: 'image',
@@ -28,19 +29,11 @@ class Search extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    SearchStore.unlisten(this.onChange);
-  }
-
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
     if (prevProps.params.suburb !== this.props.params.suburb) {
       SearchActions.getPropertiesInSuburb(this.props.params.suburb);
     }
-  }
-
-  onChange(state) {
-    this.setState(state);
   }
 
 render() {
@@ -50,7 +43,7 @@ render() {
       }
     });
     var suburbName = this.props.params.suburb;
-    var propertyNodes = this.state.properties.map((property, index) => {
+    var propertyNodes = this.props.properties.map((property, index) => {
       suburbName = property.suburb;
       return (
         <PropertyGrid property={property} key={property._id} />
@@ -68,4 +61,4 @@ render() {
   }
 }
 
-export default Search;
+export default connectToStores(Search);

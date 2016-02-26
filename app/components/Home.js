@@ -1,20 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import HomeStore from '../stores/HomeStore'
 import HomeActions from '../actions/HomeActions';
 import PropertyGrid from './PropertyGrid';
 import ReactPaginate from 'react-paginate';
 
 class Home extends React.Component {
+  static getStores() {
+    return [HomeStore];
+  }
 
-  constructor(props) {
-    super(props);
-    this.state = HomeStore.getState();
-    this.onChange = this.onChange.bind(this);
+  static getPropsFromStores() {
+    return HomeStore.getState();
   }
 
   componentDidMount() {
-    HomeStore.listen(this.onChange);
     HomeActions.getAllProperties(0);
     HomeActions.getPropertyCount();
 
@@ -29,22 +30,14 @@ class Home extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    HomeStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
   handlePageClick (page) {
     let selected = page.selected;
-    let offset = Math.ceil(selected * this.state.limit);
+    let offset = Math.ceil(selected * this.props.limit);
     HomeActions.getAllProperties(offset);
   };
 
   render() {
-    var propertyNodes = this.state.properties.map((property, index) => {
+    var propertyNodes = this.props.properties.map((property, index) => {
       return (
         <PropertyGrid property={property} key={property._id} />
       );
@@ -52,7 +45,7 @@ class Home extends React.Component {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>All {this.state.totalProperties} Properties</h3>
+        <h3 className='text-center'>All {this.props.totalProperties} Properties</h3>
         <div className='row'>
           {propertyNodes}
         </div>
@@ -60,7 +53,7 @@ class Home extends React.Component {
           <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<li className="break"><a href="">...</a></li>}
-                       pageNum={Math.ceil(this.state.totalProperties / this.state.limit)}
+                       pageNum={Math.ceil(this.props.totalProperties / this.props.limit)}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
                        clickCallback={this.handlePageClick.bind(this)}
@@ -73,4 +66,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default connectToStores(Home);
