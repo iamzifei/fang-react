@@ -1,46 +1,38 @@
 import React from 'react';
 import {Link} from 'react-router';
-import NavbarStore from '../stores/NavbarStore';
-import NavbarActions from '../actions/NavbarActions';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import PropertiesListingStore from '../stores/PropertiesListingStore';
+import PropertiesListingActions from '../actions/PropertiesListingActions';
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = NavbarStore.getState();
-    this.onChange = this.onChange.bind(this);
+
+  static getStores() {
+    return [PropertiesListingStore];
+  }
+
+  static getPropsFromStores() {
+    return PropertiesListingStore.getState();
   }
 
   componentDidMount() {
-    NavbarStore.listen(this.onChange);
-    NavbarActions.getPropertyCount();
-
-
     $(document).ajaxStart(() => {
-      NavbarActions.updateAjaxAnimation('fadeIn');
+      PropertiesListingActions.updateAjaxAnimation('fadeIn');
     });
 
     $(document).ajaxComplete(() => {
       setTimeout(() => {
-        NavbarActions.updateAjaxAnimation('fadeOut');
+        PropertiesListingActions.updateAjaxAnimation('fadeOut');
       }, 750);
     });
-  }
-
-  componentWillUnmount() {
-    NavbarStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    let searchQuery = this.state.searchQuery.trim();
+    let searchQuery = this.props.searchQuery.trim();
 
     if (searchQuery) {
-      NavbarActions.findProperty({
+      PropertiesListingActions.searchProperties({
         searchQuery: searchQuery,
         searchForm: this.refs.searchForm,
         history: this.props.history
@@ -59,7 +51,7 @@ class Navbar extends React.Component {
             <span className='icon-bar'></span>
           </button>
           <Link to='/' className='navbar-brand'>
-            <span ref='triangles' className={'triangles animated ' + this.state.ajaxAnimationClass}>
+            <span ref='triangles' className={'triangles animated ' + this.props.ajaxAnimationClass}>
               <div className='tri invert'></div>
               <div className='tri invert'></div>
               <div className='tri'></div>
@@ -76,7 +68,7 @@ class Navbar extends React.Component {
         <div id='navbar' className='navbar-collapse collapse'>
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder={this.state.totalProperties + ' properties'} value={this.state.searchQuery} onChange={NavbarActions.updateSearchQuery} />
+              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.props.searchQuery} onChange={PropertiesListingActions.updateSearchQuery} />
               <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
               </span>
@@ -92,4 +84,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default connectToStores(Navbar);
