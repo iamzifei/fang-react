@@ -67,7 +67,7 @@ app.get('/api/properties/:suburb', function(req, res, next) {
  * Returns detailed property information.
  */
 app.get('/api/property/:id', function(req, res, next) {
-  propertyService.getPropertyById(req, res, next);
+    propertyService.getPropertyById(req, res, next);
 });
 
 /**

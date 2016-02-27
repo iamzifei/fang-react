@@ -1,22 +1,29 @@
 import alt from '../alt';
+import {assign} from 'underscore';
 
 class SearchActions {
-    constructor() {
-        this.generateActions(
-            'getResultSuccess',
-            'getResultFail'
-        );
-    }
+  constructor() {
+    this.generateActions(
+      'updateAjaxAnimation',
+      'updateSearchQuery',
+      'searchPropertiesSuccess',
+      'searchPropertiesFail'
+    );
+  }
 
-    getPropertiesInSuburb(suburb) {
-        $.ajax({ url: '/api/properties/' + suburb })
-            .done(data => {
-                this.actions.getResultSuccess(data);
-            })
-            .fail(jqXhr => {
-                this.actions.getResultFail(jqXhr.responseJSON.message);
-            });
-    }
+  searchProperties(payload) {
+    $.ajax({
+        url: '/api/properties/search',
+        data: { suburb: payload.searchQuery }
+      })
+      .done((data) => {
+        assign(payload, data);
+        this.actions.searchPropertiesSuccess(payload);
+      })
+      .fail(() => {
+        this.actions.searchPropertiesFail(payload);
+      });
+  }
 }
 
 export default alt.createActions(SearchActions);

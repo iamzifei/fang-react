@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "alt": "^0.17.8",
+    "alt-utils": "^1.0.0",
     "async": "^1.5.0",
     "babel-core": "^6.1.19",
     "babel-preset-es2015": "^6.1.18",
@@ -54,6 +55,7 @@
     "path": "^0.12.7",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
+    "react-paginate": "^0.5.4",
     "react-router": "^1.0.0",
     "request": "^2.65.0",
     "serve-favicon": "^2.3.0",

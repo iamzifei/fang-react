@@ -4,10 +4,24 @@ const Property = require('../models/property');
 
 class PropertyService {
   getNumberOfProperties(req, res, next) {
-    Property.count({}, function(err, count) {
-      if (err) return next(err);
-      res.send({ count: count });
-    });
+    var suburb = req.query.suburb? req.query.suburb: -1;
+    if (suburb == -1) {
+      Property.count({}, function(err, count) {
+        if (err) return next(err);
+        res.send({ count: count });
+      });
+    } else if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+      Property.count({postcode: suburb}, function(err, count) {
+        if (err) return next(err);
+        res.send({ count: count });
+      });
+    } else {
+      suburb = new RegExp(req.query.suburb, 'i');
+      Property.count({suburb: suburb}, function(err, count) {
+        if (err) return next(err);
+        res.send({ count: count });
+      });
+    }
   }
 
   getPropertyBySuburb(req, res, next) {
@@ -42,22 +56,46 @@ class PropertyService {
   }
 
   getPropertyById(req, res, next) {
-    var id = req.params.id;
+    var suburb = req.params.suburb;
+    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
+    if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+      Property.find({ postcode: suburb })
+        .skip(offset)
+        .limit(config.perPage)
+        .sort({'_id': 'desc'})
+        .exec(function(err, properties) {
+          if (err) return next(err);
 
-    Property.findOne({ _id: id }, function(err, property) {
-      if (err) return next(err);
+          if (!properties) {
+            return res.status(404).send({ message: 'Property not found.' });
+          }
 
-      if (!property) {
-        return res.status(404).send({ message: 'Property not found.' });
-      }
+          res.send({limit: config.perPage, properties: properties});
+        });
+    } else {
+      suburb = new RegExp(req.params.suburb, 'i');
+      Property.find({ suburb: suburb })
+        .skip(offset)
+        .limit(config.perPage)
+        .sort({'_id': 'desc'})
+        .exec(function(err, properties) {
+          if (err) return next(err);
 
-      res.send(property);
-    });
+          if (!properties) {
+            return res.status(404).send({ message: 'Property not found.' });
+          }
+
+          res.send({limit: config.perPage, properties: properties});
+        });
+    }
   }
 
   getAllProperties(req, res, next) {
+    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     Property.find()
       .sort({'_id': 'desc'})
+      .skip(offset)
+      .limit(config.perPage)
       .exec(function(err, properties) {
         if (err) return next(err);
 
@@ -65,7 +103,7 @@ class PropertyService {
           return res.status(404).send({ message: 'Properties not found.' });
         }
 
-        res.send(properties);
+        res.send({limit: config.perPage, properties: properties});
       })
   }
 

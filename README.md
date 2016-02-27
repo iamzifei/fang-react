@@ -1,6 +1,6 @@
 # fang-react
 
-## how to build and run the project
+## How to build and run the project
 
 * run `npm install && bower install` for dependencies
 * create data/db folder under project root
@@ -8,11 +8,11 @@
 * `cd` to the project root in terminal, run `npm run watch`
 * open another terminal window/tab, `cd` to the project root and run `gulp`
 
-## import testing data
+## Testing data import
 
 call `http://localhost:3000/api/load` to load testing data, you only need to do this once
 
-## a few mongodb command for help
+## Mongodb command tips
 
 * run `mongo` to get into the mongodb command shell
 * run `use nef` to select database 'nef'
@@ -27,6 +27,12 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * master branch for deployment
 * tag the production version
 
+## Project structure
+
+* PropertyActions -> PropertyStore (handle all CRUD actions and states for property/properties)
+* ListingActions -> ListingStore (handle all properties listing actions and states)
+* SearchActions -> SearchStore (handle all search including search narrow downs)
+
 ## Todo:
 
 ### stage 1
@@ -36,12 +42,21 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * suburb/postcode search auto-complete
 * google map integration for property details page
 * property details form enhancement
-* style polish
+* narrow down search results by price, type & features
+* style polish & responsive
 
 ### stage 2
+* nearby facilities for property
+* search by facilities
+
+### stage 3
 * user register/login
 * user profile
 * social network login integration
+
+### stage 4
+* property management
+* property rating/comment
 
 ## references:
 
