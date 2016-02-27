@@ -1,6 +1,7 @@
 'use strict';
 
 const Property = require('../models/property');
+const config = require('../config');
 
 class PropertyService {
   getNumberOfProperties(req, res, next) {
@@ -25,37 +26,6 @@ class PropertyService {
   }
 
   getPropertyBySuburb(req, res, next) {
-    var suburb = req.params.suburb;
-
-    if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
-      Property.find({ postcode: suburb })
-        .sort({'_id': 'desc'})
-        .exec(function(err, properties) {
-          if (err) return next(err);
-
-          if (!properties) {
-            return res.status(404).send({ message: 'Property not found.' });
-          }
-
-          res.send(properties);
-        });
-    } else {
-      suburb = new RegExp(req.params.suburb, 'i');
-      Property.find({ suburb: suburb })
-        .sort({'_id': 'desc'})
-        .exec(function(err, properties) {
-          if (err) return next(err);
-
-          if (!properties) {
-            return res.status(404).send({ message: 'Property not found.' });
-          }
-
-          res.send(properties);
-        });
-    }
-  }
-
-  getPropertyById(req, res, next) {
     var suburb = req.params.suburb;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
@@ -88,6 +58,20 @@ class PropertyService {
           res.send({limit: config.perPage, properties: properties});
         });
     }
+  }
+
+  getPropertyById(req, res, next) {
+    var id = req.params.id;
+
+    Property.findOne({ _id: id }, function(err, property) {
+      if (err) return next(err);
+
+      if (!property) {
+        return res.status(404).send({ message: 'Property not found.' });
+      }
+
+      res.send(property);
+    });
   }
 
   getAllProperties(req, res, next) {
