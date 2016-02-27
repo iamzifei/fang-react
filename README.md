@@ -7,6 +7,7 @@
 * run `sh start-db.sh` to start mongodb
 * `cd` to the project root in terminal, run `npm run watch`
 * open another terminal window/tab, `cd` to the project root and run `gulp`
+* run `sh import-suburb.sh` to import suburb table, you may need to change the database name in the shell script
 
 ## Testing data import
 
@@ -22,7 +23,7 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 
 ## Branching strategy
 
-* please create a branch for each feature
+* please create a branch for each feature, branch name should be `feature\<BRANCH NAME>`
 * use pull request to merge back to dev branch
 * master branch for deployment
 * tag the production version
@@ -44,6 +45,7 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * property details form enhancement
 * narrow down search results by price, type & features
 * style polish & responsive
+* translation
 
 ### stage 2
 * nearby facilities for property
