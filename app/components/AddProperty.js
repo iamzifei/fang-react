@@ -23,22 +23,7 @@ class AddProperty extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    var name = this.state.name.trim();
-    var gender = this.state.gender;
-
-    if (!name) {
-      AddPropertyActions.invalidName();
-      this.refs.nameTextField.getDOMNode().focus();
-    }
-
-    if (!gender) {
-      AddPropertyActions.invalidGender();
-    }
-
-    if (name && gender) {
-      AddPropertyActions.AddProperty(name, gender);
-    }
+    AddPropertyActions.AddProperty();
   }
 
   render() {

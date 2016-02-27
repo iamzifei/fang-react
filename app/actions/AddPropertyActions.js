@@ -1,5 +1,7 @@
 import alt from '../alt';
 
+import Logger from '../utils/Logger';
+
 class AddPropertyActions {
     constructor() {
         this.generateActions(
@@ -70,9 +72,11 @@ class AddPropertyActions {
                 }
             })
             .done((data) => {
+                Logger.log("this.actions.AddPropertySuccess {0}", "ok");
                 this.actions.AddPropertySuccess(data.message);
             })
             .fail((jqXhr) => {
+                Logger.log("this.actions.AddPropertySuccess {0}", "fail");;
                 this.actions.AddPropertyFail(jqXhr.responseJSON.message);
             });
     }
