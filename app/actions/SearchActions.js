@@ -5,9 +5,12 @@ class SearchActions {
   constructor() {
     this.generateActions(
       'updateAjaxAnimation',
-      'updateSearchQuery',
+      'updateSearchQueryEvent',
+      'updateSearchQueryValue',
       'searchPropertiesSuccess',
-      'searchPropertiesFail'
+      'searchPropertiesFail',
+      'searchSuburbSuccess',
+      'searchSuburbFail'
     );
   }
 
@@ -23,6 +26,21 @@ class SearchActions {
       .fail(() => {
         this.actions.searchPropertiesFail(payload);
       });
+  }
+
+  getSuburbs(suburb) {
+    if (suburb.length > 2) {
+      $.ajax({
+          url: '/api/suburb/',
+          data: {suburb: suburb}
+        })
+        .done(data => {
+          this.actions.searchSuburbSuccess(data);
+        })
+        .fail(jqXhr => {
+          this.actions.searchSuburbFail(jqXhr.responseJSON.message);
+        });
+    }
   }
 }
 

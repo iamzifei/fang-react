@@ -6,7 +6,10 @@ const config = require('../config');
 class PropertyService {
   getNumberOfProperties(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
+    var autocomplete = new RegExp('^([a-z\']+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
+    var match;
     if (suburb == -1) {
+      // return all properties number if query is -1 flagged
       Property.count({}, function(err, count) {
         if (err) return next(err);
         res.send({ count: count });
@@ -16,9 +19,13 @@ class PropertyService {
         if (err) return next(err);
         res.send({ count: count });
       });
+    } else if((match = autocomplete.exec(suburb)) !== null) {
+      Property.count({postcode: match[2], suburb: new RegExp(match[1], 'i')}, function(err, count) {
+        if (err) return next(err);
+        res.send({ count: count });
+      });
     } else {
-      suburb = new RegExp(req.query.suburb, 'i');
-      Property.count({suburb: suburb}, function(err, count) {
+      Property.count({suburb: new RegExp(suburb, 'i')}, function(err, count) {
         if (err) return next(err);
         res.send({ count: count });
       });
@@ -28,7 +35,10 @@ class PropertyService {
   getPropertyBySuburb(req, res, next) {
     var suburb = req.params.suburb;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
+    var autocomplete = new RegExp('^([a-z\']+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
+    var match;
     if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+      // if the query is all numbers, consider it is postcode
       Property.find({ postcode: suburb })
         .skip(offset)
         .limit(config.perPage)
@@ -42,9 +52,27 @@ class PropertyService {
 
           res.send({limit: config.perPage, properties: properties});
         });
+    } else if((match = autocomplete.exec(suburb)) !== null) {
+      // if the query contains two commas, consider it is auto complete
+      if (match.index === autocomplete.lastIndex) {
+        autocomplete.lastIndex++;
+      }
+      Property.find({postcode: match[2], suburb: new RegExp(match[1], 'i')})
+        .skip(offset)
+        .limit(config.perPage)
+        .sort({'_id': 'desc'})
+        .exec(function(err, properties) {
+          if (err) return next(err);
+
+          if (!properties) {
+            return res.status(404).send({ message: 'Property not found.' });
+          }
+
+          res.send({limit: config.perPage, properties: properties});
+        });
     } else {
-      suburb = new RegExp(req.params.suburb, 'i');
-      Property.find({ suburb: suburb })
+      // if it is string, consider as suburb name
+      Property.find({ suburb: new RegExp(suburb, 'i') })
         .skip(offset)
         .limit(config.perPage)
         .sort({'_id': 'desc'})

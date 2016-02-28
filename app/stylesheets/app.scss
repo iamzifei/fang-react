@@ -18,6 +18,34 @@ body {
   background-color: #fff;
 }
 
+
+.navbar-form {
+  .search-results {
+    display: block;
+    position: absolute;
+    top: 34px;
+    list-style: none;
+    margin: 0;
+    padding: 0px;
+    background-color: #fff;
+    border: 1px solid #cfdadc;
+    width: 120%;
+    height: 900%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .search-list-item {
+      padding: 12px;
+      &:hover {
+        background-color: #cfdadc;
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 .type-container {
   position: absolute;
   top: 5px;
