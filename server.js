@@ -18,6 +18,8 @@ var config = require('./config');
 const PropertyService = require('./services/PropertyService');
 const propertyService = new PropertyService();
 
+var Suburb = require('./models/suburb');
+
 var async = require('async');
 var request = require('request');
 var xml2js = require('xml2js');
@@ -53,6 +55,45 @@ app.get('/api/properties/count', function(req, res, next) {
 app.get('/api/properties/search', function(req, res, next) {
   res.send({suburb:req.query.suburb});
 });
+
+/**
+ * GET /api/properties/search
+ * Looks up a property by suburb or postcode.
+ */
+app.get('/api/suburb', function(req, res, next) {
+  var suburb = req.query.suburb;
+  // if it's number, consider as postcode
+  if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+    suburb = new RegExp('^' + req.query.suburb, 'i');
+    Suburb.find({ postcode: suburb })
+      .lean()
+      .exec(function(err, suburbs) {
+        if (err) return next(err);
+        processSuburbs(res, suburbs);
+      });
+  } else {
+    suburb = new RegExp('^' + req.query.suburb, 'i');
+    Suburb.find({ suburb: suburb })
+      .lean()
+      .exec(function(err, suburbs) {
+        if (err) return next(err);
+        processSuburbs(res, suburbs);
+      });
+  }
+});
+
+var processSuburbs = function(res, suburbs) {
+  if (!suburbs) {
+    return res.status(404).send({ message: 'Suburb not found.' });
+  }
+  var results = [];
+
+  for (var i = 0; i < suburbs.length; i++) {
+    results.push(suburbs[i].suburb + ', ' + suburbs[i].postcode + ', ' + suburbs[i].state);
+  }
+
+  res.send(results);
+};
 
 /**
  * GET /api/properties/:suburb

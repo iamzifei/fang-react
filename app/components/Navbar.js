@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import SearchStore from '../stores/SearchStore';
 import SearchActions from '../actions/SearchActions';
+import {Typeahead} from 'react-typeahead';
 
 class Navbar extends React.Component {
 
@@ -32,15 +33,36 @@ class Navbar extends React.Component {
     let searchQuery = this.props.searchQuery.trim();
 
     if (searchQuery) {
-      SearchActions.searchProperties({
-        searchQuery: searchQuery,
-        searchForm: this.refs.searchForm,
-        history: this.props.history
-      });
+      this.propertySearch(searchQuery);
     }
   }
 
+  propertySearch(searchQuery) {
+    SearchActions.searchProperties({
+      searchQuery: searchQuery,
+      searchForm: this.refs.searchForm,
+      history: this.props.history
+    });
+  }
+
+  suburbInputChange(event) {
+    $("ul.search-results").show();
+    SearchActions.updateSearchQueryEvent(event);
+    SearchActions.getSuburbs(event.target.value);
+  }
+
+  selectSuggestedSuburb(value) {
+    SearchActions.updateSearchQueryValue(value);
+    this.propertySearch(value);
+  }
+
   render() {
+    var customClasses = {
+      'input': 'form-control',
+      'results': 'search-results',
+      'listItem': 'search-list-item'
+    };
+
     return (
       <nav className='navbar navbar-default navbar-static-top'>
         <div className='navbar-header'>
@@ -68,7 +90,17 @@ class Navbar extends React.Component {
         <div id='navbar' className='navbar-collapse collapse'>
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.props.searchQuery} onChange={SearchActions.updateSearchQuery} />
+
+              <Typeahead
+                options={this.props.suburbs}
+                placeholder='Suburb/Postcode'
+                name="search-field"
+                value={this.props.searchQuery}
+                onKeyDown={this.suburbInputChange.bind(this)}
+                onOptionSelected={this.selectSuggestedSuburb.bind(this)}
+                customClasses={customClasses}
+              />
+
               <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
               </span>
@@ -78,6 +110,7 @@ class Navbar extends React.Component {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/add'>Add</Link></li>
           </ul>
+
         </div>
       </nav>
     );
