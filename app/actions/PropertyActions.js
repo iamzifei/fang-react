@@ -8,6 +8,7 @@ class PropertyActions {
     );
   }
 
+  //TODO: put properties CRUD actions in this one
   getProperty(_id) {
     $.ajax({ url: '/api/property/' + _id })
       .done((data) => {

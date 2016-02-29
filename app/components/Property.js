@@ -1,17 +1,19 @@
 import React from 'react';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
 import PropertyFeature from './PropertyFeature';
 
 class Property extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = PropertyStore.getState();
-    this.onChange = this.onChange.bind(this);
+  static getStores() {
+    return [PropertyStore];
+  }
+
+  static getPropsFromStores() {
+    return PropertyStore.getState();
   }
 
   componentDidMount() {
-    PropertyStore.listen(this.onChange);
     PropertyActions.getProperty(this.props.params.id);
 
     $('.magnific-popup').magnificPopup({
@@ -26,20 +28,11 @@ class Property extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    PropertyStore.unlisten(this.onChange);
-    $(document.body).removeClass();
-  }
-
   componentDidUpdate(prevProps) {
     // Fetch new property data when URL path changes
     if (prevProps.params.id !== this.props.params.id) {
       PropertyActions.getProperty(this.props.params.id);
     }
-  }
-
-  onChange(state) {
-    this.setState(state);
   }
 
   render() {
@@ -53,37 +46,37 @@ class Property extends React.Component {
         <div className='row'>
           <div className="property-info col-sm-6">
             <h3><strong>Property Details:</strong></h3>
-            <h4 className='lead'>Suburb: <strong>{this.state.suburb}, {this.state.postcode}</strong></h4>
-            <h4 className='lead'>Address: <strong>{this.state.address}</strong></h4>
-            <h4 className='lead'>Price: <strong>${this.state.price}</strong> per week</h4>
-            <h4 className='lead'>Property Type: <strong>{this.state.propertyType}</strong></h4>
-            <h4 className='lead'>Room Type: <strong>{this.state.roomType}</strong></h4>
+            <h4 className='lead'>Suburb: <strong>{this.props.suburb}, {this.props.postcode}</strong></h4>
+            <h4 className='lead'>Address: <strong>{this.props.address}</strong></h4>
+            <h4 className='lead'>Price: <strong>${this.props.price}</strong> per week</h4>
+            <h4 className='lead'>Property Type: <strong>{this.props.propertyType}</strong></h4>
+            <h4 className='lead'>Room Type: <strong>{this.props.roomType}</strong></h4>
           </div>
           <div className="contact-details col-sm-6">
             <h3><strong>Contact Details:</strong></h3>
-            <h4 className='lead'>Name: <strong>{this.state.contactName}</strong></h4>
-            <h4 className='lead'>Phone Number: <strong>{this.state.contactNumber}</strong></h4>
-            <h4 className='lead'>Email: <strong>{this.state.contactEmail}</strong></h4>
-            <h4 className='lead'>Social Network: <strong>{this.state.contactSocial}</strong> (Preferred)</h4>
+            <h4 className='lead'>Name: <strong>{this.props.contactName}</strong></h4>
+            <h4 className='lead'>Phone Number: <strong>{this.props.contactNumber}</strong></h4>
+            <h4 className='lead'>Email: <strong>{this.props.contactEmail}</strong></h4>
+            <h4 className='lead'>Social Network: <strong>{this.props.contactSocial}</strong> (Preferred)</h4>
           </div>
         </div>
         <hr/>
         <div className="row">
-          <h2><strong>{this.state.title}</strong></h2>
-          <h4 className='lead'>Details: <strong>{this.state.details}</strong></h4>
+          <h2><strong>{this.props.title}</strong></h2>
+          <h4 className='lead'>Details: <strong>{this.props.details}</strong></h4>
         </div>
         <hr/>
         <div className='row'>
           <div className='property-feature col-sm-6'>
             <h3 className='lead'><strong>Property Feature: </strong></h3>
-            <PropertyFeature propertyFeatures={this.state.propertyFeature} />
+            <PropertyFeature propertyFeatures={this.props.propertyFeature} />
           </div>
           <div className='lease-details col-sm-6'>
             <h3 className='lead'><strong>Lease Details:</strong></h3>
             <ul>
-              <li><strong>{this.state.bond}</strong> weeks bond</li>
-              <li>Minimum <strong>{this.state.minTerm}</strong> month(s) lease</li>
-              <li>Available at <strong>{this.state.availableStart}</strong></li>
+              <li><strong>{this.props.bond}</strong> weeks bond</li>
+              <li>Minimum <strong>{this.props.minTerm}</strong> month(s) lease</li>
+              <li>Available at <strong>{this.props.availableStart}</strong></li>
             </ul>
           </div>
         </div>
@@ -92,4 +85,4 @@ class Property extends React.Component {
   }
 }
 
-export default Property;
+export default connectToStores(Property);

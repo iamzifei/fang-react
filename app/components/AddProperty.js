@@ -44,7 +44,7 @@ class AddProperty extends React.Component {
   render() {
     return (
       <div className='container'>
-        <div className='row flipInX animated'>
+        <div className='row'>
           <div className='col-sm-8'>
             <div className='panel panel-default'>
               <div className='panel-heading'>Add Property</div>
