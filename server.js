@@ -89,7 +89,10 @@ var processSuburbs = function(res, suburbs) {
   var results = [];
 
   for (var i = 0; i < suburbs.length; i++) {
-    results.push(suburbs[i].suburb + ', ' + suburbs[i].postcode + ', ' + suburbs[i].state);
+    var result = {};
+    result.value = suburbs[i].suburb + ', ' + suburbs[i].postcode + ', ' + suburbs[i].state;
+    result.label = result.value
+    results.push(result);
   }
 
   res.send(results);

@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import SearchStore from '../stores/SearchStore';
 import SearchActions from '../actions/SearchActions';
-import {Typeahead} from 'react-typeahead';
+import Autosuggest from 'react-autosuggest';
 
 class Navbar extends React.Component {
 
@@ -45,22 +45,40 @@ class Navbar extends React.Component {
     });
   }
 
-  suburbInputChange(event) {
-    $("ul.search-results").show();
-    SearchActions.updateSearchQueryEvent(event);
-    SearchActions.getSuburbs(event.target.value);
+  onSuggestionsUpdateRequested(object) {
+    SearchActions.getSuburbs(object.value);
   }
 
-  selectSuggestedSuburb(value) {
-    SearchActions.updateSearchQueryValue(value);
-    this.propertySearch(value);
+  onChange(event, object) {
+    SearchActions.updateSearchQueryValue(object.newValue);
+  }
+
+  onSuggestionSelected(event, object) {
+    this.propertySearch(object.suggestionValue);
+  }
+
+  getSuggestionValue(suggestion) {
+    return suggestion.value;
+  }
+
+  renderSuggestion(suggestion) {
+    return (
+      <span>{suggestion.label}</span>
+    );
   }
 
   render() {
-    var customClasses = {
+    const theme = {
       'input': 'form-control',
-      'results': 'search-results',
-      'listItem': 'search-list-item'
+      'suggestionsContainer': 'search-results',
+      'suggestion': 'search-list-item'
+    };
+
+    const inputProps = {
+      value: this.props.searchQuery,
+      onChange: this.onChange,
+      type: 'search',
+      placeholder: 'Enter postcode or suburb'
     };
 
     return (
@@ -91,14 +109,14 @@ class Navbar extends React.Component {
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
 
-              <Typeahead
-                options={this.props.suburbs}
-                placeholder='Suburb/Postcode'
-                name="search-field"
-                value={this.props.searchQuery}
-                onKeyDown={this.suburbInputChange.bind(this)}
-                onOptionSelected={this.selectSuggestedSuburb.bind(this)}
-                customClasses={customClasses}
+              <Autosuggest
+                theme={theme}
+                suggestions={this.props.suburbs}
+                onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
+                onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                getSuggestionValue={this.getSuggestionValue.bind(this)}
+                renderSuggestion={this.renderSuggestion.bind(this)}
+                inputProps={inputProps}
               />
 
               <span className='input-group-btn'>
