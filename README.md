@@ -37,10 +37,10 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 ## Todo:
 
 ### stage 1
-~~* pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))~~
+* ~~pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))~~
 * add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
 * display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
-* suburb/postcode search auto-complete
+* ~~suburb/postcode search auto-complete~~
 * google map integration for property details page
 * property details form enhancement
 * narrow down search results by price, type & features
