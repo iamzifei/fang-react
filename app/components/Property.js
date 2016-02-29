@@ -3,6 +3,8 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
 import PropertyFeature from './PropertyFeature';
+import GoogleMap from 'google-map-react';
+import GeoMarker from './GeoMarker';
 
 class Property extends React.Component {
   static getStores() {
@@ -36,6 +38,12 @@ class Property extends React.Component {
   }
 
   render() {
+    const defaultProps = {
+      apiKey: 'AIzaSyDZGA2abAJWUNok5LhT-5Re31QfbFTeFo4',
+      center: [59.938043, 30.337157],
+      zoom: 9,
+      greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
+    };
     return (
       <div className='container'>
         <div className='property-img'>
@@ -80,6 +88,15 @@ class Property extends React.Component {
             </ul>
           </div>
         </div>
+        <div className='row' style={{height: '300px'}}>
+        <GoogleMap
+          apiKey={defaultProps.apiKey}
+          center={defaultProps.center}
+          defaultZoom={defaultProps.zoom}>
+          <GeoMarker lat={59.955413} lng={30.337844} text={'A'} /* Kreyser Avrora */ />
+          <GeoMarker {...defaultProps.greatPlaceCoords} text={'B'} /* road circle */ />
+        </GoogleMap>
+          </div>
       </div>
     );
   }
