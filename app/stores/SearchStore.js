@@ -6,6 +6,7 @@ class SearchStore {
     this.bindActions(SearchActions);
     this.ajaxAnimationClass = '';
     this.searchQuery = '';
+    this.suburbs = [];
   }
 
   onUpdateAjaxAnimation(className) {
@@ -23,8 +24,16 @@ class SearchStore {
     }, 1000);
   }
 
-  onUpdateSearchQuery(event) {
-    this.searchQuery = event.target.value;
+  onUpdateSearchQueryValue(value) {
+    this.searchQuery = value;
+  }
+
+  onSearchSuburbSuccess(data) {
+    this.suburbs = data;
+  }
+
+  onSearchSuburbFail(errorMessage) {
+    toastr.error(errorMessage);
   }
 }
 

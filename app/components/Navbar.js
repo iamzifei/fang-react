@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import SearchStore from '../stores/SearchStore';
 import SearchActions from '../actions/SearchActions';
+import Autosuggest from 'react-autosuggest';
 
 class Navbar extends React.Component {
 
@@ -32,15 +33,54 @@ class Navbar extends React.Component {
     let searchQuery = this.props.searchQuery.trim();
 
     if (searchQuery) {
-      SearchActions.searchProperties({
-        searchQuery: searchQuery,
-        searchForm: this.refs.searchForm,
-        history: this.props.history
-      });
+      this.propertySearch(searchQuery);
     }
   }
 
+  propertySearch(searchQuery) {
+    SearchActions.searchProperties({
+      searchQuery: searchQuery,
+      searchForm: this.refs.searchForm,
+      history: this.props.history
+    });
+  }
+
+  onSuggestionsUpdateRequested(object) {
+    SearchActions.getSuburbs(object.value);
+  }
+
+  onChange(event, object) {
+    SearchActions.updateSearchQueryValue(object.newValue);
+  }
+
+  onSuggestionSelected(event, object) {
+    this.propertySearch(object.suggestionValue);
+  }
+
+  getSuggestionValue(suggestion) {
+    return suggestion.value;
+  }
+
+  renderSuggestion(suggestion) {
+    return (
+      <span>{suggestion.label}</span>
+    );
+  }
+
   render() {
+    const theme = {
+      'input': 'form-control',
+      'suggestionsContainer': 'search-results',
+      'suggestion': 'search-list-item'
+    };
+
+    const inputProps = {
+      value: this.props.searchQuery,
+      onChange: this.onChange,
+      type: 'search',
+      placeholder: 'Enter postcode or suburb'
+    };
+
     return (
       <nav className='navbar navbar-default navbar-static-top'>
         <div className='navbar-header'>
@@ -68,7 +108,17 @@ class Navbar extends React.Component {
         <div id='navbar' className='navbar-collapse collapse'>
           <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder='Suburb/Postcode' value={this.props.searchQuery} onChange={SearchActions.updateSearchQuery} />
+
+              <Autosuggest
+                theme={theme}
+                suggestions={this.props.suburbs}
+                onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
+                onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                getSuggestionValue={this.getSuggestionValue.bind(this)}
+                renderSuggestion={this.renderSuggestion.bind(this)}
+                inputProps={inputProps}
+              />
+
               <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
               </span>
@@ -78,6 +128,7 @@ class Navbar extends React.Component {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/add'>Add</Link></li>
           </ul>
+
         </div>
       </nav>
     );

@@ -17,6 +17,8 @@ var config = require('./config');
 
 const PropertyService = require('./services/PropertyService');
 const propertyService = new PropertyService();
+const LocationService = require('./services/LocationService');
+const locationService = new LocationService();
 
 var async = require('async');
 var request = require('request');
@@ -43,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Returns the total number of properties.
  */
 app.get('/api/properties/count', function(req, res, next) {
-  return propertyService.getNumberOfProperties(req, res, next);
+  propertyService.getNumberOfProperties(req, res, next);
 });
 
 /**
@@ -52,6 +54,14 @@ app.get('/api/properties/count', function(req, res, next) {
  */
 app.get('/api/properties/search', function(req, res, next) {
   res.send({suburb:req.query.suburb});
+});
+
+/**
+ * GET /api/properties/search
+ * Looks up a property by suburb or postcode.
+ */
+app.get('/api/suburb', function(req, res, next) {
+  locationService.getSuburbSuggestions(req, res, next);
 });
 
 /**

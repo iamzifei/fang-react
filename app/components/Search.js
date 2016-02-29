@@ -48,7 +48,7 @@ class Search extends React.Component {
   render() {
     _.mixin({
       capitalize: function(string) {
-        return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+        return string.charAt(0).toUpperCase() + string.substring(1);
       }
     });
     var suburbName = this.props.params.suburb;
