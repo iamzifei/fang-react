@@ -4,46 +4,7 @@ import Logger from '../utils/Logger';
 
 class AddPropertyActions {
     constructor() {
-        this.generateActions(
-            'AddPropertySuccess',
-            'AddPropertyFail',
-            'updateSuburb',
-            'updatePostcode',
-            'updatePrice',
-            'updateAddress',
-            'updateImageCount',
-            'updateTitle',
-            'updateDetails',
-            'updatePropertyType',
-            'updateRoomType',
-            'updateContactName',
-            'updateContactNumber',
-            'updateContactEmail',
-            'updateContactSocial',
-            'updatePreferredContact',
-            'updateBond',
-            'updateAvailableStart',
-            'updateMinTerm',
-            'updatePropertyFeature',
-            'invalidSuburb',
-            'invalidPostcode',
-            'invalidPrice',
-            'invalidAddress',
-            'invalidImageCount',
-            'invalidTitle',
-            'invalidDetails',
-            'invalidPropertyType',
-            'invalidRoomType',
-            'invalidContactName',
-            'invalidContactNumber',
-            'invalidContactEmail',
-            'invalidContactSocial',
-            'invalidPreferredContact',
-            'invalidBond',
-            'invalidAvailableStart',
-            'invalidMinTerm',
-            'invalidPropertyFeature'
-        );
+        this.generateActions('fieldValueChanges');
     }
 
     AddProperty(suburb,postcode,price,address,imageCount,title,details,propertyType,roomType,contactName,contactNumber,contactEmail,contactSocial,preferredContact,bond,availableStart,minTerm,propertyFeature) {

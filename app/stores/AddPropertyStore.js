@@ -1,9 +1,11 @@
 import alt from '../alt';
 import AddPropertyActions from '../actions/AddPropertyActions';
+import Logger from '../utils/Logger';
 
 class AddPropertyStore {
   constructor() {
     this.bindActions(AddPropertyActions);
+
     this.suburb = '';
     this.postcode = '';
     this.price = '';
@@ -61,6 +63,10 @@ class AddPropertyStore {
     this.availableStartValidateState = '';
     this.minTermValidateState = '';
     this.propertyFeatureValidateState = '';
+  }
+
+  onFieldValueChanges(change) {
+    Logger.log('AddPropertyStore.onFieldValueChanges() {0}', JSON.stringify(change));
   }
 
   onAddPropertySuccess(successMessage) {
