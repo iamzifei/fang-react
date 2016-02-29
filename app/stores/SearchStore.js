@@ -24,10 +24,6 @@ class SearchStore {
     }, 1000);
   }
 
-  onUpdateSearchQueryEvent(event) {
-    this.searchQuery = event.target.value;
-  }
-
   onUpdateSearchQueryValue(value) {
     this.searchQuery = value;
   }

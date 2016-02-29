@@ -5,7 +5,6 @@ class SearchActions {
   constructor() {
     this.generateActions(
       'updateAjaxAnimation',
-      'updateSearchQueryEvent',
       'updateSearchQueryValue',
       'searchPropertiesSuccess',
       'searchPropertiesFail',
