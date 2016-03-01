@@ -21,8 +21,9 @@ class PropertyStore {
     this.preferredContact = 'TBD';
     this.bond = 'TBD';
     this.availableStart = 'TBD';
-    this.minTerm = 0
+    this.minTerm = 0;
     this.propertyFeature = [];
+    this.geolocation = {lat: 59.724465, lng: 30.080121};
   }
 
   onGetPropertySuccess(data) {
@@ -31,6 +32,14 @@ class PropertyStore {
 
   onGetPropertyFail(jqXhr) {
     toastr.error(jqXhr.responseJSON.message);
+  }
+
+  onUpdateGeoLocation(location) {
+    this.geolocation = location;
+  }
+
+  onFieldValueChanges(change) {
+    this[change.fieldName] = change.fieldValue;
   }
 }
 

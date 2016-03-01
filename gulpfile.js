@@ -30,6 +30,13 @@ var dependencies = [
  | Combine all JS libraries into a single file for fewer HTTP requests.
  |--------------------------------------------------------------------------
  */
+gulp.task('snippet', function() {
+  return gulp.src([
+    'bower_components/rollbar/dist/rollbar.snippet.js'
+  ]).pipe(concat('rollbar.js'))
+    .pipe(gulp.dest('public/js'));
+});
+
 gulp.task('vendor', function() {
   return gulp.src([
     'bower_components/jquery/dist/jquery.js',
@@ -131,5 +138,5 @@ gulp.task('watch', function() {
   gulp.watch('app/stylesheets/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['styles', 'sass', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['styles', 'sass', 'vendor', 'browserify']);
+gulp.task('default', ['styles', 'sass', 'vendor', 'snippet', 'browserify-watch', 'watch']);
+gulp.task('build', ['styles', 'sass', 'vendor', 'snippet', 'browserify']);

@@ -3,6 +3,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
 import PropertyFeature from './PropertyFeature';
+import GoogleMap from 'google-map-react';
 
 class Property extends React.Component {
   static getStores() {
@@ -35,7 +36,38 @@ class Property extends React.Component {
     }
   }
 
+  getLatlngByAddress (map, maps, address) {
+    var geocoder = new maps.Geocoder();
+    geocoder.geocode({'address': address}, function(results, status) {
+      if (status === maps.GeocoderStatus.OK) {
+        PropertyActions.updateGeoLocation(results[0].geometry.location.toJSON());
+        var infowindow = new maps.InfoWindow({
+          content: address
+        });
+        var marker = new maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: '$'
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+      } else {
+        Rollbar.error('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  };
+
   render() {
+    const propertyAddress = this.props.address + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia';
+
+    var createMapOptions = function (maps) {
+      return {
+        mapTypeControl: true,
+        scrollwheel: false
+      }
+    };
+
     return (
       <div className='container'>
         <div className='property-img'>
@@ -78,6 +110,18 @@ class Property extends React.Component {
               <li>Minimum <strong>{this.props.minTerm}</strong> month(s) lease</li>
               <li>Available at <strong>{this.props.availableStart}</strong></li>
             </ul>
+          </div>
+        </div>
+        <div className='row'>
+          <h3><strong>Property Location:</strong></h3>
+          <div className='map-container'>
+            <GoogleMap
+              onGoogleApiLoaded={({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)}
+              yesIWantToUseGoogleMapApiInternals
+              options={createMapOptions}
+              center={this.props.geolocation}
+              defaultZoom={16}
+            />
           </div>
         </div>
       </div>
