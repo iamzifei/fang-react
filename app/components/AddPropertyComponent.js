@@ -3,7 +3,7 @@ import AddPropertyStore from '../stores/AddPropertyStore';
 import AddPropertyActions from '../actions/AddPropertyActions';
 import Logger from '../utils/Logger';
 
-class AddProperty extends React.Component {
+class AddPropertyComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = AddPropertyStore.getState();
@@ -20,12 +20,10 @@ class AddProperty extends React.Component {
   }
 
   onChange(state) {
-    Logger.log("AddProperty.onChange {0}", state);
     this.setState(state);
   }
 
   onFieldChange(event) {
-    console.log(event.target.name + ": " + event.target.value);
     AddPropertyActions.fieldValueChanges({
       fieldName:  event.target.name,
       fieldValue: event.target.value
@@ -34,7 +32,7 @@ class AddProperty extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    AddPropertyActions.AddProperty();
+    AddPropertyActions.addProperty(this.state);
   }
 
   render() {
@@ -243,4 +241,4 @@ class AddProperty extends React.Component {
   }
 }
 
-export default AddProperty;
+export default AddPropertyComponent;

@@ -19,6 +19,12 @@ class Logger {
       return console.log(pattern.format(parameters));
     }
   }
+
+  static logObject(obj) {
+    if (DEBUG) {
+      return console.log(obj);
+    }
+  }
 }
 
 module.exports = Logger;

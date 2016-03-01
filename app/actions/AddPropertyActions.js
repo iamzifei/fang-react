@@ -4,41 +4,26 @@ import Logger from '../utils/Logger';
 
 class AddPropertyActions {
     constructor() {
-        this.generateActions('fieldValueChanges');
+        this.generateActions(
+          'fieldValueChanges',
+          'addPropertySuccess',
+          'addPropertyFail'
+        );
     }
 
-    AddProperty(suburb,postcode,price,address,imageCount,title,details,propertyType,roomType,contactName,contactNumber,contactEmail,contactSocial,preferredContact,bond,availableStart,minTerm,propertyFeature) {
+    addProperty(property) {
         $.ajax({
                 type: 'POST',
                 url: '/api/properties',
-                data: {
-                  suburb:   suburb,
-                  postcode:   postcode,
-                  price:   price,
-                  address:   address,
-                  imageCount:   imageCount,
-                  title:   title,
-                  details:   details,
-                  propertyType:   propertyType,
-                  roomType:   roomType,
-                  contactName:   contactName,
-                  contactNumber:   contactNumber,
-                  contactEmail:   contactEmail,
-                  contactSocial:   contactSocial,
-                  preferredContact:   preferredContact,
-                  bond:   bond,
-                  availableStart:   availableStart,
-                  minTerm:   minTerm,
-                  propertyFeature:   propertyFeature
-                }
+                data: property
             })
             .done((data) => {
-                Logger.log("this.actions.AddPropertySuccess {0}", "ok");
-                this.actions.AddPropertySuccess(data.message);
+                Logger.logObject(data);
+                this.actions.addPropertySuccess(data.message);
             })
             .fail((jqXhr) => {
-                Logger.log("this.actions.AddPropertySuccess {0}", "fail");;
-                this.actions.AddPropertyFail(jqXhr.responseJSON.message);
+                Logger.logObject(jqXhr);
+                this.actions.addPropertyFail(jqXhr.responseJSON.message);
             });
     }
 }
