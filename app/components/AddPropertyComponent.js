@@ -1,22 +1,22 @@
 import React from 'react';
-import AddPropertyStore from '../stores/AddPropertyStore';
-import AddPropertyActions from '../actions/AddPropertyActions';
+import PropertyStore from '../stores/PropertyStore';
+import PropertyActions from '../actions/PropertyActions';
 import Logger from '../utils/Logger';
 
 class AddPropertyComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = AddPropertyStore.getState();
+    this.state = PropertyStore.getState();
     this.onChange = this.onChange.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
   }
 
   componentDidMount() {
-    AddPropertyStore.listen(this.onChange);
+    PropertyStore.listen(this.onChange);
   }
 
   componentWillUnmount() {
-    AddPropertyStore.unlisten(this.onChange);
+    PropertyStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -24,7 +24,7 @@ class AddPropertyComponent extends React.Component {
   }
 
   onFieldChange(event) {
-    AddPropertyActions.fieldValueChanges({
+    PropertyActions.fieldValueChanges({
       fieldName:  event.target.name,
       fieldValue: event.target.value
     });
@@ -32,7 +32,7 @@ class AddPropertyComponent extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    AddPropertyActions.addProperty(this.state);
+    PropertyActions.addProperty(this.state);
   }
 
   render() {
