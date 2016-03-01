@@ -23,8 +23,8 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 
 ## Branching strategy
 
-* please create a branch for each feature, branch name should be `feature\<BRANCH NAME>`
-* use pull request to merge back to dev branch
+* please create a branch for each feature, branch name should be `feature\<BRANCH NAME>` or `bugbix\<BRANCH NAME>`
+* use pull request to merge back to the master branch
 * master branch for deployment
 * tag the production version
 
