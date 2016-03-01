@@ -4,7 +4,8 @@ class PropertyActions {
   constructor() {
     this.generateActions(
       'getPropertySuccess',
-      'getPropertyFail'
+      'getPropertyFail',
+      'updateGeoLocation'
     );
   }
 

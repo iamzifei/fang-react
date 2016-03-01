@@ -13,11 +13,21 @@ $break-large-max: 1199px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
+%border-with-hover {
+  border: 5px solid #ececec;
+  transition: 1s;
+  transform-style: preserve-3d;
+}
+%border-hover-effect {
+  background: #f8f8f8;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
 
 body {
   background-color: #fff;
 }
-
 
 .navbar-form {
   .search-results {
@@ -46,6 +56,17 @@ body {
   }
 }
 
+<<<<<<< HEAD
+=======
+.map-container {
+  height: 300px;
+  @extend %border-with-hover;
+  &:hover {
+    @extend %border-hover-effect;
+  }
+}
+
+>>>>>>> master
 .type-container {
   position: absolute;
   top: 5px;
@@ -83,19 +104,14 @@ body {
 .grid-offer-col {
   padding: 15px;
   .grid-offer {
-    border: 5px solid #ececec;
     overflow: hidden;
-    transition: 1s;
-    transform-style: preserve-3d;
     position: relative;
     margin: auto;
     width: 100%;
+    @extend %border-with-hover;
     &:hover {
-      background: #f8f8f8;
       cursor: pointer;
-      -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
-      -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+      @extend %border-hover-effect;
     }
     .panel-body{
       padding: 0;
