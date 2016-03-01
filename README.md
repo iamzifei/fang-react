@@ -65,6 +65,7 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * add/update Google Map API key
 * remove the testing data and relevant API
 * import suburb/postcode information into DB
+* change Rollbar environment
 
 ## references:
 

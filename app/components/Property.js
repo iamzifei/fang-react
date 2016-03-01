@@ -53,7 +53,7 @@ class Property extends React.Component {
           infowindow.open(map, marker);
         });
       } else {
-        console.log('Geocode was not successful for the following reason: ' + status);
+        Rollbar.error('Geocode was not successful for the following reason: ' + status);
       }
     });
   };
