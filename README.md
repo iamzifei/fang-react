@@ -48,16 +48,17 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * translation
 
 ### stage 2
-* nearby facilities for property
-* search by facilities
-
-### stage 3
 * user register/login
 * user profile
 * social network login integration
+* property management
+
+### stage 3
+* nearby facilities for property
+* search by facilities
 
 ### stage 4
-* property management
+* property shortlist
 * property rating/comment
 
 ## Deploy notes:
