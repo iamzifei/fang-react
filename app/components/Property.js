@@ -4,7 +4,6 @@ import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
 import PropertyFeature from './PropertyFeature';
 import GoogleMap from 'google-map-react';
-import GeoMarker from './GeoMarker';
 
 class Property extends React.Component {
   static getStores() {
@@ -37,13 +36,30 @@ class Property extends React.Component {
     }
   }
 
+  getLatlngByAddress (map, maps, address) {
+    var geocoder = new maps.Geocoder();
+    geocoder.geocode({'address': address}, function(results, status) {
+      if (status === maps.GeocoderStatus.OK) {
+        PropertyActions.updateGeoLocation(results[0].geometry.location.toJSON());
+        var infowindow = new maps.InfoWindow({
+          content: address
+        });
+        var marker = new maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: '$'
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+      } else {
+        console.log('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  };
+
   render() {
-    const defaultProps = {
-      apiKey: 'AIzaSyDZGA2abAJWUNok5LhT-5Re31QfbFTeFo4',
-      center: [59.938043, 30.337157],
-      zoom: 9,
-      greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
-    };
+    const propertyAddress = this.props.address + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia';
     return (
       <div className='container'>
         <div className='property-img'>
@@ -88,15 +104,17 @@ class Property extends React.Component {
             </ul>
           </div>
         </div>
-        <div className='row' style={{height: '300px'}}>
-        <GoogleMap
-          apiKey={defaultProps.apiKey}
-          center={defaultProps.center}
-          defaultZoom={defaultProps.zoom}>
-          <GeoMarker lat={59.955413} lng={30.337844} text={'A'} /* Kreyser Avrora */ />
-          <GeoMarker {...defaultProps.greatPlaceCoords} text={'B'} /* road circle */ />
-        </GoogleMap>
+        <div className='row'>
+          <h3><strong>Property Location:</strong></h3>
+          <div className='map-container'>
+            <GoogleMap
+              onGoogleApiLoaded={({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)}
+              yesIWantToUseGoogleMapApiInternals
+              center={this.props.geolocation}
+              defaultZoom={16}
+            />
           </div>
+        </div>
       </div>
     );
   }
