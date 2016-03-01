@@ -60,6 +60,14 @@ class Property extends React.Component {
 
   render() {
     const propertyAddress = this.props.address + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia';
+
+    var createMapOptions = function (maps) {
+      return {
+        mapTypeControl: true,
+        scrollwheel: false
+      }
+    };
+
     return (
       <div className='container'>
         <div className='property-img'>
@@ -110,6 +118,7 @@ class Property extends React.Component {
             <GoogleMap
               onGoogleApiLoaded={({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)}
               yesIWantToUseGoogleMapApiInternals
+              options={createMapOptions}
               center={this.props.geolocation}
               defaultZoom={16}
             />
