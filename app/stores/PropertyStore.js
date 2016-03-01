@@ -37,6 +37,10 @@ class PropertyStore {
   onUpdateGeoLocation(location) {
     this.geolocation = location;
   }
+
+  onFieldValueChanges(change) {
+    this[change.fieldName] = change.fieldValue;
+  }
 }
 
 export default alt.createStore(PropertyStore);
