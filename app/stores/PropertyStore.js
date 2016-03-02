@@ -1,29 +1,12 @@
 import {assign, contains} from 'underscore';
 import alt from '../alt';
+
 import PropertyActions from '../actions/PropertyActions';
+import Logger from '../utils/Logger';
 
 class PropertyStore {
   constructor() {
     this.bindActions(PropertyActions);
-    this.suburb = 'TBD';
-    this.postcode = 'TBD';
-    this.price = 'TBD';
-    this.address = 'TBD';
-    this.imageCount = 0;
-    this.title = 'TBD';
-    this.details = 'TBD';
-    this.propertyType = 'TBD';
-    this.roomType = 'TBD';
-    this.contactName = 'TBD';
-    this.contactNumber = 'TBD';
-    this.contactEmail = 'TBD';
-    this.contactSocial = 'TBD';
-    this.preferredContact = 'TBD';
-    this.bond = 'TBD';
-    this.availableStart = 'TBD';
-    this.minTerm = 0;
-    this.propertyFeature = [];
-    this.geolocation = {lat: 59.724465, lng: 30.080121};
   }
 
   onGetPropertySuccess(data) {
@@ -40,6 +23,10 @@ class PropertyStore {
 
   onFieldValueChanges(change) {
     this[change.fieldName] = change.fieldValue;
+  }
+
+  onUploadPhotos(files) {
+    this['photos'] = files;
   }
 }
 

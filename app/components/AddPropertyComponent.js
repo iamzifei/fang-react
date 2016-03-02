@@ -1,14 +1,37 @@
 import React from 'react';
+import Dropzone from 'react-dropzone';
+
 import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
 import Logger from '../utils/Logger';
 
+const DropzoneStyles = {
+  width: '100%',
+  height: '100px',
+  backgroundColor: '#E6E6E6',
+  border: '1px grey dotted',
+}
+
+const TextCenterDivStyles = {
+  textAlign: 'center',
+  verticalAlign: 'middle',
+  lineHeight: '90px',
+  cursor: 'hand', //ToDo: not working (nj)
+}
+
+const ImagePreviewStyles = {
+  height: '80px',
+}
+
 class AddPropertyComponent extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = PropertyStore.getState();
+
     this.onChange = this.onChange.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
+    this.onDrop = this.onDrop.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +56,10 @@ class AddPropertyComponent extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     PropertyActions.addProperty(this.state);
+  }
+
+  onDrop(files) {
+    PropertyActions.uploadPhotos(files);
   }
 
   render() {
@@ -229,6 +256,17 @@ class AddPropertyComponent extends React.Component {
                              onChange={this.onFieldChange}/>
                       <label htmlFor='fastInternet'>Fast Internet</label>
                     </div>
+                  </div>
+                  <div className={'form-group ' + this.state.bondValidateState}>
+                    <Dropzone onDrop={this.onDrop} style={DropzoneStyles}>
+                      <div style={TextCenterDivStyles}>Drop photos here or click to select photos to upload.</div>
+                    </Dropzone>
+                    {
+                      this.state.photos ?
+                        <div>
+                          <div>{this.state.photos.map((file, i) => <img key={'image-preview-' + i} src={file.preview} style={ImagePreviewStyles}/>)}</div>
+                        </div> : null
+                    }
                   </div>
                   <button type='submit' className='btn btn-primary'>Submit</button>
                 </form>

@@ -10,7 +10,8 @@ class PropertyActions {
       'updateGeoLocation',
       'fieldValueChanges',
       'addPropertySuccess',
-      'addPropertyFail'
+      'addPropertyFail',
+      'uploadPhotos'
     );
   }
 

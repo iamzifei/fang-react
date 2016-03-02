@@ -57,6 +57,7 @@
     "react": "^0.14.2",
     "react-autosuggest": "^3.5.0",
     "react-dom": "^0.14.2",
+    "react-dropzone": "^3.3.2",
     "react-paginate": "^0.5.4",
     "react-router": "^1.0.0",
     "request": "^2.65.0",
