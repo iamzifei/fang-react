@@ -42,3 +42,4 @@ data/db/*
 # Compiled files
 public/css/*
 public/js/*
+data/property_images
