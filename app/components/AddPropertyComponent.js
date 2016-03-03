@@ -21,6 +21,7 @@ const TextCenterDivStyles = {
 
 const ImagePreviewStyles = {
   height: '80px',
+  margin: '2px',
 }
 
 class AddPropertyComponent extends React.Component {

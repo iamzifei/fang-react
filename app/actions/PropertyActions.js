@@ -27,9 +27,14 @@ class PropertyActions {
   }
 
   addProperty(property) {
+    Logger.log('PropertyActions.addProperty(property)');
+    Logger.logObject(property);
+
     $.ajax({
         type: 'POST',
         url: '/api/properties',
+        contentType: false,
+        processData: false,
         data: property
       })
       .done((data) => {
