@@ -157,6 +157,8 @@ class PropertyService {
         return res.end(err);
       }
 
+      Logger.logObject(req);
+
       var property = new Property({
         suburb: req.body.suburb,
         imageCount: req.files && req.files.length,

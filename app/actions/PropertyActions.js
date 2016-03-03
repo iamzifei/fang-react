@@ -1,5 +1,7 @@
 import alt from '../alt';
 
+import request from 'superagent';
+
 import Logger from '../utils/Logger';
 
 class PropertyActions {
@@ -11,7 +13,7 @@ class PropertyActions {
       'fieldValueChanges',
       'addPropertySuccess',
       'addPropertyFail',
-      'uploadPhotos'
+      'selectFilesToUpload'
     );
   }
 
@@ -28,23 +30,38 @@ class PropertyActions {
 
   addProperty(property) {
     Logger.log('PropertyActions.addProperty(property)');
-    Logger.logObject(property);
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/properties',
-        contentType: false,
-        processData: false,
-        data: property
-      })
-      .done((data) => {
-        Logger.logObject(data);
-        this.actions.addPropertySuccess(data.message);
-      })
-      .fail((jqXhr) => {
-        Logger.logObject(jqXhr);
-        this.actions.addPropertyFail(jqXhr.responseJSON.message);
+    var req = request.post('/api/properties');
+    req.type('form');
+
+    //attach all input fields
+    Object.keys(property).forEach(function(key, index) {
+      Logger.log('req.field({0}, {1})', 'a', 'b');
+      req.field(key, property[key]);
+    });
+
+    //attach all selected files
+    if (property.files) {
+      property.files.map( (file) => {
+        req.attach(file.name, file);
       });
+    }
+
+    Logger.log('property');
+    Logger.logObject(property);
+    Logger.log('req');
+    Logger.logObject(req);
+
+    const thisAction = this;
+    req.end(function(error, response) {
+      if (error) {
+        Logger.logObject(error);
+        thisAction.actions.addPropertyFail(error);
+      } else {
+        Logger.logObject(response);
+        thisAction.actions.addPropertySuccess(response);
+      }
+    });
   }
 }
 

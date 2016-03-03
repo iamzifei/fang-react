@@ -25,8 +25,8 @@ class PropertyStore {
     this[change.fieldName] = change.fieldValue;
   }
 
-  onUploadPhotos(files) {
-    this['photos'] = files;
+  onSelectFilesToUpload(files) {
+    this['files'] = files;
   }
 }
 

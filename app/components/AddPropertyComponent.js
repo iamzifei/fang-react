@@ -60,7 +60,7 @@ class AddPropertyComponent extends React.Component {
   }
 
   onDrop(files) {
-    PropertyActions.uploadPhotos(files);
+    PropertyActions.selectFilesToUpload(files);
   }
 
   render() {
@@ -263,9 +263,9 @@ class AddPropertyComponent extends React.Component {
                       <div style={TextCenterDivStyles}>Drop photos here or click to select photos to upload.</div>
                     </Dropzone>
                     {
-                      this.state.photos ?
+                      this.state.files ?
                         <div>
-                          <div>{this.state.photos.map((file, i) => <img key={'image-preview-' + i} src={file.preview} style={ImagePreviewStyles}/>)}</div>
+                          <div>{this.state.files.map((file, i) => <img key={'image-preview-' + i} src={file.preview} style={ImagePreviewStyles}/>)}</div>
                         </div> : null
                     }
                   </div>
