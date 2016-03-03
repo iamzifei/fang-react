@@ -17,7 +17,6 @@ var config = require('./config');
 
 const PropertyService = require('./services/PropertyService');
 const propertyService = new PropertyService();
-
 const LocationService = require('./services/LocationService');
 const locationService = new LocationService();
 
