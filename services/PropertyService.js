@@ -1,13 +1,7 @@
 'use strict';
 
-const fs = require('fs');
-const multer = require('multer');
-const upload = multer({dest: '../../data/upload/'}).any();
-
 const Property = require('../models/property');
 const config = require('../config');
-
-const Logger = require('../app/utils/Logger');
 
 class PropertyService {
   getNumberOfProperties(req, res, next) {
@@ -152,48 +146,54 @@ class PropertyService {
   }
 
   addProperty(req, res, next) {
-    upload(req, res, function (err) {
-      if (err) {
-        return res.end(err);
-      }
+    var suburb = req.body.suburb;
+    var postcode = req.body.postcode;
+    var price = req.body.price;
+    var address = req.body.address;
+    var title = req.body.title;
+    var details = req.body.details;
+    var propertyType = req.body.propertyType;
+    var roomType = req.body.roomType;
+    var contactName = req.body.contactName;
+    var contactNumber = req.body.contactNumber;
+    var contactEmail = req.body.contactEmail;
+    var contactSocial = req.body.contactSocial;
+    var preferredContact = req.body.preferredContact;
+    var bond = req.body.bond;
+    var availableStart = req.body.availableStart;
+    var minTerm = req.body.minTerm;
+    var imageCount = req.body.imageCount;
+    var propertyFeature = [];
 
-      var property = new Property({
-        suburb: req.body.suburb,
-        imageCount: req.files && req.files.length,
-        address: req.body.address
-      });
-
-      Logger.log("PropertyService.addProperty(...)");
-      Logger.logObject(property);
-
-      try {
-        property.save(function(err) {
-          if (err) return next(err);
-
-          // get doc id
-          var docID = property["_id"];
-          Logger.log("property id: {0}", docID);
-
-          // move uploaded images to target folder and rename them with id
-          const imageFilenamePattern = "./data/property_images/property_image_{0}_{1}";
-          for (var i = 0; i < property.imageCount; i++) {
-            var targetPath = imageFilenamePattern.format(docID, i + 1);
-            Logger.log("moving {0} to {1}".format(req.files[i].path, targetPath));
-            fs.rename(req.files[i].path, targetPath,
-              function (err) {
-                if (err) {
-                  Logger.log("moving the file failed");
-                }
-              }
-            );
-          }
-
-          res.send({ message: 'Property at ' + property.address + ' has been added successfully!' });
-        });
-      } catch (e) {
-        res.status(404).send({ message: ' Could not add the property.' });
-      }
+    var property = new Property({
+      suburb: suburb,
+      postcode: postcode,
+      price: price,
+      address: address,
+      imageCount: imageCount,
+      title: title,
+      details: details,
+      propertyType: propertyType,
+      roomType: roomType,
+      contactName: contactName,
+      contactNumber: contactNumber,
+      contactEmail: contactEmail,
+      contactSocial: contactSocial,
+      preferredContact: preferredContact,
+      bond: bond,
+      availableStart: availableStart,
+      minTerm: minTerm,
+      propertyFeature: propertyFeature
     });
+
+    try {
+      property.save(function(err) {
+        if (err) return next(err);
+        res.send({ message: 'Property at ' + address + ' has been added successfully!' });
+      });
+    } catch (e) {
+      res.status(404).send({ message: ' Could not add the property.' });
+    }
   }
 }
 
