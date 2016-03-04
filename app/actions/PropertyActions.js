@@ -1,6 +1,6 @@
 import alt from '../alt';
 
-import Logger from '../utils/Logger';
+import Logger from '../../utils/Logger';
 
 class PropertyActions {
   constructor() {

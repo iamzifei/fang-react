@@ -1,7 +1,7 @@
 import React from 'react';
 import PropertyStore from '../stores/PropertyStore';
 import PropertyActions from '../actions/PropertyActions';
-import Logger from '../utils/Logger';
+import Logger from '../../utils/Logger';
 
 class AddPropertyComponent extends React.Component {
   constructor(props) {
