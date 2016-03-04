@@ -36,7 +36,7 @@ class Property extends React.Component {
     }
   }
 
-  getLatlngByAddress (map, maps, address) {
+  getLatlngByAddress(map, maps, address) {
     var geocoder = new maps.Geocoder()
     geocoder.geocode({ address }, function(results, status) {
       if (status === maps.GeocoderStatus.OK) {
@@ -46,10 +46,10 @@ class Property extends React.Component {
         })
         var marker = new maps.Marker({
           position: results[0].geometry.location,
-          map: map,
+          map,
           title: '$'
         })
-        marker.addListener('click', function() {
+        marker.addListener('click', function () {
           infowindow.open(map, marker)
         })
       } else {
@@ -79,26 +79,44 @@ class Property extends React.Component {
         <div className="row">
           <div className="property-info col-sm-6">
             <h3><strong>Property Details:</strong></h3>
-            <h4 className="lead">Suburb: <strong>{this.props.suburb}, {this.props.postcode}</strong></h4>
-            <h4 className="lead">Address: <strong>{this.props.address}</strong></h4>
-            <h4 className="lead">Price: <strong>${this.props.price}</strong> per week</h4>
-            <h4 className="lead">Property Type: <strong>{this.props.propertyType}</strong></h4>
-            <h4 className="lead">Room Type: <strong>{this.props.roomType}</strong></h4>
+            <h4 className="lead">
+              Suburb:<strong>{this.props.suburb}, {this.props.postcode}</strong>
+            </h4>
+            <h4 className="lead">
+              Address:<strong>{this.props.address}</strong>
+            </h4>
+            <h4 className="lead">
+              Price: <strong>${this.props.price}</strong> per week
+            </h4>
+            <h4 className="lead">
+              Property Type: <strong>{this.props.propertyType}</strong>
+            </h4>
+            <h4 className="lead">
+              Room Type: <strong>{this.props.roomType}</strong>
+            </h4>
           </div>
           <div className="contact-details col-sm-6">
             <h3><strong>Contact Details:</strong></h3>
-            <h4 className="lead">Name: <strong>{this.props.contactName}</strong></h4>
-            <h4 className="lead">Phone Number: <strong>{this.props.contactNumber}</strong></h4>
-            <h4 className="lead">Email: <strong>{this.props.contactEmail}</strong></h4>
-            <h4 className="lead">Social Network: <strong>{this.props.contactSocial}</strong> (Preferred)</h4>
+            <h4 className="lead">
+              Name:<strong>{this.props.contactName}</strong>
+            </h4>
+            <h4 className="lead">
+              Phone Number: <strong>{this.props.contactNumber}</strong>
+            </h4>
+            <h4 className="lead">
+              Email: <strong>{this.props.contactEmail}</strong>
+            </h4>
+            <h4 className="lead">
+              Social Network: <strong>{this.props.contactSocial}</strong> (Preferred)
+            </h4>
           </div>
         </div>
-        <hr/>
+        <hr />
         <div className="row">
           <h2><strong>{this.props.title}</strong></h2>
           <h4 className="lead">Details: <strong>{this.props.details}</strong></h4>
         </div>
-        <hr/>
+        <hr />
         <div className="row">
           <div className="property-feature col-sm-6">
             <h3 className="lead"><strong>Property Feature: </strong></h3>
@@ -117,7 +135,9 @@ class Property extends React.Component {
           <h3><strong>Property Location:</strong></h3>
           <div className="map-container">
             <GoogleMap
-              onGoogleApiLoaded={({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)}
+              onGoogleApiLoaded={
+                ({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)
+              }
               yesIWantToUseGoogleMapApiInternals
               options={createMapOptions}
               center={this.props.geolocation}

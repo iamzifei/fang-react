@@ -27,7 +27,6 @@ class PropertyFeature extends React.Component {
         <ul></ul>
       )
     }
-
   }
 }
 

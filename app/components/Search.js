@@ -38,15 +38,15 @@ class Search extends React.Component {
     }
   }
 
-  handlePageClick (page) {
-    let selected = page.selected
-    let offset = Math.ceil(selected * this.props.limit)
+  handlePageClick(page) {
+    const selected = page.selected
+    const offset = Math.ceil(selected * this.props.limit)
     PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, offset)
   }
 
   render() {
     _.mixin({
-      capitalize: function(string) {
+      capitalize: function (string) {
         return string.charAt(0).toUpperCase() + string.substring(1)
       }
     })
@@ -60,7 +60,9 @@ class Search extends React.Component {
 
     return (
       <div className="container">
-        <h3 className="text-center">{this.props.propertiesCount} Properties in {_(suburbName).capitalize()}</h3>
+        <h3 className="text-center">
+          {this.props.propertiesCount} Properties in {_(suburbName).capitalize()}
+        </h3>
         <div className="row">
           {propertyNodes}
         </div>
