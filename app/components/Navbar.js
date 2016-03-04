@@ -45,7 +45,7 @@ class Navbar extends React.Component {
 
   propertySearch(searchQuery) {
     SearchActions.searchProperties({
-      searchQuery: searchQuery,
+      searchQuery,
       searchForm: this.refs.searchForm,
       history: this.props.history
     })
@@ -85,7 +85,8 @@ class Navbar extends React.Component {
       <nav className="navbar navbar-default navbar-static-top">
         <div className="navbar-header">
           <button type="button" className="navbar-toggle collapsed"
-                  data-toggle="collapse" data-target="#navbar">
+            data-toggle="collapse" data-target="#navbar"
+          >
             <span className="sr-only">Toggle navigation</span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
@@ -108,7 +109,8 @@ class Navbar extends React.Component {
         </div>
         <div id="navbar" className="navbar-collapse collapse">
           <form ref="searchForm" className="navbar-form navbar-left animated"
-                onSubmit={this.handleSubmit.bind(this)}>
+            onSubmit={this.handleSubmit.bind(this)}
+          >
             <div className="input-group">
 
               <Autosuggest
@@ -137,6 +139,13 @@ class Navbar extends React.Component {
       </nav>
     )
   }
+}
+
+Navbar.propTypes = {
+  history: React.PropTypes.object,
+  searchQuery: React.PropTypes.string,
+  ajaxAnimationClass: React.PropTypes.string,
+  suburbs: React.PropTypes.array
 }
 
 export default connectToStores(Navbar)

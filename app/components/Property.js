@@ -130,4 +130,11 @@ class Property extends React.Component {
   }
 }
 
+Property.propTypes = {
+  params: React.PropTypes.object,
+  searchQuery: React.PropTypes.string,
+  ajaxAnimationClass: React.PropTypes.string,
+  suburbs: React.PropTypes.array
+}
+
 export default connectToStores(Property)
