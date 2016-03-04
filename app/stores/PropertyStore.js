@@ -1,8 +1,6 @@
 import {assign, contains} from 'underscore';
 import alt from '../alt';
-
 import PropertyActions from '../actions/PropertyActions';
-import Logger from '../utils/Logger';
 
 class PropertyStore {
   constructor() {

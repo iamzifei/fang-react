@@ -159,11 +159,16 @@ class PropertyService {
 
       Logger.logObject(req);
 
-      var property = new Property({
-        suburb: req.body.suburb,
-        imageCount: req.files && req.files.length,
-        address: req.body.address
+      var property = new Property();
+
+      //attach all input fields
+      Object.keys(req.body).forEach(function(key, index) {
+        property[key] = req.body[key];
       });
+
+      if (req.files) {
+        property.imageCount = req.files.length;
+      }
 
       Logger.log("PropertyService.addProperty(...)");
       Logger.logObject(property);
