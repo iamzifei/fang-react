@@ -32,11 +32,10 @@ class PropertyActions {
     Logger.log('PropertyActions.addProperty(property)');
 
     var req = request.post('/api/properties');
-    req.type('form');
+    req.set('Accept', 'application/json')
 
     //attach all input fields
     Object.keys(property).forEach(function(key, index) {
-      Logger.log('req.field({0}, {1})', 'a', 'b');
       req.field(key, property[key]);
     });
 
