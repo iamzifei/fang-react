@@ -68,7 +68,7 @@ class Home extends React.Component {
 
 Home.propTypes = {
   limit: React.PropTypes.number,
-  properties: React.PropTypes.Array,
+  properties: React.PropTypes.array,
   propertiesCount: React.PropTypes.number
 }
 

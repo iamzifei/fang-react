@@ -1,6 +1,8 @@
-import alt from '../alt'
+import alt from '../alt';
 
-import Logger from '../../utils/Logger'
+import request from 'superagent';
+
+import Logger from '../../utils/Logger';
 
 class PropertyActions {
   constructor() {
@@ -10,36 +12,56 @@ class PropertyActions {
       'updateGeoLocation',
       'fieldValueChanges',
       'addPropertySuccess',
-      'addPropertyFail'
-    )
+      'addPropertyFail',
+      'selectFilesToUpload'
+    );
   }
 
-  // TODO: put properties CRUD actions in this one
+  //TODO: put properties CRUD actions in this one
   getProperty(_id) {
     $.ajax({ url: '/api/property/' + _id })
-    .done((data) => {
-      this.actions.getPropertySuccess(data)
-    })
-    .fail((jqXhr) => {
-      this.actions.getPropertyFail(jqXhr)
-    })
+      .done((data) => {
+        this.actions.getPropertySuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getPropertyFail(jqXhr);
+      });
   }
 
   addProperty(property) {
-    $.ajax({
-      type: 'POST',
-      url: '/api/properties',
-      data: property
-    })
-    .done((data) => {
-      Logger.logObject(data)
-      this.actions.addPropertySuccess(data.message)
-    })
-    .fail((jqXhr) => {
-      Logger.logObject(jqXhr)
-      this.actions.addPropertyFail(jqXhr.responseJSON.message)
-    })
+    Logger.log('PropertyActions.addProperty(property)');
+
+    var req = request.post('/api/properties');
+    req.set('Accept', 'application/json')
+
+    //attach all input fields
+    Object.keys(property).forEach(function(key, index) {
+      req.field(key, property[key]);
+    });
+
+    //attach all selected files
+    if (property.files) {
+      property.files.map( (file) => {
+        req.attach(file.name, file);
+      });
+    }
+
+    Logger.log('property');
+    Logger.logObject(property);
+    Logger.log('req');
+    Logger.logObject(req);
+
+    const thisAction = this;
+    req.end(function(error, response) {
+      if (error) {
+        Logger.logObject(error);
+        thisAction.actions.addPropertyFail(error);
+      } else {
+        Logger.logObject(response);
+        thisAction.actions.addPropertySuccess(response);
+      }
+    });
   }
 }
 
-export default alt.createActions(PropertyActions)
+export default alt.createActions(PropertyActions);
