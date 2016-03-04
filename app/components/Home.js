@@ -36,11 +36,9 @@ class Home extends React.Component {
   }
 
   render() {
-    var propertyNodes = this.props.properties.map((property, index) => {
-      return (
-        <PropertyGrid property={property} key={property._id} />
-      )
-    })
+    var propertyNodes = this.props.properties.map((property, index) =>
+      <PropertyGrid property={property} key={property._id} />
+    )
 
     return (
       <div className="container">

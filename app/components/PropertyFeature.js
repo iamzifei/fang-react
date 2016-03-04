@@ -14,19 +14,17 @@ class PropertyFeature extends React.Component {
 
     if (this.props.propertyFeatures) {
       var propertyFeatureNodes = this.props.propertyFeatures.map(
-        (propertyFeature, index) => {
-          return <li key={propertyFeature}>{propertyFeatureNames[propertyFeature]}</li>
-        }
+        (propertyFeature, index) =>
+          <li key={propertyFeature}>{propertyFeatureNames[propertyFeature]}</li>
       )
 
       return (
         <ul>{propertyFeatureNodes}</ul>
       )
-    } else {
-      return (
-        <ul></ul>
-      )
     }
+    return (
+      <ul></ul>
+    )
   }
 }
 

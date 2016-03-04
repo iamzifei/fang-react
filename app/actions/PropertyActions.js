@@ -35,9 +35,9 @@ class PropertyActions {
     req.set('Accept', 'application/json')
 
     // attach all input fields
-    Object.keys(property).forEach(function (key, index) {
+    Object.keys(property).forEach((key, index) =>
       req.field(key, property[key])
-    })
+    )
 
     // attach all selected files
     if (property.files) {
@@ -52,7 +52,7 @@ class PropertyActions {
     Logger.logObject(req)
 
     const thisAction = this
-    req.end(function (error, response) {
+    req.end((error, response) => {
       if (error) {
         Logger.logObject(error)
         thisAction.actions.addPropertyFail(error)

@@ -46,9 +46,8 @@ class Search extends React.Component {
 
   render() {
     _.mixin({
-      capitalize: function (string) {
-        return string.charAt(0).toUpperCase() + string.substring(1)
-      }
+      capitalize: (string) =>
+        string.charAt(0).toUpperCase() + string.substring(1)
     })
     var suburbName = this.props.params.suburb
     var propertyNodes = this.props.properties.map((property, index) => {
@@ -82,6 +81,13 @@ class Search extends React.Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  params: React.PropTypes.object,
+  limit: React.PropTypes.number,
+  propertiesCount: React.PropTypes.number,
+  properties: React.PropTypes.array
 }
 
 export default connectToStores(Search)

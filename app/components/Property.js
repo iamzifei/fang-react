@@ -38,7 +38,7 @@ class Property extends React.Component {
 
   getLatlngByAddress(map, maps, address) {
     var geocoder = new maps.Geocoder()
-    geocoder.geocode({ address }, function(results, status) {
+    geocoder.geocode({ address }, (results, status) => {
       if (status === maps.GeocoderStatus.OK) {
         PropertyActions.updateGeoLocation(results[0].geometry.location.toJSON())
         var infowindow = new maps.InfoWindow({
@@ -49,7 +49,7 @@ class Property extends React.Component {
           map,
           title: '$'
         })
-        marker.addListener('click', function () {
+        marker.addListener('click', () => {
           infowindow.open(map, marker)
         })
       } else {
@@ -62,7 +62,7 @@ class Property extends React.Component {
     const propertyAddress = this.props.address
       + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia'
 
-    var createMapOptions = function (maps) {
+    function createMapOptions(maps) {
       return {
         mapTypeControl: true,
         scrollwheel: false
@@ -136,7 +136,7 @@ class Property extends React.Component {
           <div className="map-container">
             <GoogleMap
               onGoogleApiLoaded={
-                ({map, maps}) => this.getLatlngByAddress(map, maps, propertyAddress)
+                ({ map, maps }) => this.getLatlngByAddress(map, maps, propertyAddress)
               }
               yesIWantToUseGoogleMapApiInternals
               options={createMapOptions}
@@ -152,9 +152,24 @@ class Property extends React.Component {
 
 Property.propTypes = {
   params: React.PropTypes.object,
-  searchQuery: React.PropTypes.string,
-  ajaxAnimationClass: React.PropTypes.string,
-  suburbs: React.PropTypes.array
+  suburb: React.PropTypes.string,
+  postcode: React.PropTypes.string,
+  price: React.PropTypes.string,
+  address: React.PropTypes.string,
+  title: React.PropTypes.string,
+  details: React.PropTypes.string,
+  propertyType: React.PropTypes.string,
+  roomType: React.PropTypes.string,
+  contactName: React.PropTypes.string,
+  contactNumber: React.PropTypes.string,
+  contactEmail: React.PropTypes.string,
+  contactSocial: React.PropTypes.string,
+  preferredContact: React.PropTypes.string,
+  bond: React.PropTypes.string,
+  availableStart: React.PropTypes.string,
+  minTerm: React.PropTypes.number,
+  propertyFeature: React.PropTypes.array,
+  geolocation: React.PropTypes.object
 }
 
 export default connectToStores(Property)
