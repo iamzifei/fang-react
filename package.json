@@ -63,6 +63,7 @@
     "rollbar": "^0.5.13",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.3.7",
+    "superagent": "^1.7.2",
     "swig": "^1.4.2",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0",
