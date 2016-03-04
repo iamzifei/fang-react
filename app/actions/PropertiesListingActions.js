@@ -1,4 +1,4 @@
-import alt from '../alt';
+import alt from '../alt'
 
 class PropertiesListingActions {
   constructor() {
@@ -8,47 +8,47 @@ class PropertiesListingActions {
       'getPropertiesListFail',
       'getPropertyCountSuccess',
       'getPropertyCountFail'
-    );
+    )
   }
 
   getAllProperties(offset) {
     $.ajax({
-        url: '/api/properties',
-        data: { offset: offset }
-      })
-      .done(data => {
-        this.actions.getPropertiesListSuccess(data);
-      })
-      .fail(jqXhr => {
-        this.actions.getPropertiesListFail(jqXhr.responseJSON.message);
-      });
+      url: '/api/properties',
+      data: { offset }
+    })
+    .done(data => {
+      this.actions.getPropertiesListSuccess(data)
+    })
+    .fail(jqXhr => {
+      this.actions.getPropertiesListFail(jqXhr.responseJSON.message)
+    })
   }
 
   getPropertyCount(suburb = -1) {
     $.ajax({
       url: '/api/properties/count',
-      data: { suburb: suburb }
+      data: { suburb }
     })
-      .done((data) => {
-        this.actions.getPropertyCountSuccess(data)
-      })
-      .fail((jqXhr) => {
-        this.actions.getPropertyCountFail(jqXhr)
-      });
+    .done((data) => {
+      this.actions.getPropertyCountSuccess(data)
+    })
+    .fail((jqXhr) => {
+      this.actions.getPropertyCountFail(jqXhr)
+    })
   }
 
   getPropertiesInSuburb(suburb, offset) {
     $.ajax({
       url: '/api/properties/' + suburb,
-      data: { offset: offset }
+      data: { offset }
     })
-      .done(data => {
-        this.actions.getPropertiesListSuccess(data);
-      })
-      .fail(jqXhr => {
-        this.actions.getPropertiesListFail(jqXhr.responseJSON.message);
-      });
+    .done(data => {
+      this.actions.getPropertiesListSuccess(data)
+    })
+    .fail(jqXhr => {
+      this.actions.getPropertiesListFail(jqXhr.responseJSON.message)
+    })
   }
 }
 
-export default alt.createActions(PropertiesListingActions);
+export default alt.createActions(PropertiesListingActions)

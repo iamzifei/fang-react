@@ -1,6 +1,6 @@
-import alt from '../alt';
+import alt from '../alt'
 
-import Logger from '../../utils/Logger';
+import Logger from '../../utils/Logger'
 
 class PropertyActions {
   constructor() {
@@ -11,35 +11,35 @@ class PropertyActions {
       'fieldValueChanges',
       'addPropertySuccess',
       'addPropertyFail'
-    );
+    )
   }
 
-  //TODO: put properties CRUD actions in this one
+  // TODO: put properties CRUD actions in this one
   getProperty(_id) {
     $.ajax({ url: '/api/property/' + _id })
-      .done((data) => {
-        this.actions.getPropertySuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getPropertyFail(jqXhr);
-      });
+    .done((data) => {
+      this.actions.getPropertySuccess(data)
+    })
+    .fail((jqXhr) => {
+      this.actions.getPropertyFail(jqXhr)
+    })
   }
 
   addProperty(property) {
     $.ajax({
-        type: 'POST',
-        url: '/api/properties',
-        data: property
-      })
-      .done((data) => {
-        Logger.logObject(data);
-        this.actions.addPropertySuccess(data.message);
-      })
-      .fail((jqXhr) => {
-        Logger.logObject(jqXhr);
-        this.actions.addPropertyFail(jqXhr.responseJSON.message);
-      });
+      type: 'POST',
+      url: '/api/properties',
+      data: property
+    })
+    .done((data) => {
+      Logger.logObject(data)
+      this.actions.addPropertySuccess(data.message)
+    })
+    .fail((jqXhr) => {
+      Logger.logObject(jqXhr)
+      this.actions.addPropertyFail(jqXhr.responseJSON.message)
+    })
   }
 }
 
-export default alt.createActions(PropertyActions);
+export default alt.createActions(PropertyActions)

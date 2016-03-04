@@ -1,6 +1,6 @@
-import React from 'react';
-import Footer from './Footer';
-import Navbar from './Navbar';
+import React from 'react'
+import Footer from './Footer'
+import Navbar from './Navbar'
 
 
 class App extends React.Component {
@@ -11,8 +11,13 @@ class App extends React.Component {
         {this.props.children}
         <Footer />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+App.propTypes = {
+  history: React.PropTypes.object,
+  children: React.PropTypes.array
+}
+
+export default App
