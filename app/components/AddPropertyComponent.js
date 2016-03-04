@@ -15,8 +15,7 @@ const TextCenterDivStyles = {
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '90px',
-  cursor: 'hand',
-  // ToDo: not working (nj)
+  cursor: 'hand', // ToDo: cursor style is not working (nj)
 }
 
 const ImagePreviewStyles = {
@@ -28,7 +27,7 @@ class AddPropertyComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = PropertyStore.getState()
+    this.state = {};
 
     this.onChange = this.onChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
@@ -37,6 +36,7 @@ class AddPropertyComponent extends React.Component {
 
   componentDidMount() {
     PropertyStore.listen(this.onChange)
+    PropertyActions.initState();
   }
 
   componentWillUnmount() {

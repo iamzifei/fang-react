@@ -157,8 +157,6 @@ class PropertyService {
         return res.end(err);
       }
 
-      Logger.logObject(req);
-
       var property = new Property();
 
       //attach all input fields

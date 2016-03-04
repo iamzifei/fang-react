@@ -13,7 +13,8 @@ class PropertyActions {
       'fieldValueChanges',
       'addPropertySuccess',
       'addPropertyFail',
-      'selectFilesToUpload'
+      'selectFilesToUpload',
+      'initState'
     )
   }
 
