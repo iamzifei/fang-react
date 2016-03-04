@@ -193,7 +193,10 @@ class PropertyService {
             );
           }
 
-          res.send({ message: 'Property at ' + property.address + ' has been added successfully!' });
+          res.send({
+            message: 'Property at ' + property.address + ' has been added successfully!',
+            id: docID
+          });
         });
       } catch (e) {
         res.status(404).send({ message: ' Could not add the property.' });
