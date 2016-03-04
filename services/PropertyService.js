@@ -7,7 +7,7 @@ const upload = multer({dest: '../../data/upload/'}).any();
 const Property = require('../models/property');
 const config = require('../config');
 
-const Logger = require('../app/utils/Logger');
+const Logger = require('../utils/Logger');
 
 class PropertyService {
   getNumberOfProperties(req, res, next) {

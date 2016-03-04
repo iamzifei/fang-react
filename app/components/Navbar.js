@@ -1,113 +1,117 @@
-import React from 'react';
-import {Link} from 'react-router';
-import connectToStores from 'alt-utils/lib/connectToStores';
-import SearchStore from '../stores/SearchStore';
-import SearchActions from '../actions/SearchActions';
-import Autosuggest from 'react-autosuggest';
+import React from 'react'
+import { Link } from 'react-router'
+import connectToStores from 'alt-utils/lib/connectToStores'
+import SearchStore from '../stores/SearchStore'
+import SearchActions from '../actions/SearchActions'
+import Autosuggest from 'react-autosuggest'
 
 class Navbar extends React.Component {
 
   static getStores() {
-    return [SearchStore];
+    return [SearchStore]
   }
 
   static getPropsFromStores() {
-    return SearchStore.getState();
+    return SearchStore.getState()
   }
 
   componentDidMount() {
     $(document).ajaxStart(() => {
-      SearchActions.updateAjaxAnimation('fadeIn');
-    });
+      SearchActions.updateAjaxAnimation('fadeIn')
+    })
 
     $(document).ajaxComplete(() => {
       setTimeout(() => {
-        SearchActions.updateAjaxAnimation('fadeOut');
-      }, 750);
-    });
+        SearchActions.updateAjaxAnimation('fadeOut')
+      }, 750)
+    })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  onSuggestionsUpdateRequested(object) {
+    SearchActions.getSuburbs(object.value)
+  }
 
-    let searchQuery = this.props.searchQuery.trim();
+  onChange(event, object) {
+    SearchActions.updateSearchQueryValue(object.newValue)
+  }
 
-    if (searchQuery) {
-      this.propertySearch(searchQuery);
-    }
+  onSuggestionSelected(event, object) {
+    this.propertySearch(object.suggestionValue)
+  }
+
+  getSuggestionValue(suggestion) {
+    return suggestion.value
   }
 
   propertySearch(searchQuery) {
     SearchActions.searchProperties({
-      searchQuery: searchQuery,
+      searchQuery,
       searchForm: this.refs.searchForm,
       history: this.props.history
-    });
+    })
   }
 
-  onSuggestionsUpdateRequested(object) {
-    SearchActions.getSuburbs(object.value);
-  }
+  handleSubmit(event) {
+    event.preventDefault()
 
-  onChange(event, object) {
-    SearchActions.updateSearchQueryValue(object.newValue);
-  }
+    const searchQuery = this.props.searchQuery.trim()
 
-  onSuggestionSelected(event, object) {
-    this.propertySearch(object.suggestionValue);
-  }
-
-  getSuggestionValue(suggestion) {
-    return suggestion.value;
+    if (searchQuery) {
+      this.propertySearch(searchQuery)
+    }
   }
 
   renderSuggestion(suggestion) {
     return (
       <span>{suggestion.label}</span>
-    );
+    )
   }
 
   render() {
     const theme = {
-      'input': 'form-control',
-      'suggestionsContainer': 'search-results',
-      'suggestion': 'search-list-item'
-    };
+      input: 'form-control',
+      suggestionsContainer: 'search-results',
+      suggestion: 'search-list-item'
+    }
 
     const inputProps = {
       value: this.props.searchQuery,
       onChange: this.onChange,
       type: 'search',
       placeholder: 'Enter postcode or suburb'
-    };
+    }
 
     return (
-      <nav className='navbar navbar-default navbar-static-top'>
-        <div className='navbar-header'>
-          <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar'>
-            <span className='sr-only'>Toggle navigation</span>
-            <span className='icon-bar'></span>
-            <span className='icon-bar'></span>
-            <span className='icon-bar'></span>
+      <nav className="navbar navbar-default navbar-static-top">
+        <div className="navbar-header">
+          <button type="button" className="navbar-toggle collapsed"
+            data-toggle="collapse" data-target="#navbar"
+          >
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
           </button>
-          <Link to='/' className='navbar-brand'>
-            <span ref='triangles' className={'triangles animated ' + this.props.ajaxAnimationClass}>
-              <div className='tri invert'></div>
-              <div className='tri invert'></div>
-              <div className='tri'></div>
-              <div className='tri invert'></div>
-              <div className='tri invert'></div>
-              <div className='tri'></div>
-              <div className='tri invert'></div>
-              <div className='tri'></div>
-              <div className='tri invert'></div>
+          <Link to="/" className="navbar-brand">
+            <span ref="triangles" className={'triangles animated ' + this.props.ajaxAnimationClass}>
+              <div className="tri invert"></div>
+              <div className="tri invert"></div>
+              <div className="tri"></div>
+              <div className="tri invert"></div>
+              <div className="tri invert"></div>
+              <div className="tri"></div>
+              <div className="tri invert"></div>
+              <div className="tri"></div>
+              <div className="tri invert"></div>
             </span>
             Fang
           </Link>
         </div>
-        <div id='navbar' className='navbar-collapse collapse'>
-          <form ref='searchForm' className='navbar-form navbar-left animated' onSubmit={this.handleSubmit.bind(this)}>
-            <div className='input-group'>
+        <div id="navbar" className="navbar-collapse collapse">
+          <form ref="searchForm" className="navbar-form navbar-left animated"
+            onSubmit={this.handleSubmit.bind(this)}
+          >
+            <div className="input-group">
 
               <Autosuggest
                 theme={theme}
@@ -119,20 +123,29 @@ class Navbar extends React.Component {
                 inputProps={inputProps}
               />
 
-              <span className='input-group-btn'>
-                <button className='btn btn-default' onClick={this.handleSubmit.bind(this)}><span className='glyphicon glyphicon-search'></span></button>
+              <span className="input-group-btn">
+                <button className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                  <span className="glyphicon glyphicon-search"></span>
+                </button>
               </span>
             </div>
           </form>
-          <ul className='nav navbar-nav'>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/add'>Add</Link></li>
+          <ul className="nav navbar-nav">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/add">Add</Link></li>
           </ul>
 
         </div>
       </nav>
-    );
+    )
   }
 }
 
-export default connectToStores(Navbar);
+Navbar.propTypes = {
+  history: React.PropTypes.object,
+  searchQuery: React.PropTypes.string,
+  ajaxAnimationClass: React.PropTypes.string,
+  suburbs: React.PropTypes.array
+}
+
+export default connectToStores(Navbar)

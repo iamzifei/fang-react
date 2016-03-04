@@ -71,7 +71,7 @@ gulp.task('browserify-vendor', function() {
 gulp.task('browserify', ['browserify-vendor'], function() {
   return browserify({ entries: 'app/main.js', debug: true })
     .external(dependencies)
-    .transform(babelify, { presets: ['es2015', 'react'] })
+    .transform(babelify)
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
@@ -89,7 +89,7 @@ gulp.task('browserify', ['browserify-vendor'], function() {
 gulp.task('browserify-watch', ['browserify-vendor'], function() {
   var bundler = watchify(browserify({ entries: 'app/main.js', debug: true }, watchify.args));
   bundler.external(dependencies);
-  bundler.transform(babelify, { presets: ['es2015', 'react'] });
+  bundler.transform(babelify);
   bundler.on('update', rebundle);
   return rebundle();
 

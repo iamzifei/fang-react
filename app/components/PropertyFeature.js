@@ -1,27 +1,35 @@
-import React from 'react';
+import React from 'react'
 
 class PropertyFeature extends React.Component {
 
   render() {
     var propertyFeatureNames = {
-      furnished: "Furnished",
-      femalePrefer: "Female Prefer",
-      nonSmoker: "Non-smoking",
-      petAllowed: "Pet Allowed",
-      billInclude: "Bill Included",
-      fastInternet: "Fast Internet"
-    };
+      furnished: 'Furnished',
+      femalePrefer: 'Female Prefer',
+      nonSmoker: 'Non-smoking',
+      petAllowed: 'Pet Allowed',
+      billInclude: 'Bill Included',
+      fastInternet: 'Fast Internet'
+    }
 
-    var propertyFeatureNodes = this.props.propertyFeatures.map((propertyFeature, index) => {
-      return (
-        <li key={propertyFeature}>{propertyFeatureNames[propertyFeature]}</li>
+    if (this.props.propertyFeatures) {
+      var propertyFeatureNodes = this.props.propertyFeatures.map(
+        (propertyFeature, index) =>
+          <li key={propertyFeature}>{propertyFeatureNames[propertyFeature]}</li>
       )
-    });
 
+      return (
+        <ul>{propertyFeatureNodes}</ul>
+      )
+    }
     return (
-      <ul>{propertyFeatureNodes}</ul>
-    );
+      <ul></ul>
+    )
   }
 }
 
-export default PropertyFeature;
+PropertyFeature.propTypes = {
+  propertyFeatures: React.PropTypes.array
+}
+
+export default PropertyFeature

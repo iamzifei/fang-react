@@ -1,8 +1,8 @@
-import alt from '../alt';
+import alt from '../alt'
 
-import request from 'superagent';
+import request from 'superagent'
 
-import Logger from '../utils/Logger';
+import Logger from '../../utils/Logger'
 
 class PropertyActions {
   constructor() {
@@ -14,54 +14,54 @@ class PropertyActions {
       'addPropertySuccess',
       'addPropertyFail',
       'selectFilesToUpload'
-    );
+    )
   }
 
-  //TODO: put properties CRUD actions in this one
+  // TODO: put properties CRUD actions in this one
   getProperty(_id) {
     $.ajax({ url: '/api/property/' + _id })
       .done((data) => {
-        this.actions.getPropertySuccess(data);
+        this.actions.getPropertySuccess(data)
       })
       .fail((jqXhr) => {
-        this.actions.getPropertyFail(jqXhr);
-      });
+        this.actions.getPropertyFail(jqXhr)
+      })
   }
 
   addProperty(property) {
-    Logger.log('PropertyActions.addProperty(property)');
+    Logger.log('PropertyActions.addProperty(property)')
 
-    var req = request.post('/api/properties');
+    var req = request.post('/api/properties')
     req.set('Accept', 'application/json')
 
-    //attach all input fields
-    Object.keys(property).forEach(function(key, index) {
-      req.field(key, property[key]);
-    });
+    // attach all input fields
+    Object.keys(property).forEach((key, index) =>
+      req.field(key, property[key])
+    )
 
-    //attach all selected files
+    // attach all selected files
     if (property.files) {
-      property.files.map( (file) => {
-        req.attach(file.name, file);
-      });
+      property.files.map((file) => {
+        req.attach(file.name, file)
+      })
     }
 
-    Logger.log('property');
-    Logger.logObject(property);
-    Logger.log('req');
-    Logger.logObject(req);
+    Logger.log('property')
+    Logger.logObject(property)
+    Logger.log('req')
+    Logger.logObject(req)
 
-    const thisAction = this;
-    req.end(function(error, response) {
+    const thisAction = this
+    req.end((error, response) => {
       if (error) {
-        Logger.logObject(error);
-        thisAction.actions.addPropertyFail(error);
+        Logger.logObject(error)
+        thisAction.actions.addPropertyFail(error)
       } else {
-        Logger.logObject(response);
-        thisAction.actions.addPropertySuccess(response);
+        Logger.logObject(response)
+        thisAction.actions.addPropertySuccess(response)
       }
-    });
+    })
   }
 }
 
-export default alt.createActions(PropertyActions);
+export default alt.createActions(PropertyActions)

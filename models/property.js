@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var propertySchema = new Schema({
   updated: { type: Date, default: Date.now },
-  suburb: { type: String, trim: true },
+  suburb: { type: String, lowercase: true, trim: true },
   postcode: String,
   price: String,
   address: String,
