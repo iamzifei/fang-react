@@ -52,8 +52,6 @@ class Property extends React.Component {
         marker.addListener('click', () => {
           infowindow.open(map, marker)
         })
-      } else {
-        Rollbar.error('Geocode was not successful for the following reason: ' + status)
       }
     })
   }
