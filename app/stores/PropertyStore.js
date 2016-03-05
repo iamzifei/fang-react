@@ -5,6 +5,7 @@ import PropertyActions from '../actions/PropertyActions'
 class PropertyStore {
   constructor() {
     this.bindActions(PropertyActions)
+    this.geolocation = { lat: 59.724465, lng: 30.080121 }
   }
 
   onGetPropertySuccess(data) {

@@ -1,5 +1,6 @@
 import React from 'react'
 import counterpart from 'counterpart'
+import Translate from 'react-translate-component'
 
 class LocaleSwitcher extends React.Component {
   render() {
@@ -8,11 +9,11 @@ class LocaleSwitcher extends React.Component {
     }
     return (
       <p>
-        <span>Switch Lang:</span>
+        <span><Translate content="footer.langSwitcher.label" /></span>
 
         <select value="cn" onChange={handleChange}>
-          <option value="en">en</option>
-          <option value="cn">cn</option>
+          <option value="en">{counterpart('footer.langSwitcher.en')}</option>
+          <option value="cn">{counterpart('footer.langSwitcher.cn')}</option>
         </select>
       </p>
     )
