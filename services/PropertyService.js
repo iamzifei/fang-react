@@ -180,7 +180,7 @@ class PropertyService {
           Logger.log("property id: {0}", docID);
 
           // move uploaded images to target folder and rename them with id
-          const imageFilenamePattern = "./data/property_images/property_image_{0}_{1}";
+          const imageFilenamePattern = "./public/property_images/property_image_{0}_{1}";
           for (var i = 0; i < property.imageCount; i++) {
             var targetPath = imageFilenamePattern.format(docID, i + 1);
             Logger.log("moving {0} to {1}".format(req.files[i].path, targetPath));
