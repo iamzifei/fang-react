@@ -69,13 +69,71 @@ class Property extends React.Component {
 
   createImageCarousel() {
     Logger.logObject(this.props);
+
+    const Decorators = [
+      {
+        component: React.createClass({
+          render() {
+            return (
+              <button
+                style={this.getButtonStyles(this.props.currentSlide === 0)}
+                onClick={this.handleClick}>PREV</button>
+            )
+          },
+          handleClick(e) {
+            e.preventDefault();
+            this.props.previousSlide();
+          },
+          getButtonStyles(disabled) {
+            return {
+              border: 0,
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              padding: 10,
+              outline: 0,
+              opacity: disabled ? 0.3 : 1,
+              cursor: 'pointer'
+            }
+          }
+        }),
+        position: 'CenterLeft'
+      },
+      {
+        component: React.createClass({
+          render() {
+            return (
+              <button
+                style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
+                onClick={this.handleClick}>NEXT</button>
+            )
+          },
+          handleClick(e) {
+            e.preventDefault();
+            this.props.nextSlide();
+          },
+          getButtonStyles(disabled) {
+            return {
+              border: 0,
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              padding: 10,
+              outline: 0,
+              opacity: disabled ? 0.3 : 1,
+              cursor: 'pointer'
+            }
+          }
+        }),
+        position: 'CenterRight'
+      }
+    ];
+
     if (this.props.imageCount > 0) {
       var rows = [];
       for(var i=1; i<=this.props.imageCount; i++) {
         var filename = "property_image_{0}_{1}".format(this.props._id, i);
         rows.push(<img key={filename} src={"/property_images/{0}".format(filename)}/>);
       }
-      return <Carousel>{rows}</Carousel>;
+      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>;
     }
   }
 
