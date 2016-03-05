@@ -38,19 +38,19 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 
 ### stage 1
 * ~~pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))~~
-* add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
-* display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
 * ~~suburb/postcode search auto-complete~~
 * ~~google map integration for property details page~~
-* property details form enhancement
-* narrow down search results by price, type & features
+* add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
+* display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
+* translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))
 * style polish & responsive
-* translation
 
 ### stage 2
+* narrow down search results by price, type & features
 * user register/login
 * user profile
 * social network login integration
+* property details form enhancement
 * property management
 
 ### stage 3
@@ -70,6 +70,14 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 
 ## references:
 
-* [a walkthrough of the project structure](http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/)
-* [React Eco System](http://www.toptal.com/react/navigating-the-react-ecosystem)
-* [ALT for Flux](http://alt.js.org/guide/)
+- [a walkthrough of the project structure](http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/)
+- [React Eco System](http://www.toptal.com/react/navigating-the-react-ecosystem)
+- [ALT for Flux](http://alt.js.org/guide/)
+- [Flux Data Flow](http://rackt.org/redux/docs/basics/DataFlow.html)
+- [Redux](http://rackt.org/redux/docs/basics/index.html)
+- [React Router Redux](https://github.com/reactjs/react-router-redux)
+- [Fetch API](https://github.com/github/fetch)
+- [Fetch Mock](https://github.com/wheresrhys/fetch-mock)
+- [Immutable JS](https://github.com/facebook/immutable-js)
+- [Redux Form](http://erikras.github.io/redux-form)
+- [Migrating to Redux](http://redux.js.org/docs/recipes/MigratingToRedux.html)
