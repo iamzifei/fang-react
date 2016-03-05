@@ -34,6 +34,24 @@ call `http://localhost:3000/api/load` to load testing data, you only need to do 
 * ListingActions -> ListingStore (handle all properties listing actions and states)
 * SearchActions -> SearchStore (handle all search including search narrow downs)
 
+## How to translate
+
+1) do the following import in component if needed:
+  ```
+  import counterpart from 'counterpart'
+  import Translate from 'react-translate-component'
+  ```
+2) put the translated string in JSON format under `locales` folder 
+  a) for React component, use:
+  ```
+  <Translate content="nav.toggle" />
+  ```
+  b) for String output, use:
+  ```
+  counterpart("nav.search.placeholder")
+  ```
+for more details, please refer to [React Translate Componenent](https://github.com/martinandert/react-translate-component) and [Counterpart](https://github.com/martinandert/counterpart)
+
 ## Todo:
 
 ### stage 1

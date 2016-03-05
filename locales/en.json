@@ -1,3 +1,75 @@
 {
-	"hello": "hello"
+  "home": {
+    "property": {
+      "list": {
+        "title": "All %(count)s Properties"
+      }
+    }
+  },
+  "pagination": {
+    "previous": "previous",
+    "next": "next"
+  },
+  "footer": {
+    "latestProperties": "Latest Properties",
+    "langSwitcher": {
+      "label": "Language",
+      "en": "English",
+      "cn": "Simplified Chinese"
+    }
+  },
+  "nav": {
+    "name": "Fang",
+    "toggle": "Toggle navigation",
+    "home": "Home",
+    "add": "Add",
+    "search": {
+      "placeholder": "Enter postcode or suburb"
+    }
+  },
+  "search": {
+    "title": "Found %(count)s properties in %(suburb)s"
+  },
+  "property": {
+    "flags": {
+      "new": "New"
+    },
+    "details": {
+      "title": "Property Details",
+      "suburb": "Suburb",
+      "address": "Address",
+      "price": "Price",
+      "priceValue": "$%(price)s per week",
+      "propertyType": "Property Type",
+      "roomType": "Room Type",
+      "title": "Title",
+      "details": "Details",
+      "contact": {
+        "title": "Contact Details",
+        "name": "Name",
+        "phoneNumber": "Phone Number",
+        "email": "Email",
+        "social": "Social Network",
+        "prefer": " (Preferred)"
+      },
+      "feature": {
+        "title": "Property Feature",
+        "furnished": "Furnished",
+        "female": "Female Prefer",
+        "nonSmoking": "Non-smoking",
+        "pet": "Pet Allowed",
+        "billIncluded": "Bill Included",
+        "internet": "Fast Internet"
+      },
+      "lease": {
+        "title": "Lease Details",
+        "bond": "%(bond)s weeks bond",
+        "term": "Minimum %(term)s month(s) lease",
+        "start": "Available at %(startDate)s"
+      },
+      "location": {
+        "title": "Property Location"
+      }
+    }
+  }
 }

@@ -4,6 +4,8 @@ import connectToStores from 'alt-utils/lib/connectToStores'
 import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions'
 import Autosuggest from 'react-autosuggest'
+import Translate from 'react-translate-component'
+import counterpart from 'counterpart'
 
 class Navbar extends React.Component {
 
@@ -78,7 +80,7 @@ class Navbar extends React.Component {
       value: this.props.searchQuery,
       onChange: this.onChange,
       type: 'search',
-      placeholder: 'Enter postcode or suburb'
+      placeholder: counterpart("nav.search.placeholder")
     }
 
     return (
@@ -87,7 +89,7 @@ class Navbar extends React.Component {
           <button type="button" className="navbar-toggle collapsed"
             data-toggle="collapse" data-target="#navbar"
           >
-            <span className="sr-only">Toggle navigation</span>
+            <span className="sr-only"><Translate content="nav.toggle" /></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
@@ -104,7 +106,7 @@ class Navbar extends React.Component {
               <div className="tri"></div>
               <div className="tri invert"></div>
             </span>
-            Fang
+            <Translate content="nav.name" />
           </Link>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
@@ -131,8 +133,8 @@ class Navbar extends React.Component {
             </div>
           </form>
           <ul className="nav navbar-nav">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/add">Add</Link></li>
+            <li><Link to="/"><Translate content="nav.home" /></Link></li>
+            <li><Link to="/add"><Translate content="nav.add" /></Link></li>
           </ul>
 
         </div>

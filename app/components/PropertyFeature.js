@@ -1,15 +1,16 @@
 import React from 'react'
+import counterpart from 'counterpart'
 
 class PropertyFeature extends React.Component {
 
   render() {
     var propertyFeatureNames = {
-      furnished: 'Furnished',
-      femalePrefer: 'Female Prefer',
-      nonSmoker: 'Non-smoking',
-      petAllowed: 'Pet Allowed',
-      billInclude: 'Bill Included',
-      fastInternet: 'Fast Internet'
+      furnished: counterpart('property.details.feature.furnished'),
+      femalePrefer: counterpart('property.details.feature.female'),
+      nonSmoker: counterpart('property.details.feature.nonSmoking'),
+      petAllowed: counterpart('property.details.feature.pet'),
+      billInclude: counterpart('property.details.feature.billIncluded'),
+      fastInternet: counterpart('property.details.feature.internet')
     }
 
     if (this.props.propertyFeatures) {

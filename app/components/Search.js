@@ -5,6 +5,7 @@ import PropertiesListingActions from '../actions/PropertiesListingActions'
 import PropertyGrid from './PropertyGrid'
 import ReactPaginate from 'react-paginate'
 import _ from 'underscore'
+import Translate from 'react-translate-component'
 
 class Search extends React.Component {
   static getStores() {
@@ -59,15 +60,19 @@ class Search extends React.Component {
 
     return (
       <div className="container">
-        <h3 className="text-center">
-          {this.props.propertiesCount} Properties in {_(suburbName).capitalize()}
-        </h3>
+        <Translate
+          suburb={_(suburbName).capitalize()}
+          content="search.title"
+          count={this.props.propertiesCount}
+          component="h3"
+          className="text-center"
+        />
         <div className="row">
           {propertyNodes}
         </div>
         <div id="react-paginate">
-          <ReactPaginate previousLabel={"previous"}
-            nextLabel={"next"}
+          <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
+            nextLabel={<Translate content="pagination.next" />}
             breakLabel={<li className="break"><a href="">...</a></li>}
             pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
             marginPagesDisplayed={2}

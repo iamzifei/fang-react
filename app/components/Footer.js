@@ -1,6 +1,6 @@
 import React from 'react'
-import Translate from 'react-translate-component'
 import LocaleSwitcher from './LocaleSwitcher'
+import Translate from 'react-translate-component'
 
 class Footer extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Footer extends React.Component {
             <div className="col-sm-7">
               <h3 className="lead">
                 <strong>
-                  <Translate {...this.props} content="hello" />
+                  <Translate content="footer.latestProperties" />
                 </strong>
               </h3>
               <ul className="list-inline">

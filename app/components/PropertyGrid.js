@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 import PropertyFeature from './PropertyFeature'
+import counterpart from 'counterpart'
+import Translate from 'react-translate-component'
 
 class PropertyGrid extends React.Component {
 
@@ -15,7 +17,7 @@ class PropertyGrid extends React.Component {
                 <img src="/img/grid-offer.jpg" alt="" />
                 <div className="type-container">
                   <div className="estate-type">{property.propertyType}</div>
-                  <div className="ads-flag">new</div>
+                  <div className="ads-flag"><Translate content="property.flags.new" /></div>
                 </div>
               </div>
               <div className="grid-offer-text">
@@ -26,7 +28,9 @@ class PropertyGrid extends React.Component {
                 <div className="clearfix"></div>
               </div>
               <div className="price-grid-cont">
-                <div className="grid-price-label pull-left">Price:</div>
+                <div className="grid-price-label pull-left">
+                  <Translate content="property.details.price" />:
+                </div>
                 <div className="grid-price pull-right">
                   ${property.price}
                 </div>
