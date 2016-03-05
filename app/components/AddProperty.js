@@ -23,7 +23,7 @@ const ImagePreviewStyles = {
   margin: '2px',
 }
 
-class AddPropertyComponent extends React.Component {
+class AddProperty extends React.Component {
   constructor(props) {
     super(props)
 
@@ -320,4 +320,4 @@ class AddPropertyComponent extends React.Component {
   }
 }
 
-export default AddPropertyComponent
+export default AddProperty
