@@ -15,6 +15,11 @@ class Home extends React.Component {
     return PropertiesListingStore.getState()
   }
 
+  constructor(props, context) {
+    super(props, context)
+    this.handlePageClick = this.handlePageClick.bind(this)
+  }
+
   componentDidMount() {
     PropertiesListingActions.getAllProperties(0)
     PropertiesListingActions.getPropertyCount()
@@ -59,7 +64,7 @@ class Home extends React.Component {
             pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
-            clickCallback={this.handlePageClick.bind(this)}
+            clickCallback={this.handlePageClick}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}

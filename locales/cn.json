@@ -1,4 +1,10 @@
 {
+  "furnished": "带家具",
+  "femalePrefer": "只招女生",
+  "nonSmoker": "禁烟",
+  "petAllowed": "可养宠物",
+  "billInclude": "包水电",
+  "fastInternet": "高速网络",
   "home": {
     "property": {
       "list": {
@@ -13,7 +19,7 @@
   "footer": {
     "latestProperties": "最近的广告",
     "langSwitcher": {
-      "label": "语言",
+      "label": "语言: ",
       "en": "英文",
       "cn": "简体中文"
     }
@@ -28,7 +34,46 @@
     }
   },
   "search": {
-    "title": "在%(suburb)s共找到%(count)s套房源信息"
+    "title": "在%(suburb)s共找到%(count)s套房源信息",
+    "refine": {
+      "sort": {
+        "label": "排序",
+        "photo": "照片优先",
+        "newest": "最新房源优先",
+        "cheapest": "按价格从低到高",
+        "dearest": "按价格从高到低"
+      },
+      "gender": {
+        "label": "房客要求",
+        "any": "不限性别",
+        "male": "只招男生",
+        "female": "只招女生"
+      },
+      "term": {
+        "label": "住宿期限",
+        "any": "不限期限",
+        "short": "短租",
+        "long": "长租 (6个月以上)"
+      },
+      "room": {
+        "label": "房屋类型",
+        "all": "不限类型",
+        "private": "单人间",
+        "shared": "与人合住"
+      },
+      "property": {
+        "label": "物业类型",
+        "all": "不限类型",
+        "house": "House内房间",
+        "apart": "公寓内房间",
+        "studio": "Studio",
+        "flat": "整套出租"
+      },
+      "feature": {
+        "label": "环境设施",
+        "any": "不限"
+      }
+    }
   },
   "property": {
     "flags": {
@@ -53,13 +98,7 @@
         "prefer": " (优先)"
       },
       "feature": {
-        "title": "环境设施",
-        "furnished": "带家具",
-        "female": "只招女生",
-        "nonSmoking": "禁烟",
-        "pet": "可养宠物",
-        "billIncluded": "包水电",
-        "internet": "高速网络"
+        "title": "环境设施"
       },
       "lease": {
         "title": "出租详情",

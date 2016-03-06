@@ -30,6 +30,20 @@ $break-large-max: 1199px;
   -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 }
+%box-shadow {
+  -webkit-box-shadow: 0 0 5px #444;
+  -moz-box-shadow: 0 0 5px #444;
+  -ms-box-shadow: 0 0 5px #444;
+  -o-box-shadow: 0 0 5px #444;
+  box-shadow: 0 0 5px #444;
+}
+%no-box-shadow {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+}
 
 body {
   background-color: #fff;
@@ -90,6 +104,10 @@ body {
   }
 }
 
+#react-paginate {
+  clear: both;
+}
+
 #react-paginate ul {
   display: inline-block;
   padding-left: 15px;
@@ -144,16 +162,15 @@ body {
         }
       }
       > div {
-        padding-top: .4em;
+        padding-top: .3em;
+        padding-bottom: .3em;
         font-size: 1.1em;
         float: right;
         width: 63%;
         position: relative;
         right: 1%;
         overflow: hidden;
-        padding-bottom: .3em;
         h2, h3, h4 {
-          line-height: 1.6em;
           margin: 0;
           padding: 0;
           font-weight: bold;
@@ -313,6 +330,84 @@ body {
           }
         }
       }
+    }
+  }
+}
+
+#results {
+  float: left;
+  width: 100%;
+  @media screen and (min-width: $break-medium) {
+    width: 68%;
+  }
+}
+
+#refine {
+  padding: 60px 4% 20px;
+  border-bottom: 0;
+  background: #fff;
+  position: fixed;
+  //display: none;
+  text-align: left;
+  float: right;
+  height: 100%;
+  width: 320px;
+  top: 0;
+  right: 0;
+  overflow: scroll;
+  z-index: 700;
+  @extend %box-shadow;
+  a[data-closerefine] {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    text-decoration: none;
+    color: #666;
+    font-size: 1.5em;
+    padding: 10px;
+  }
+  @media screen and (min-width: $break-medium) {
+    padding: 70px 2% 20px;
+    display: block;
+    width: 30%;
+    height: auto;
+    position: relative;
+    padding-top: 1em !important;
+    background: #fff;
+    @extend %no-box-shadow;
+    a[data-closerefine] {
+      display: none;
+    }
+  }
+  h3 {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin: .5em 0;
+    padding: 0;
+    font-weight: normal;
+    color: $header-color;
+  }
+  ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    strong, a {
+      display: block;
+      float: left;
+      width: 100%;
+      padding: .5em 7%;
+      color: $text-color;
+      text-decoration: none;
+    }
+    strong {
+      font-weight: normal;
+      color: $header-color;
+      background: $border-color;
+    }
+    a:hover {
+      background: #f8f8f8;
+      color: #000;
     }
   }
 }

@@ -6,6 +6,7 @@ import PropertyList from './PropertyList'
 import ReactPaginate from 'react-paginate'
 import _ from 'underscore'
 import Translate from 'react-translate-component'
+import SearchRefine from './SearchRefine'
 
 class Search extends React.Component {
   static getStores() {
@@ -14,6 +15,11 @@ class Search extends React.Component {
 
   static getPropsFromStores() {
     return PropertiesListingStore.getState()
+  }
+
+  constructor(props, context) {
+    super(props, context)
+    this.handlePageClick = this.handlePageClick.bind(this)
   }
 
   componentDidMount() {
@@ -68,20 +74,23 @@ class Search extends React.Component {
           className="text-center"
         />
         <div className="row">
-          <ul className="list-offer-col">{propertyNodes}</ul>
-        </div>
-        <div id="react-paginate">
-          <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
-            nextLabel={<Translate content="pagination.next" />}
-            breakLabel={<li className="break"><a href="">...</a></li>}
-            pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            clickCallback={this.handlePageClick.bind(this)}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
+          <div id="results">
+            <ul className="list-offer-col">{propertyNodes}</ul>
+          </div>
+          <SearchRefine />
+          <div id="react-paginate">
+            <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
+              nextLabel={<Translate content="pagination.next" />}
+              breakLabel={<li className="break"><a href="">...</a></li>}
+              pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              clickCallback={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       </div>
     )

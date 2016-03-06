@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 import PropertyFeature from './PropertyFeature'
-import counterpart from 'counterpart'
 import Translate from 'react-translate-component'
 
 class PropertyGrid extends React.Component {

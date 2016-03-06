@@ -11,7 +11,7 @@ class LocaleSwitcher extends React.Component {
       <p>
         <span><Translate content="footer.langSwitcher.label" /></span>
 
-        <select value="cn" onChange={handleChange}>
+        <select default="cn" onChange={handleChange}>
           <option value="en">{counterpart('footer.langSwitcher.en')}</option>
           <option value="cn">{counterpart('footer.langSwitcher.cn')}</option>
         </select>

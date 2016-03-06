@@ -17,6 +17,15 @@ class Navbar extends React.Component {
     return SearchStore.getState()
   }
 
+  constructor(props, context) {
+    super(props, context)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(this)
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+    this.getSuggestionValue = this.getSuggestionValue.bind(this)
+    this.renderSuggestion = this.renderSuggestion.bind(this)
+  }
+
   componentDidMount() {
     $(document).ajaxStart(() => {
       SearchActions.updateAjaxAnimation('fadeIn')
@@ -80,7 +89,7 @@ class Navbar extends React.Component {
       value: this.props.searchQuery,
       onChange: this.onChange,
       type: 'search',
-      placeholder: counterpart("nav.search.placeholder")
+      placeholder: counterpart('nav.search.placeholder')
     }
 
     return (
@@ -111,22 +120,22 @@ class Navbar extends React.Component {
         </div>
         <div id="navbar" className="navbar-collapse collapse">
           <form ref="searchForm" className="navbar-form navbar-left animated"
-            onSubmit={this.handleSubmit.bind(this)}
+            onSubmit={this.handleSubmit}
           >
             <div className="input-group">
 
               <Autosuggest
                 theme={theme}
                 suggestions={this.props.suburbs}
-                onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
-                onSuggestionSelected={this.onSuggestionSelected.bind(this)}
-                getSuggestionValue={this.getSuggestionValue.bind(this)}
-                renderSuggestion={this.renderSuggestion.bind(this)}
+                onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+                onSuggestionSelected={this.onSuggestionSelected}
+                getSuggestionValue={this.getSuggestionValue}
+                renderSuggestion={this.renderSuggestion}
                 inputProps={inputProps}
               />
 
               <span className="input-group-btn">
-                <button className="btn btn-default" onClick={this.handleSubmit.bind(this)}>
+                <button className="btn btn-default" onClick={this.handleSubmit}>
                   <span className="glyphicon glyphicon-search"></span>
                 </button>
               </span>

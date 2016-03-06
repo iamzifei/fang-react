@@ -1,4 +1,10 @@
 {
+  "furnished": "Furnished",
+  "femalePrefer": "Female Prefer",
+  "nonSmoker": "Non-smoking",
+  "petAllowed": "Pet Allowed",
+  "billInclude": "Bill Included",
+  "fastInternet": "Fast Internet",
   "home": {
     "property": {
       "list": {
@@ -13,7 +19,7 @@
   "footer": {
     "latestProperties": "Latest Properties",
     "langSwitcher": {
-      "label": "Language",
+      "label": "Language: ",
       "en": "English",
       "cn": "Simplified Chinese"
     }
@@ -28,7 +34,46 @@
     }
   },
   "search": {
-    "title": "Found %(count)s properties in %(suburb)s"
+    "title": "Found %(count)s properties in %(suburb)s",
+    "refine": {
+      "sort": {
+        "label": "Sort by",
+        "photo": "Photos first",
+        "newest": "Newest first",
+        "cheapest": "Cheapest first",
+        "dearest": "Dearest first"
+      },
+      "gender": {
+        "label": "Gender",
+        "any": "Any gender",
+        "male": "For males",
+        "female": "For females"
+      },
+      "term": {
+        "label": "Stay length",
+        "any": "Any stay length",
+        "short": "Short-term",
+        "long": "Long-term (6+ months)"
+      },
+      "room": {
+        "label": "Room type",
+        "all": "All room",
+        "private": "Private rooms",
+        "shared": "Shared rooms"
+      },
+      "property": {
+        "label": "Accommodation type",
+        "all": "All Accommodation",
+        "house": "Shared House",
+        "apart": "Shared Apartment",
+        "studio": "Studio",
+        "flat": "Entire Flat"
+      },
+      "feature": {
+        "label": "Room feature",
+        "any": "Any features"
+      }
+    }
   },
   "property": {
     "flags": {
@@ -53,13 +98,7 @@
         "prefer": " (Preferred)"
       },
       "feature": {
-        "title": "Property Feature",
-        "furnished": "Furnished",
-        "female": "Female Prefer",
-        "nonSmoking": "Non-smoking",
-        "pet": "Pet Allowed",
-        "billIncluded": "Bill Included",
-        "internet": "Fast Internet"
+        "title": "Property Feature"
       },
       "lease": {
         "title": "Lease Details",
