@@ -1,4 +1,10 @@
 $main-color: #e36159;
+$hover-bg-color: #f8f8f8;
+$border-color: #ececec;
+$header-color: #000;
+$text-color: #999;
+$features-bg-color: #1b2835;
+
 $break-small: 320px;
 $break-medium: 640px;
 $break-large: 1200px;
@@ -14,12 +20,12 @@ $break-large-max: 1199px;
   overflow: hidden;
 }
 %border-with-hover {
-  border: 5px solid #ececec;
+  border: 5px solid $border-color;
   transition: 1s;
   transform-style: preserve-3d;
 }
 %border-hover-effect {
-  background: #f8f8f8;
+  background: $hover-bg-color;
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
@@ -98,6 +104,109 @@ body {
   cursor: default;
 }
 
+.list-offer-col {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin: 0;
+  padding: .6em 0;
+  list-style: none;
+  .list-offer {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 1em 0;
+    position: relative;
+    a {
+      display: block;
+      float: left;
+      width: 94%;
+      position: relative;
+      left: 3%;
+      overflow: hidden;
+      color: $text-color;
+      text-decoration: none;
+      &:hover {
+        cursor: pointer;
+        background: $hover-bg-color;
+      }
+      > span {
+        display: block;
+        float: left;
+        width: 33%;
+        position: relative;
+        img {
+          border: 5px solid $border-color;
+          display: block;
+          float: left;
+          width: 100%;
+        }
+      }
+      > div {
+        padding-top: .4em;
+        font-size: 1.1em;
+        float: right;
+        width: 63%;
+        position: relative;
+        right: 1%;
+        overflow: hidden;
+        padding-bottom: .3em;
+        h2, h3, h4 {
+          line-height: 1.6em;
+          margin: 0;
+          padding: 0;
+          font-weight: bold;
+          color: $header-color;
+        }
+        h2 {
+          float: left;
+        }
+        h3 {
+          float: right;
+        }
+        h4 {
+          clear: left;
+          float: left;
+          padding: .2em 0 0 0;
+          font-size: 1.2em;
+          width: 75%;
+          color: $text-color;
+          @extend %overflow-text;
+        }
+        p {
+          clear: both;
+          margin: 0;
+          padding: .6em 0 .3em 0;
+          @extend %overflow-text;
+        }
+      }
+      ul {
+        list-style: disc;
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0 .3em 0 0;
+        @extend %overflow-text;
+        li {
+          display: block;
+          width: 50%;
+          position: relative;
+          padding: 0 2em 0 0;
+          float: left;
+          line-height: 1.4em;
+          margin: 0;
+          @extend %overflow-text;
+          &:before {
+            content: "• ";
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
 .grid-offer-col {
   padding: 15px;
   .grid-offer {
@@ -124,7 +233,7 @@ body {
       }
       .grid-offer-text {
         font-size: 1.1em;
-        color: #999;
+        color: $text-color;
         padding: 20px 5px 0 5px;
         border: none;
         height: 120px;
@@ -135,7 +244,7 @@ body {
           @extend %overflow-text;
           display: inline;
           font-size: 1.6em;
-          color: #000;
+          color: $header-color;
           font-weight: 700;
         }
         .grid-offer-h4 {
@@ -145,12 +254,11 @@ body {
           margin-top: 2px;
           display: inline;
           font-size: 1.2em;
-          color: #999;
           font-weight: 700;
         }
       }
       .price-grid-cont {
-        border-top: 1px solid #ebebeb;
+        border-top: 1px solid $border-color;
         padding: 0 30px 0 30px;
         .grid-price-label {
           line-height: 42px;
@@ -168,7 +276,7 @@ body {
         }
       }
       .grid-offer-params {
-        background: #1b2835;
+        background: $features-bg-color;
         float: left;
         width: 100%;
         color: #fff;

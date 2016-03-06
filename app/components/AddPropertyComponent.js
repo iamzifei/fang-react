@@ -199,21 +199,21 @@ class AddPropertyComponent extends React.Component {
                     <div className="control-label">Preferred Contact Method</div>
                     <div className="radio radio-inline">
                       <input type="radio" name="preferredContact" id="phone" value="phone"
-                        checked={this.state.preferredContact === 'phone'} name="phone"
+                        checked={this.state.preferredContact === 'phone'}
                         onChange={this.onFieldChange}
                       />
                       <label htmlFor="phone">Phone</label>
                     </div>
                     <div className="radio radio-inline">
                       <input type="radio" name="preferredContact" id="email" value="email"
-                        checked={this.state.preferredContact === 'email'} name="email"
+                        checked={this.state.preferredContact === 'email'}
                         onChange={this.onFieldChange}
                       />
                       <label htmlFor="email">Email</label>
                     </div>
                     <div className="radio radio-inline">
                       <input type="radio" name="preferredContact" id="social" value="social"
-                        checked={this.state.preferredContact === 'social'} name="social"
+                        checked={this.state.preferredContact === 'social'}
                         onChange={this.onFieldChange}
                       />
                       <label htmlFor="social">Wechat</label>

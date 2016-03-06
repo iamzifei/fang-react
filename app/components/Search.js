@@ -2,7 +2,7 @@ import React from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import PropertiesListingStore from '../stores/PropertiesListingStore'
 import PropertiesListingActions from '../actions/PropertiesListingActions'
-import PropertyGrid from './PropertyGrid'
+import PropertyList from './PropertyList'
 import ReactPaginate from 'react-paginate'
 import _ from 'underscore'
 import Translate from 'react-translate-component'
@@ -54,7 +54,7 @@ class Search extends React.Component {
     var propertyNodes = this.props.properties.map((property, index) => {
       suburbName = property.suburb
       return (
-        <PropertyGrid property={property} key={property._id} />
+        <PropertyList property={property} key={property._id} />
       )
     })
 
@@ -68,7 +68,7 @@ class Search extends React.Component {
           className="text-center"
         />
         <div className="row">
-          {propertyNodes}
+          <ul className="list-offer-col">{propertyNodes}</ul>
         </div>
         <div id="react-paginate">
           <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
