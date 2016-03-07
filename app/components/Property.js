@@ -77,7 +77,9 @@ class Property extends React.Component {
             return (
               <button
                 style={this.getButtonStyles(this.props.currentSlide === 0)}
-                onClick={this.handleClick}>PREV</button>
+                onClick={this.handleClick}>
+                <i className="fa fa-chevron-left"></i>
+              </button>
             )
           },
           handleClick(e) {
@@ -104,7 +106,9 @@ class Property extends React.Component {
             return (
               <button
                 style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
-                onClick={this.handleClick}>NEXT</button>
+                onClick={this.handleClick}>
+                <i className="fa fa-chevron-right"></i>
+              </button>
             )
           },
           handleClick(e) {
@@ -166,6 +170,7 @@ class Property extends React.Component {
               Price: <strong>${this.props.price}</strong> per week
             </h4>
             <h4 className="lead">
+              <i className="ri-md ri  ri-swimming-pool-indoor"></i>
               Property Type: <strong>{this.props.propertyType}</strong>
             </h4>
             <h4 className="lead">
