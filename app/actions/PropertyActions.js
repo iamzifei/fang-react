@@ -20,13 +20,14 @@ class PropertyActions {
 
   // TODO: put properties CRUD actions in this one
   getProperty(_id) {
-    $.ajax({ url: '/api/property/' + _id })
-      .done((data) => {
-        this.actions.getPropertySuccess(data)
-      })
-      .fail((jqXhr) => {
-        this.actions.getPropertyFail(jqXhr)
-      })
+    request.get('/api/property/' + _id)
+    .end((err, res) => {
+      if (err) {
+        this.actions.getPropertyFail(err.response)
+      } else {
+        this.actions.getPropertySuccess(res.body)
+      }
+    })
   }
 
   addProperty(property) {
@@ -42,9 +43,9 @@ class PropertyActions {
 
     // attach all selected files
     if (property.files) {
-      property.files.map((file) => {
+      property.files.map((file) =>
         req.attach(file.name, file)
-      })
+      )
     }
 
     Logger.log('property')

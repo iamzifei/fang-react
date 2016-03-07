@@ -34,6 +34,7 @@ class AddProperty extends React.Component {
     this.onChange = this.onChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
     this.onDrop = this.onDrop.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -73,7 +74,7 @@ class AddProperty extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading">Add Property</div>
               <div className="panel-body">
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                <form onSubmit={this.handleSubmit}>
                   <div className={'form-group ' + this.state.suburbValidateState}>
                     <label className="control-label">Suburb</label>
                     <input type="text" className="form-control" ref="suburbTextField"
