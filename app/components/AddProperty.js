@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import Dropzone from 'react-dropzone'
 
@@ -29,7 +27,7 @@ class AddProperty extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {};
+    this.state = {}
 
     this.onChange = this.onChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
@@ -39,7 +37,7 @@ class AddProperty extends React.Component {
 
   componentDidMount() {
     PropertyStore.listen(this.onChange)
-    PropertyActions.initState();
+    PropertyActions.initState()
   }
 
   componentWillUnmount() {

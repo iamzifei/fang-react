@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import PropertyStore from '../stores/PropertyStore'
@@ -7,21 +5,20 @@ import PropertyActions from '../actions/PropertyActions'
 import PropertyFeature from './PropertyFeature'
 import GoogleMap from 'google-map-react'
 import Carousel from 'nuka-carousel'
-import Logger from '../../utils/Logger'
 import Translate from 'react-translate-component'
 
 class Property extends React.Component {
-  constructor(props) {
-    super(props);
-    this.createImageCarousel = this.createImageCarousel.bind(this);
-  }
-
   static getStores() {
     return [PropertyStore]
   }
 
   static getPropsFromStores() {
     return PropertyStore.getState()
+  }
+
+  constructor(props) {
+    super(props)
+    this.createImageCarousel = this.createImageCarousel.bind(this)
   }
 
   componentDidMount() {
@@ -80,8 +77,8 @@ class Property extends React.Component {
             )
           },
           handleClick(e) {
-            e.preventDefault();
-            this.props.previousSlide();
+            e.preventDefault()
+            this.props.previousSlide()
           },
           getButtonStyles(disabled) {
             return {
@@ -103,14 +100,15 @@ class Property extends React.Component {
             return (
               <button
                 style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
-                onClick={this.handleClick}>
+                onClick={this.handleClick}
+              >
                 <i className="fa fa-chevron-right"></i>
               </button>
             )
           },
           handleClick(e) {
-            e.preventDefault();
-            this.props.nextSlide();
+            e.preventDefault()
+            this.props.nextSlide()
           },
           getButtonStyles(disabled) {
             return {
@@ -126,15 +124,15 @@ class Property extends React.Component {
         }),
         position: 'CenterRight'
       }
-    ];
+    ]
 
     if (this.props.imageCount > 0) {
-      var rows = [];
-      for(var i=1; i<=this.props.imageCount; i++) {
-        var filename = "property_image_{0}_{1}".format(this.props._id, i);
-        rows.push(<img key={filename} src={"/property_images/{0}".format(filename)}/>);
+      var rows = []
+      for (var i = 1; i <= this.props.imageCount; i++) {
+        var filename = 'property_image_{0}_{1}'.format(this.props._id, i)
+        rows.push(<img key={filename} src={'/property_images/{0}'.format(filename)}/>)
       }
-      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>;
+      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>
     }
   }
 

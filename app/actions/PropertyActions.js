@@ -59,7 +59,7 @@ class PropertyActions {
       } else {
         Logger.logObject(response)
         thisAction.actions.addPropertySuccess(response)
-        window.location.replace('/property/' + response.body.id);
+        window.location.replace('/property/' + response.body.id)
       }
     })
   }
