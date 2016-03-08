@@ -1,5 +1,6 @@
 import alt from '../alt'
 import { assign } from 'underscore'
+import request from 'superagent'
 
 class SearchActions {
   constructor() {
@@ -14,30 +15,28 @@ class SearchActions {
   }
 
   searchProperties(payload) {
-    $.ajax({
-      url: '/api/properties/search',
-      data: { suburb: payload.searchQuery }
-    })
-    .done((data) => {
-      assign(payload, data)
-      this.actions.searchPropertiesSuccess(payload)
-    })
-    .fail(() => {
-      this.actions.searchPropertiesFail(payload)
+    request.get('/api/properties/search')
+    .query({ suburb: payload.searchQuery })
+    .end((err, res) => {
+      if (err) {
+        this.actions.searchPropertiesFail(err.response)
+      } else {
+        assign(payload, res.body)
+        this.actions.searchPropertiesSuccess(payload)
+      }
     })
   }
 
   getSuburbs(suburb) {
     if (suburb.length > 2) {
-      $.ajax({
-        url: '/api/suburb/',
-        data: { suburb }
-      })
-      .done(data => {
-        this.actions.searchSuburbSuccess(data)
-      })
-      .fail(jqXhr => {
-        this.actions.searchSuburbFail(jqXhr.responseJSON.message)
+      request.get('/api/suburb/')
+      .query({ suburb })
+      .end((err, res) => {
+        if (err) {
+          this.actions.searchSuburbFail(err.response)
+        } else {
+          this.actions.searchSuburbSuccess(res.body)
+        }
       })
     }
   }
