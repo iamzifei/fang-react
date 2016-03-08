@@ -26,9 +26,11 @@ var xml2js = require('xml2js');
 
 var _ = require('underscore');
 
-// include and initialize the rollbar library with your access token
-var rollbar = require("rollbar");
-rollbar.init("00c2bc4196194ee0a9dbcd8481bffe1d");
+var counterpart = require('counterpart');
+
+counterpart.registerTranslations('en', require('./locales/en.json'));
+counterpart.registerTranslations('cn', require('./locales/cn.json'));
+counterpart.setLocale('cn');
 
 mongoose.connect(config.database);
 mongoose.connection.on('error', function() {

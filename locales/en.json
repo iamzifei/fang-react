@@ -1,0 +1,114 @@
+{
+  "furnished": "Furnished",
+  "femalePrefer": "Female Prefer",
+  "nonSmoker": "Non-smoking",
+  "petAllowed": "Pet Allowed",
+  "billInclude": "Bill Included",
+  "fastInternet": "Fast Internet",
+  "home": {
+    "property": {
+      "list": {
+        "title": "All %(count)s Properties"
+      }
+    }
+  },
+  "pagination": {
+    "previous": "previous",
+    "next": "next"
+  },
+  "footer": {
+    "latestProperties": "Latest Properties",
+    "langSwitcher": {
+      "label": "Language: ",
+      "en": "English",
+      "cn": "Simplified Chinese"
+    }
+  },
+  "nav": {
+    "name": "Fang",
+    "toggle": "Toggle navigation",
+    "home": "Home",
+    "add": "Add",
+    "search": {
+      "placeholder": "Enter postcode or suburb"
+    }
+  },
+  "search": {
+    "title": "Found %(count)s properties in %(suburb)s",
+    "refine": {
+      "sort": {
+        "label": "Sort by",
+        "photo": "Photos first",
+        "newest": "Newest first",
+        "cheapest": "Cheapest first",
+        "dearest": "Dearest first"
+      },
+      "gender": {
+        "label": "Gender",
+        "any": "Any gender",
+        "male": "For males",
+        "female": "For females"
+      },
+      "term": {
+        "label": "Stay length",
+        "any": "Any stay length",
+        "short": "Short-term",
+        "long": "Long-term (6+ months)"
+      },
+      "room": {
+        "label": "Room type",
+        "all": "All room",
+        "private": "Private rooms",
+        "shared": "Shared rooms"
+      },
+      "property": {
+        "label": "Accommodation type",
+        "all": "All Accommodation",
+        "house": "Shared House",
+        "apart": "Shared Apartment",
+        "studio": "Studio",
+        "flat": "Entire Flat"
+      },
+      "feature": {
+        "label": "Room feature",
+        "any": "Any features"
+      }
+    }
+  },
+  "property": {
+    "flags": {
+      "new": "New"
+    },
+    "details": {
+      "title": "Property Details",
+      "suburb": "Suburb",
+      "address": "Address",
+      "price": "Price",
+      "priceValue": "$%(price)s per week",
+      "propertyType": "Property Type",
+      "roomType": "Room Type",
+      "title": "Title",
+      "details": "Details",
+      "contact": {
+        "title": "Contact Details",
+        "name": "Name",
+        "phoneNumber": "Phone Number",
+        "email": "Email",
+        "social": "Social Network",
+        "prefer": " (Preferred)"
+      },
+      "feature": {
+        "title": "Property Feature"
+      },
+      "lease": {
+        "title": "Lease Details",
+        "bond": "%(bond)s weeks bond",
+        "term": "Minimum %(term)s month(s) lease",
+        "start": "Available at %(startDate)s"
+      },
+      "location": {
+        "title": "Property Location"
+      }
+    }
+  }
+}

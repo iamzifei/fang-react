@@ -6,6 +6,7 @@ import Logger from '../../utils/Logger'
 class PropertyStore {
   constructor() {
     this.bindActions(PropertyActions)
+    this.geolocation = { lat: 59.724465, lng: 30.080121 }
   }
 
   onInitState() {

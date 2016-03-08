@@ -8,6 +8,7 @@ import PropertyFeature from './PropertyFeature'
 import GoogleMap from 'google-map-react'
 import Carousel from 'nuka-carousel'
 import Logger from '../../utils/Logger'
+import Translate from 'react-translate-component'
 
 class Property extends React.Component {
   constructor(props) {
@@ -61,8 +62,6 @@ class Property extends React.Component {
         marker.addListener('click', () => {
           infowindow.open(map, marker)
         })
-      } else {
-        Rollbar.error('Geocode was not successful for the following reason: ' + status)
       }
     })
   }
@@ -159,62 +158,88 @@ class Property extends React.Component {
         </div>
         <div className="row">
           <div className="property-info col-sm-6">
-            <h3><strong>Property Details:</strong></h3>
+            <h3>
+              <strong>
+                <Translate content="property.details.title" />:
+              </strong>
+            </h3>
             <h4 className="lead">
-              Suburb:<strong>{this.props.suburb}, {this.props.postcode}</strong>
+              <Translate content="property.details.suburb" />:
+              <strong>{this.props.suburb}, {this.props.postcode}</strong>
             </h4>
             <h4 className="lead">
-              Address:<strong>{this.props.address}</strong>
+              <Translate content="property.details.address" />:<strong>{this.props.address}</strong>
             </h4>
             <h4 className="lead">
-              Price: <strong>${this.props.price}</strong> per week
+              <Translate content="property.details.price" />:
+              <Translate
+                price={this.props.price}
+                content="property.details.priceValue"
+                component="strong"
+              />
             </h4>
             <h4 className="lead">
               <i className="ri-md ri  ri-swimming-pool-indoor"></i>
               Property Type: <strong>{this.props.propertyType}</strong>
             </h4>
             <h4 className="lead">
-              Room Type: <strong>{this.props.roomType}</strong>
+              <Translate content="property.details.roomType" />:
+              <strong>{this.props.roomType}</strong>
             </h4>
           </div>
           <div className="contact-details col-sm-6">
-            <h3><strong>Contact Details:</strong></h3>
+            <h3><strong><Translate content="property.details.contact.title" />:</strong></h3>
             <h4 className="lead">
-              Name:<strong>{this.props.contactName}</strong>
+              <Translate content="property.details.contact.name" />:
+              <strong>{this.props.contactName}</strong>
             </h4>
             <h4 className="lead">
-              Phone Number: <strong>{this.props.contactNumber}</strong>
+              <Translate content="property.details.contact.phoneNumber" />:
+              <strong>{this.props.contactNumber}</strong>
             </h4>
             <h4 className="lead">
-              Email: <strong>{this.props.contactEmail}</strong>
+              <Translate content="property.details.contact.email" />:
+              <strong>{this.props.contactEmail}</strong>
             </h4>
             <h4 className="lead">
-              Social Network: <strong>{this.props.contactSocial}</strong> (Preferred)
+              <Translate content="property.details.contact.social" />:
+              <strong>{this.props.contactSocial}</strong>
+              <Translate content="property.details.contact.prefer" />
             </h4>
           </div>
         </div>
         <hr />
         <div className="row">
           <h2><strong>{this.props.title}</strong></h2>
-          <h4 className="lead">Details: <strong>{this.props.details}</strong></h4>
+          <h4 className="lead"><Translate content="property.details.details" />:
+            <strong>{this.props.details}</strong>
+          </h4>
         </div>
         <hr />
         <div className="row">
           <div className="property-feature col-sm-6">
-            <h3 className="lead"><strong>Property Feature: </strong></h3>
+            <h3 className="lead">
+              <strong><Translate content="property.details.feature.title" />: </strong>
+            </h3>
             <PropertyFeature propertyFeatures={this.props.propertyFeature} />
           </div>
           <div className="lease-details col-sm-6">
-            <h3 className="lead"><strong>Lease Details:</strong></h3>
+            <h3 className="lead">
+              <strong><Translate content="property.details.lease.title" />:</strong>
+            </h3>
             <ul>
-              <li><strong>{this.props.bond}</strong> weeks bond</li>
-              <li>Minimum <strong>{this.props.minTerm}</strong> month(s) lease</li>
-              <li>Available at <strong>{this.props.availableStart}</strong></li>
+              <li><Translate bond={this.props.bond} content="property.details.lease.bond" /></li>
+              <li><Translate bond={this.props.minTerm} content="property.details.lease.term" /></li>
+              <li>
+                <Translate bond={this.props.availableStart}
+                  content="property.details.lease.start"
+                />
+              </li>
             </ul>
           </div>
         </div>
         <div className="row">
-          <h3><strong>Property Location:</strong></h3>
+          <h3><strong><Translate content="property.details.location.title" />:</strong></h3>
           <div className="map-container">
             <GoogleMap
               onGoogleApiLoaded={
