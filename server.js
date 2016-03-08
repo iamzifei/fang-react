@@ -47,11 +47,27 @@ app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
+ * GET /api/suburb
+ * Looks up a suburb auto suggestions.
+ */
+app.get('/api/suburb', function(req, res, next) {
+  locationService.getSuburbSuggestions(req, res, next);
+});
+
+/**
  * GET /api/properties/count
  * Returns the total number of properties.
  */
 app.get('/api/properties/count', function(req, res, next) {
   propertyService.getNumberOfProperties(req, res, next);
+});
+
+/**
+ * GET /api/properties
+ * Returns all properties.
+ */
+app.get('/api/properties', function(req, res, next) {
+  propertyService.getAllProperties(req, res, next);
 });
 
 /**
@@ -63,19 +79,19 @@ app.get('/api/properties/search', function(req, res, next) {
 });
 
 /**
- * GET /api/properties/search
- * Looks up a property by suburb or postcode.
- */
-app.get('/api/suburb', function(req, res, next) {
-  locationService.getSuburbSuggestions(req, res, next);
-});
-
-/**
  * GET /api/properties/:suburb
  * List all properties in suburb.
  */
 app.get('/api/properties/:suburb', function(req, res, next) {
-  propertyService.getPropertyBySuburb(req, res, next);
+  propertyService.getPropertiesBySuburb(req, res, next);
+});
+
+/**
+ * GET /api/properties/search/:refine/:criteria
+ * Looks up a property by search refinement and criteria
+ */
+app.get('/api/properties/search/:refine/:criteria', function(req, res, next) {
+  propertyService.getPropertiesByRefineCriteria(req, res, next);
 });
 
 /**
@@ -84,14 +100,6 @@ app.get('/api/properties/:suburb', function(req, res, next) {
  */
 app.get('/api/property/:id', function(req, res, next) {
     propertyService.getPropertyById(req, res, next);
-});
-
-/**
- * GET /api/properties
- * Returns all properties.
- */
-app.get('/api/properties', function(req, res, next) {
-  propertyService.getAllProperties(req, res, next);
 });
 
 /**

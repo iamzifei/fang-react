@@ -38,76 +38,6 @@ class PropertyService {
     }
   }
 
-  getPropertyBySuburb(req, res, next) {
-    var suburb = req.params.suburb;
-    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
-    var autocomplete = new RegExp('^([a-z\']+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
-    var match;
-    if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
-      // if the query is all numbers, consider it is postcode
-      Property.find({ postcode: suburb })
-        .skip(offset)
-        .limit(config.perPage)
-        .sort({'_id': 'desc'})
-        .exec(function(err, properties) {
-          if (err) return next(err);
-
-          if (!properties) {
-            return res.status(404).send({ message: 'Property not found.' });
-          }
-
-          res.send({limit: config.perPage, properties: properties});
-        });
-    } else if((match = autocomplete.exec(suburb)) !== null) {
-      // if the query contains two commas, consider it is auto complete
-      if (match.index === autocomplete.lastIndex) {
-        autocomplete.lastIndex++;
-      }
-      Property.find({postcode: match[2], suburb: new RegExp(match[1], 'i')})
-        .skip(offset)
-        .limit(config.perPage)
-        .sort({'_id': 'desc'})
-        .exec(function(err, properties) {
-          if (err) return next(err);
-
-          if (!properties) {
-            return res.status(404).send({ message: 'Property not found.' });
-          }
-
-          res.send({limit: config.perPage, properties: properties});
-        });
-    } else {
-      // if it is string, consider as suburb name
-      Property.find({ suburb: new RegExp(suburb, 'i') })
-        .skip(offset)
-        .limit(config.perPage)
-        .sort({'_id': 'desc'})
-        .exec(function(err, properties) {
-          if (err) return next(err);
-
-          if (!properties) {
-            return res.status(404).send({ message: 'Property not found.' });
-          }
-
-          res.send({limit: config.perPage, properties: properties});
-        });
-    }
-  }
-
-  getPropertyById(req, res, next) {
-    var id = req.params.id;
-
-    Property.findOne({ _id: id }, function(err, property) {
-      if (err) return next(err);
-
-      if (!property) {
-        return res.status(404).send({ message: 'Property not found.' });
-      }
-
-      res.send(property);
-    });
-  }
-
   getAllProperties(req, res, next) {
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     Property.find()
@@ -123,6 +53,92 @@ class PropertyService {
 
         res.send({limit: config.perPage, properties: properties});
       })
+  }
+
+  getPropertiesBySuburb(req, res, next) {
+    var suburb = req.params.suburb;
+    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
+    var autocomplete = new RegExp('^([a-z\']+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
+    var match, query;
+    if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+      // if the query is all numbers, consider it is postcode
+      query = Property.find({ postcode: suburb });
+    } else if((match = autocomplete.exec(suburb)) !== null) {
+      // if the query contains two commas, consider it is auto complete
+      if (match.index === autocomplete.lastIndex) {
+        autocomplete.lastIndex++;
+      }
+      query = Property.find({postcode: match[2], suburb: new RegExp(match[1], 'i')});
+    } else {
+      // if it is string, consider as suburb name
+      query = Property.find({ suburb: new RegExp(suburb, 'i') });
+    }
+    query
+    .skip(offset)
+    .limit(config.perPage)
+    .sort({'_id': 'desc'})
+    .exec(function(err, properties) {
+      if (err) return next(err);
+
+      if (!properties) {
+        return res.status(404).send({ message: 'Property not found.' });
+      }
+
+      res.send({limit: config.perPage, properties: properties});
+    });
+  }
+
+  getPropertiesByRefineCriteria(req, res, next) {
+    var refine = req.params.refine;
+    var criteria = req.params.criteria;
+    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
+    var query = Property.find();
+      //suburb: { type: String, lowercase: true, trim: true },
+      //postcode: String,
+      //price: String,
+      //address: String,
+      //imageCount: { type: Number, default: 0 },
+      //title: String,
+      //details: String,
+      //propertyType: String,
+      //roomType: String,
+      //contactName: String,
+      //contactNumber: String,
+      //contactEmail: String,
+      //contactSocial: String,
+      //preferredContact: String,
+      //bond: String,
+      //availableStart: String,
+      //minTerm: { type: Number, default: 4 },
+      //propertyFeature: []
+    
+    Property.find()
+      .skip(offset)
+      .limit(config.perPage)
+      .sort({'_id': 'desc'})
+      .exec(function(err, properties) {
+        if (err) return next(err);
+
+        if (!properties) {
+          return res.status(404).send({ message: 'Property not found.' });
+        }
+
+        res.send({limit: config.perPage, properties: properties});
+      });
+  }
+
+  getPropertyById(req, res, next) {
+    var id = req.params.id;
+
+    Property.findOne({ _id: id }, function(err, property) {
+      if (err) return next(err);
+
+      if (!property) {
+        return res.status(404).send({ message: 'Property not found.' });
+      }
+
+      res.send(property);
+    });
   }
 
   loadProperties(req, res, next) {
