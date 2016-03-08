@@ -4,6 +4,7 @@ import PropertyStore from '../stores/PropertyStore'
 import PropertyActions from '../actions/PropertyActions'
 import PropertyFeature from './PropertyFeature'
 import GoogleMap from 'google-map-react'
+import Carousel from 'nuka-carousel'
 import Translate from 'react-translate-component'
 
 class Property extends React.Component {
@@ -13,6 +14,11 @@ class Property extends React.Component {
 
   static getPropsFromStores() {
     return PropertyStore.getState()
+  }
+
+  constructor(props) {
+    super(props)
+    this.createImageCarousel = this.createImageCarousel.bind(this)
   }
 
   componentDidMount() {
@@ -57,6 +63,79 @@ class Property extends React.Component {
     })
   }
 
+  createImageCarousel() {
+    const Decorators = [
+      {
+        component: React.createClass({
+          render() {
+            return (
+              <button
+                style={this.getButtonStyles(this.props.currentSlide === 0)}
+                onClick={this.handleClick}>
+                <i className="fa fa-chevron-left"></i>
+              </button>
+            )
+          },
+          handleClick(e) {
+            e.preventDefault()
+            this.props.previousSlide()
+          },
+          getButtonStyles(disabled) {
+            return {
+              border: 0,
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              padding: 10,
+              outline: 0,
+              opacity: disabled ? 0.3 : 1,
+              cursor: 'pointer'
+            }
+          }
+        }),
+        position: 'CenterLeft'
+      },
+      {
+        component: React.createClass({
+          render() {
+            return (
+              <button
+                style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
+                onClick={this.handleClick}
+              >
+                <i className="fa fa-chevron-right"></i>
+              </button>
+            )
+          },
+          handleClick(e) {
+            e.preventDefault()
+            this.props.nextSlide()
+          },
+          getButtonStyles(disabled) {
+            return {
+              border: 0,
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              padding: 10,
+              outline: 0,
+              opacity: disabled ? 0.3 : 1,
+              cursor: 'pointer'
+            }
+          }
+        }),
+        position: 'CenterRight'
+      }
+    ]
+
+    if (this.props.imageCount > 0) {
+      var rows = []
+      for (var i = 1; i <= this.props.imageCount; i++) {
+        var filename = 'property_image_{0}_{1}'.format(this.props._id, i)
+        rows.push(<img key={filename} src={'/property_images/{0}'.format(filename)}/>)
+      }
+      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>
+    }
+  }
+
   render() {
     const propertyAddress = this.props.address
       + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia'
@@ -71,9 +150,7 @@ class Property extends React.Component {
     return (
       <div className="container">
         <div className="property-img">
-          <a className="magnific-popup" href="#">
-            <img src="/img/grid-offer.jpg" />
-          </a>
+          {this.createImageCarousel()}
         </div>
         <div className="row">
           <div className="property-info col-sm-6">
@@ -98,8 +175,8 @@ class Property extends React.Component {
               />
             </h4>
             <h4 className="lead">
-              <Translate content="property.details.propertyType" />:
-              <strong>{this.props.propertyType}</strong>
+              <i className="ri-md ri  ri-swimming-pool-indoor"></i>
+              Property Type: <strong>{this.props.propertyType}</strong>
             </h4>
             <h4 className="lead">
               <Translate content="property.details.roomType" />:
