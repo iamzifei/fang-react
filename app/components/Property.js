@@ -67,8 +67,6 @@ class Property extends React.Component {
   }
 
   createImageCarousel() {
-    Logger.logObject(this.props);
-
     const Decorators = [
       {
         component: React.createClass({

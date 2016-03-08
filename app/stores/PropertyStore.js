@@ -14,25 +14,25 @@ class PropertyStore {
 
     delete this._id;
     delete this.files;
-    this.suburb = null;
-    this.postcode = null;
-    this.price = null;
-    this.address = null;
-    this.imageCount = 0;
-    this.title = null;
-    this.details = null;
-    this.propertyType = null;
-    this.roomType = null;
-    this.contactName = null;
-    this.contactNumber = null;
-    this.contactEmail = null;
-    this.contactSocial = null;
-    this.preferredContact = null;
-    this.bond = null;
-    this.availableStart = null;
-    this.minTerm = 0;
-    this.propertyFeature = null;
-    this.geolocation = null;
+    delete this.suburb;
+    delete this.postcode;
+    delete this.price;
+    delete this.address;
+    delete this.imageCount;
+    delete this.title;
+    delete this.details;
+    delete this.propertyType;
+    delete this.roomType;
+    delete this.contactName;
+    delete this.contactNumber;
+    delete this.contactEmail;
+    delete this.contactSocial;
+    delete this.preferredContact;
+    delete this.bond;
+    delete this.availableStart;
+    delete this.minTerm;
+    delete this.propertyFeature;
+    delete this.geolocation;
   }
 
   onGetPropertySuccess(data) {
