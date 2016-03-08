@@ -19,6 +19,8 @@ const PropertyService = require('./services/PropertyService');
 const propertyService = new PropertyService();
 const LocationService = require('./services/LocationService');
 const locationService = new LocationService();
+const SearchService = require('./services/SearchService');
+const searchService = new SearchService();
 
 var async = require('async');
 var request = require('request');
@@ -83,15 +85,15 @@ app.get('/api/properties/search', function(req, res, next) {
  * List all properties in suburb.
  */
 app.get('/api/properties/:suburb', function(req, res, next) {
-  propertyService.getPropertiesBySuburb(req, res, next);
+  searchService.getPropertiesBySuburb(req, res, next);
 });
 
 /**
- * GET /api/properties/search/:refine/:criteria
+ * GET /api/properties/:suburb/refine?sort=desc&terms=s&room=single&property=house&feature=furnished&feature=femalePrefer&feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
  * Looks up a property by search refinement and criteria
  */
-app.get('/api/properties/search/:refine/:criteria', function(req, res, next) {
-  propertyService.getPropertiesByRefineCriteria(req, res, next);
+app.get('/api/properties/:suburb/refine', function(req, res, next) {
+  searchService.getPropertiesByRefineCriteria(req, res, next);
 });
 
 /**

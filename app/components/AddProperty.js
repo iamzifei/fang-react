@@ -123,19 +123,28 @@ class AddProperty extends React.Component {
                         checked={this.state.propertyType === 'apartment'}
                         onChange={this.onFieldChange}
                       />
-                      <label htmlFor="apartment">Apartment</label>
+                      <label htmlFor="apartment">Apartment/Unit</label>
                     </div>
                     <div className="radio radio-inline">
-                      <input type="radio" name="propertyType" id="unit" value="unit"
-                        checked={this.state.propertyType === 'unit'} onChange={this.onFieldChange}
+                      <input type="radio" name="propertyType" id="studio" value="studio"
+                        checked={this.state.propertyType === 'studio'}
+                        onChange={this.onFieldChange}
                       />
-                      <label htmlFor="unit">Unit</label>
+                      <label htmlFor="unit">Studio</label>
                     </div>
                     <div className="radio radio-inline">
                       <input type="radio" name="propertyType" id="house" value="house"
-                        checked={this.state.propertyType === 'house'} onChange={this.onFieldChange}
+                        checked={this.state.propertyType === 'house'}
+                        onChange={this.onFieldChange}
                       />
                       <label htmlFor="house">House/Townhouse</label>
+                    </div>
+                    <div className="radio radio-inline">
+                      <input type="radio" name="propertyType" id="whole" value="whole"
+                             checked={this.state.propertyType === 'whole'}
+                             onChange={this.onFieldChange}
+                      />
+                      <label htmlFor="unit">Entire flat</label>
                     </div>
                   </div>
                   <div className={'form-group ' + this.state.roomTypeValidateState}>

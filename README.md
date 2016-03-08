@@ -84,7 +84,7 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * add/update Google Map API key
 * remove the testing data and relevant API
 * import suburb/postcode information into DB
-* change Rollbar environment
+* solving the test errors
 
 ## references:
 
