@@ -52,6 +52,7 @@
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
     "nodemon": "^1.8.1",
+    "nuka-carousel": "^1.0.2",
     "path": "^0.12.7",
     "react": "^0.14.2",
     "react-autosuggest": "^3.5.0",

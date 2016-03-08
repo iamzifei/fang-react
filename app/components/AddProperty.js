@@ -1,3 +1,5 @@
+'use strict'
+
 import React from 'react'
 import Dropzone from 'react-dropzone'
 
@@ -15,8 +17,7 @@ const TextCenterDivStyles = {
   textAlign: 'center',
   verticalAlign: 'middle',
   lineHeight: '90px',
-  cursor: 'hand',
-  // ToDo: not working (nj)
+  cursor: 'hand', // ToDo: cursor style is not working (nj)
 }
 
 const ImagePreviewStyles = {
@@ -24,11 +25,11 @@ const ImagePreviewStyles = {
   margin: '2px',
 }
 
-class AddPropertyComponent extends React.Component {
+class AddProperty extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = PropertyStore.getState()
+    this.state = {};
 
     this.onChange = this.onChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
@@ -38,6 +39,7 @@ class AddPropertyComponent extends React.Component {
 
   componentDidMount() {
     PropertyStore.listen(this.onChange)
+    PropertyActions.initState();
   }
 
   componentWillUnmount() {
@@ -321,4 +323,4 @@ class AddPropertyComponent extends React.Component {
   }
 }
 
-export default AddPropertyComponent
+export default AddProperty

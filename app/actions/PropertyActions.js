@@ -13,7 +13,8 @@ class PropertyActions {
       'fieldValueChanges',
       'addPropertySuccess',
       'addPropertyFail',
-      'selectFilesToUpload'
+      'selectFilesToUpload',
+      'initState'
     )
   }
 
@@ -49,8 +50,6 @@ class PropertyActions {
 
     Logger.log('property')
     Logger.logObject(property)
-    Logger.log('req')
-    Logger.logObject(req)
 
     const thisAction = this
     req.end((error, response) => {
@@ -60,6 +59,7 @@ class PropertyActions {
       } else {
         Logger.logObject(response)
         thisAction.actions.addPropertySuccess(response)
+        window.location.replace('/property/' + response.body.id);
       }
     })
   }

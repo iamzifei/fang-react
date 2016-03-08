@@ -157,8 +157,6 @@ class PropertyService {
         return res.end(err);
       }
 
-      Logger.logObject(req);
-
       var property = new Property();
 
       //attach all input fields
@@ -182,7 +180,7 @@ class PropertyService {
           Logger.log("property id: {0}", docID);
 
           // move uploaded images to target folder and rename them with id
-          const imageFilenamePattern = "./data/property_images/property_image_{0}_{1}";
+          const imageFilenamePattern = "./public/property_images/property_image_{0}_{1}";
           for (var i = 0; i < property.imageCount; i++) {
             var targetPath = imageFilenamePattern.format(docID, i + 1);
             Logger.log("moving {0} to {1}".format(req.files[i].path, targetPath));
@@ -195,7 +193,10 @@ class PropertyService {
             );
           }
 
-          res.send({ message: 'Property at ' + property.address + ' has been added successfully!' });
+          res.send({
+            message: 'Property at ' + property.address + ' has been added successfully!',
+            id: docID
+          });
         });
       } catch (e) {
         res.status(404).send({ message: ' Could not add the property.' });
