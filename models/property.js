@@ -17,7 +17,7 @@ var propertySchema = new Schema({
   contactEmail: String,
   contactSocial: String,
   preferredContact: String,
-  bond: String,
+  bond: { type: Number },
   availableStart: String,
   minTerm: { type: Number, default: 4 },
   propertyFeature: []

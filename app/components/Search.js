@@ -21,28 +21,35 @@ class Search extends React.Component {
     this.handlePageClick = this.handlePageClick.bind(this)
   }
 
+  getResultBySuburb() {
+    SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
+    SearchActions.getPropertyCount(this.props.params.suburb)
+  }
+
+  getResultBySuburbAndParams() {
+    SearchActions.searchPropertiesRefine(
+      this.props.params.suburb,
+      0,
+      this.props.location.query.sort,
+      this.props.location.query.terms,
+      this.props.location.query.room,
+      this.props.location.query.property,
+      this.props.location.query.feature
+    )
+    SearchActions.getPropertyCountRefine(
+      this.props.params.suburb,
+      this.props.location.query.sort,
+      this.props.location.query.terms,
+      this.props.location.query.room,
+      this.props.location.query.property,
+      this.props.location.query.feature
+    )
+  }
   componentDidMount() {
     if (this.props.location.search === '') {
-      SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-      SearchActions.getPropertyCount(this.props.params.suburb)
+      this.getResultBySuburb()
     } else {
-      SearchActions.searchPropertiesRefine(
-        this.props.params.suburb,
-        0,
-        this.props.location.query.sort,
-        this.props.location.query.terms,
-        this.props.location.query.room,
-        this.props.location.query.property,
-        this.props.location.query.feature
-      )
-      SearchActions.getPropertyCountRefine(
-        this.props.params.suburb,
-        this.props.location.query.sort,
-        this.props.location.query.terms,
-        this.props.location.query.room,
-        this.props.location.query.property,
-        this.props.location.query.feature
-      )
+      this.getResultBySuburbAndParams()
     }
     $('.magnific-popup').magnificPopup({
       type: 'image',
@@ -59,15 +66,31 @@ class Search extends React.Component {
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
     if (prevProps.params.suburb !== this.props.params.suburb) {
-      SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-      SearchActions.getPropertyCount(this.props.params.suburb)
+      this.getResultBySuburb()
+    }
+
+    if ((prevProps.location.search !== this.props.location.search)
+      && this.props.location.search !== '') {
+      this.getResultBySuburbAndParams()
     }
   }
 
   handlePageClick(page) {
     const selected = page.selected
     const offset = Math.ceil(selected * this.props.limit)
-    SearchActions.getPropertiesInSuburb(this.props.params.suburb, offset)
+    if (this.props.location.search === '') {
+      SearchActions.getPropertiesInSuburb(this.props.params.suburb, offset)
+    } else {
+      SearchActions.searchPropertiesRefine(
+        this.props.params.suburb,
+        offset,
+        this.props.location.query.sort,
+        this.props.location.query.terms,
+        this.props.location.query.room,
+        this.props.location.query.property,
+        this.props.location.query.feature
+      )
+    }
   }
 
   render() {
@@ -92,7 +115,7 @@ class Search extends React.Component {
           <div id="results">
             <ul className="list-offer-col">{propertyNodes}</ul>
           </div>
-          <SearchRefine suburb={this.props.params.suburb} />
+          <SearchRefine suburb={this.props.params.suburb} location={this.props.location} />
           <div id="react-paginate">
             <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
               nextLabel={<Translate content="pagination.next" />}
@@ -104,6 +127,7 @@ class Search extends React.Component {
               containerClassName={"pagination"}
               subContainerClassName={"pages pagination"}
               activeClassName={"active"}
+                           initialSelected={0}
             />
           </div>
         </div>

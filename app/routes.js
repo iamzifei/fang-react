@@ -11,7 +11,6 @@ export default (
     <Route path="/" component={Home} />
       <Route path="/add" component={AddProperty} />
       <Route path="/properties/:suburb" component={Search} />
-      <Route path="/properties/refine/:suburb" component={Search} />
       <Route path="/property/:id" component={Property} />
   </Route>
 )

@@ -2,6 +2,7 @@ import React from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import { Link } from 'react-router'
+import { assign } from 'underscore'
 
 class SearchRefine extends React.Component {
   render() {
@@ -13,7 +14,8 @@ class SearchRefine extends React.Component {
       'billInclude',
       'fastInternet'
     ]
-    const api = `/properties/refine/${this.props.suburb}`
+    const url = this.props.location.pathname
+    console.log(this.props.location)
     // ?sort=desc&terms=s&room=private&property=house&feature=furnished&feature=femalePrefer
     // &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet&misc=photo
     return (
@@ -21,29 +23,37 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.sort.label" /></h3>
         <ul>
           <li>
-            <Link to={api} query={{ sort: 'time' }}>
+            <Link to={url} query={assign(this.props.location.query, { sort: 'time' })}>
               <Translate content="search.refine.sort.newest" />
             </Link>
           </li>
           <li>
-            <Link to={api} query={{ sort: 'priceUp' }}>
+            <Link to={url} query={assign(this.props.location.query, { sort: 'priceUp' })}>
               <Translate content="search.refine.sort.cheapest" />
             </Link>
           </li>
           <li>
-            <a href="/sydney/dearest"><Translate content="search.refine.sort.dearest" /></a>
+            <Link to={url} query={assign(this.props.location.query, { sort: 'priceDown' })}>
+              <Translate content="search.refine.sort.dearest" />
+            </Link>
           </li>
         </ul>
         <h3><Translate content="search.refine.term.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.term.any" /></strong>
+            <Link to={url} query={{ terms: 'any' }}>
+              <Translate content="search.refine.term.any" />
+            </Link>
           </li>
           <li>
-            <a href="/sydney/short-term"><Translate content="search.refine.term.short" /></a>
+            <Link to={url} query={{ terms: 's' }}>
+              <Translate content="search.refine.term.short" />
+            </Link>
           </li>
           <li>
-            <a href="/sydney/long-term"><Translate content="search.refine.term.long" /></a>
+            <Link to={url} query={{ terms: 'l' }}>
+              <Translate content="search.refine.term.long" />
+            </Link>
           </li>
         </ul>
         <h3><Translate content="search.refine.room.label" /></h3>
@@ -52,10 +62,10 @@ class SearchRefine extends React.Component {
             <strong><Translate content="search.refine.room.all" /></strong>
           </li>
           <li>
-            <a href="/sydney/private-rooms"><Translate content="search.refine.room.private" /></a>
+            <a href="&room=private"><Translate content="search.refine.room.private" /></a>
           </li>
           <li>
-            <a href="/sydney/shared-rooms"><Translate content="search.refine.room.shared" /></a>
+            <a href="&room=shared"><Translate content="search.refine.room.shared" /></a>
           </li>
           <li>
             <a href="/sydney/private-rooms"><Translate content="search.refine.room.living" /></a>
