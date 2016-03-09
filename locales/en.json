@@ -43,12 +43,6 @@
         "cheapest": "Cheapest first",
         "dearest": "Dearest first"
       },
-      "gender": {
-        "label": "Gender",
-        "any": "Any gender",
-        "male": "For males",
-        "female": "For females"
-      },
       "term": {
         "label": "Stay length",
         "any": "Any stay length",
@@ -59,7 +53,9 @@
         "label": "Room type",
         "all": "All room",
         "private": "Private rooms",
-        "shared": "Shared rooms"
+        "shared": "Shared rooms",
+        "living": "Living rooms",
+        "master": "Master rooms"
       },
       "property": {
         "label": "Accommodation type",

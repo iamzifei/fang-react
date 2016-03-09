@@ -313,19 +313,9 @@ body {
             margin: 0;
             padding: 0;
             line-height: 42px;
-            @media screen and (min-width: $break-small) {
-              &:before {
-                content: "• ";
-                font-weight: bold;
-              }
-            }
-            @media screen and (min-width: $break-medium) {
-              &:before {
-                content: "";
-              }
-              &:after {
-                content: ", ";
-              }
+            &:before {
+              content: "• ";
+              font-weight: bold;
             }
           }
         }

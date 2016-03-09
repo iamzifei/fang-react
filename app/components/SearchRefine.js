@@ -1,6 +1,7 @@
 import React from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
+import { Link } from 'react-router'
 
 class SearchRefine extends React.Component {
   render() {
@@ -29,18 +30,6 @@ class SearchRefine extends React.Component {
             <a href="/sydney/dearest"><Translate content="search.refine.sort.dearest" /></a>
           </li>
         </ul>
-        <h3><Translate content="search.refine.gender.label" /></h3>
-        <ul>
-          <li>
-            <strong><Translate content="search.refine.gender.any" /></strong>
-          </li>
-          <li>
-            <a href="/sydney/males"><Translate content="search.refine.gender.male" /></a>
-          </li>
-          <li>
-            <a href="/sydney/females"><Translate content="search.refine.gender.female" /></a>
-          </li>
-        </ul>
         <h3><Translate content="search.refine.term.label" /></h3>
         <ul>
           <li>
@@ -63,6 +52,12 @@ class SearchRefine extends React.Component {
           </li>
           <li>
             <a href="/sydney/shared-rooms"><Translate content="search.refine.room.shared" /></a>
+          </li>
+          <li>
+            <a href="/sydney/private-rooms"><Translate content="search.refine.room.living" /></a>
+          </li>
+          <li>
+            <a href="/sydney/shared-rooms"><Translate content="search.refine.room.master" /></a>
           </li>
         </ul>
         <h3><Translate content="search.refine.property.label" /></h3>

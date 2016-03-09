@@ -71,7 +71,8 @@ class Property extends React.Component {
             return (
               <button
                 style={this.getButtonStyles(this.props.currentSlide === 0)}
-                onClick={this.handleClick}>
+                onClick={this.handleClick}
+              >
                 <i className="fa fa-chevron-left"></i>
               </button>
             )

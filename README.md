@@ -58,13 +58,13 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * ~~pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))~~
 * ~~suburb/postcode search auto-complete~~
 * ~~google map integration for property details page~~
+* ~~translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))~~
 * add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
 * display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
-* translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))
+* narrow down search results by price, type & features
 * style polish & responsive
 
 ### stage 2
-* narrow down search results by price, type & features
 * user register/login
 * user profile
 * social network login integration
@@ -84,7 +84,7 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * add/update Google Map API key
 * remove the testing data and relevant API
 * import suburb/postcode information into DB
-* change Rollbar environment
+* solving the test errors
 
 ## references:
 
