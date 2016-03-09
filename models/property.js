@@ -6,7 +6,7 @@ var propertySchema = new Schema({
   suburb: { type: String, set: capitalize, trim: true },
   postcode: String,
   price: { type: Number },
-  address: String,
+  address: { type: String, set: capitalize, trim: true },
   imageCount: { type: Number, default: 0 },
   title: String,
   details: String,
