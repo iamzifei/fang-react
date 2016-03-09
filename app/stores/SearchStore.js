@@ -18,7 +18,7 @@ class SearchStore {
   }
 
   onSearchPropertiesSuccess(payload) {
-    payload.history.pushState(null, '/properties/' + payload.suburb)
+    payload.history.pushState(null, `/properties/${payload.suburb}`)
   }
 
   onSearchPropertiesFail(payload) {

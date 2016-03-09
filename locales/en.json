@@ -38,7 +38,6 @@
     "refine": {
       "sort": {
         "label": "Sort by",
-        "photo": "Photos first",
         "newest": "Newest first",
         "cheapest": "Cheapest first",
         "dearest": "Dearest first"
@@ -66,8 +65,11 @@
         "flat": "Entire Flat"
       },
       "feature": {
-        "label": "Room feature",
+        "label": "Other feature",
         "any": "Any features"
+      },
+      "misc": {
+        "photo": "Photos first"
       }
     }
   },

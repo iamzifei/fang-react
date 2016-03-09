@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions'
-import Autosuggest from 'react-autosuggest'
+import AutoSuggest from 'react-autosuggest'
 import Translate from 'react-translate-component'
 import counterpart from 'counterpart'
 
@@ -104,7 +104,7 @@ class Navbar extends React.Component {
             <span className="icon-bar"></span>
           </button>
           <Link to="/" className="navbar-brand">
-            <span ref="triangles" className={'triangles animated ' + this.props.ajaxAnimationClass}>
+            <span ref="triangles" className={`triangles animated ${this.props.ajaxAnimationClass}`}>
               <div className="tri invert"></div>
               <div className="tri invert"></div>
               <div className="tri"></div>
@@ -124,7 +124,7 @@ class Navbar extends React.Component {
           >
             <div className="input-group">
 
-              <Autosuggest
+              <AutoSuggest
                 theme={theme}
                 suggestions={this.props.suburbs}
                 onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}

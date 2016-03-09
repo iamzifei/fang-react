@@ -9,7 +9,7 @@ class PropertyList extends React.Component {
     var property = this.props.property
     return (
       <li className="list-offer" id={property._id}>
-        <Link to={'/property/' + property._id}>
+        <Link to={`/property/${property._id}`}>
           <span>
             <img src="/img/grid-offer.jpg" alt="" />
             <div className="type-container">
