@@ -141,8 +141,8 @@ class AddProperty extends React.Component {
                     </div>
                     <div className="radio radio-inline">
                       <input type="radio" name="propertyType" id="whole" value="whole"
-                             checked={this.state.propertyType === 'whole'}
-                             onChange={this.onFieldChange}
+                        checked={this.state.propertyType === 'whole'}
+                        onChange={this.onFieldChange}
                       />
                       <label htmlFor="unit">Entire flat</label>
                     </div>
@@ -150,8 +150,8 @@ class AddProperty extends React.Component {
                   <div className={'form-group ' + this.state.roomTypeValidateState}>
                     <div className="control-label">Room Type</div>
                     <div className="radio radio-inline">
-                      <input type="radio" name="roomType" id="single" value="single"
-                        checked={this.state.roomType === 'single'} onChange={this.onFieldChange}
+                      <input type="radio" name="roomType" id="private" value="private"
+                        checked={this.state.roomType === 'private'} onChange={this.onFieldChange}
                       />
                       <label htmlFor="single">Single Room</label>
                     </div>

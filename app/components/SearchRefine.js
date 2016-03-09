@@ -1,6 +1,7 @@
 import React from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
+import { Link } from 'react-router'
 
 class SearchRefine extends React.Component {
   render() {

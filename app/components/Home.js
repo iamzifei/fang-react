@@ -1,18 +1,18 @@
 import React from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
-import PropertiesListingStore from '../stores/PropertiesListingStore'
-import PropertiesListingActions from '../actions/PropertiesListingActions'
+import SearchStore from '../stores/SearchStore'
+import SearchActions from '../actions/SearchActions'
 import PropertyGrid from './PropertyGrid'
 import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
 
 class Home extends React.Component {
   static getStores() {
-    return [PropertiesListingStore]
+    return [SearchStore]
   }
 
   static getPropsFromStores() {
-    return PropertiesListingStore.getState()
+    return SearchStore.getState()
   }
 
   constructor(props, context) {
@@ -21,16 +21,16 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    PropertiesListingActions.getAllProperties(0)
-    PropertiesListingActions.getPropertyCount()
+    SearchActions.getAllProperties(0)
+    SearchActions.getPropertyCount()
 
     $(document).ajaxStart(() => {
-      PropertiesListingActions.updateAjaxAnimation('fadeIn')
+      SearchActions.updateAjaxAnimation('fadeIn')
     })
 
     $(document).ajaxComplete(() => {
       setTimeout(() => {
-        PropertiesListingActions.updateAjaxAnimation('fadeOut')
+        SearchActions.updateAjaxAnimation('fadeOut')
       }, 750)
     })
   }
@@ -38,7 +38,7 @@ class Home extends React.Component {
   handlePageClick(page) {
     const selected = page.selected
     const offset = Math.ceil(selected * this.props.limit)
-    PropertiesListingActions.getAllProperties(offset)
+    SearchActions.getAllProperties(offset)
   }
 
   render() {

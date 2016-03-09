@@ -1,20 +1,19 @@
 import React from 'react'
 import connectToStores from 'alt-utils/lib/connectToStores'
-import PropertiesListingStore from '../stores/PropertiesListingStore'
-import PropertiesListingActions from '../actions/PropertiesListingActions'
+import SearchStore from '../stores/SearchStore'
+import SearchActions from '../actions/SearchActions'
 import PropertyList from './PropertyList'
 import ReactPaginate from 'react-paginate'
-import _ from 'underscore'
 import Translate from 'react-translate-component'
 import SearchRefine from './SearchRefine'
 
 class Search extends React.Component {
   static getStores() {
-    return [PropertiesListingStore]
+    return [SearchStore]
   }
 
   static getPropsFromStores() {
-    return PropertiesListingStore.getState()
+    return SearchStore.getState()
   }
 
   constructor(props, context) {
@@ -23,8 +22,8 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-    PropertiesListingActions.getPropertyCount(this.props.params.suburb)
+    SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
+    SearchActions.getPropertyCount(this.props.params.suburb)
     $('.magnific-popup').magnificPopup({
       type: 'image',
       mainClass: 'mfp-zoom-in',
@@ -40,22 +39,18 @@ class Search extends React.Component {
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
     if (prevProps.params.suburb !== this.props.params.suburb) {
-      PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-      PropertiesListingActions.getPropertyCount(this.props.params.suburb)
+      SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
+      SearchActions.getPropertyCount(this.props.params.suburb)
     }
   }
 
   handlePageClick(page) {
     const selected = page.selected
     const offset = Math.ceil(selected * this.props.limit)
-    PropertiesListingActions.getPropertiesInSuburb(this.props.params.suburb, offset)
+    SearchActions.getPropertiesInSuburb(this.props.params.suburb, offset)
   }
 
   render() {
-    _.mixin({
-      capitalize: (string) =>
-        string.charAt(0).toUpperCase() + string.substring(1)
-    })
     var suburbName = this.props.params.suburb
     var propertyNodes = this.props.properties.map((property, index) => {
       suburbName = property.suburb
@@ -67,7 +62,7 @@ class Search extends React.Component {
     return (
       <div className="container">
         <Translate
-          suburb={_(suburbName).capitalize()}
+          suburb={suburbName}
           content="search.title"
           count={this.props.propertiesCount}
           component="h3"
