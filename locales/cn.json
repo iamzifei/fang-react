@@ -38,7 +38,6 @@
     "refine": {
       "sort": {
         "label": "排序",
-        "photo": "照片优先",
         "newest": "最新房源优先",
         "cheapest": "按价格从低到高",
         "dearest": "按价格从高到低"
@@ -66,8 +65,11 @@
         "flat": "整套出租"
       },
       "feature": {
-        "label": "环境设施",
+        "label": "其他",
         "any": "不限"
+      },
+      "misc": {
+        "photo": "照片优先"
       }
     }
   },

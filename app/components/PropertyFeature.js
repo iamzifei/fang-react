@@ -19,7 +19,7 @@ class PropertyFeature extends React.Component {
           } else if (selected !== '') {
             feature = (
               <li key={propertyFeature}>
-                <Link to={'/property/feature/' + propertyFeature}>
+                <Link to={`/property/feature/${propertyFeature}`}>
                   <Translate content={propertyFeature} />
                 </Link>
               </li>

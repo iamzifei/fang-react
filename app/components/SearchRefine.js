@@ -13,18 +13,22 @@ class SearchRefine extends React.Component {
       'billInclude',
       'fastInternet'
     ]
+    const api = `/properties/refine/${this.props.suburb}`
+    // ?sort=desc&terms=s&room=private&property=house&feature=furnished&feature=femalePrefer
+    // &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet&misc=photo
     return (
       <div id="refine">
         <h3><Translate content="search.refine.sort.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.sort.photo" /></strong>
+            <Link to={api} query={{ sort: 'time' }}>
+              <Translate content="search.refine.sort.newest" />
+            </Link>
           </li>
           <li>
-            <a href="/sydney/newest"><Translate content="search.refine.sort.newest" /></a>
-          </li>
-          <li>
-            <a href="/sydney/cheapest"><Translate content="search.refine.sort.cheapest" /></a>
+            <Link to={api} query={{ sort: 'priceUp' }}>
+              <Translate content="search.refine.sort.cheapest" />
+            </Link>
           </li>
           <li>
             <a href="/sydney/dearest"><Translate content="search.refine.sort.dearest" /></a>
@@ -83,6 +87,9 @@ class SearchRefine extends React.Component {
           <li>
             <strong><Translate content="search.refine.feature.any" /></strong>
           </li>
+          <li>
+            <Translate content="search.refine.misc.photo" />
+          </li>
           <PropertyFeature propertyFeatures={propertyFeatures} selected="any" />
         </ul>
         <a data-closerefine href="#">×</a>
@@ -92,6 +99,7 @@ class SearchRefine extends React.Component {
 }
 
 SearchRefine.propTypes = {
+  suburb: React.PropTypes.string
 }
 
 export default SearchRefine

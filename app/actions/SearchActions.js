@@ -57,7 +57,7 @@ class SearchActions {
   }
 
   getPropertiesInSuburb(suburb, offset) {
-    request.get('/api/properties/' + suburb)
+    request.get(`/api/search/${suburb}`)
       .query({ offset })
       .end((err, res) => {
         if (err) {
@@ -87,15 +87,16 @@ class SearchActions {
    * &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
    * Looks up a property by search refinement and criteria
    */
-  getPropertyCountRefine(suburb = -1, sort, terms, room, property, feature) {
-    request.get('/api/properties/refine/count')
+  getPropertyCountRefine(suburb = -1, sort, terms, room, property, feature, misc) {
+    request.get('/api/count/refine')
       .query({
         suburb,
         sort,
         terms,
         room,
         property,
-        feature
+        feature,
+        misc
       })
       .end((err, res) => {
         if (err) {
@@ -106,22 +107,22 @@ class SearchActions {
       })
   }
 
-  searchPropertiesRefine(suburb, offset, sort, terms, room, property, feature) {
-    request.get('/api/properties/' + suburb + '/refine')
+  searchPropertiesRefine(suburb, offset, sort, terms, room, property, feature, misc) {
+    request.get(`/api/search/refine/${suburb}`)
     .query({
       offset,
       sort,
       terms,
       room,
       property,
-      feature
+      feature,
+      misc
     })
     .end((err, res) => {
       if (err) {
-        this.actions.searchPropertiesFail(err.response)
+        this.actions.getPropertiesListFail(err.response)
       } else {
-        assign(payload, res.body)
-        this.actions.searchPropertiesSuccess(payload)
+        this.actions.getPropertiesListSuccess(res.body)
       }
     })
   }

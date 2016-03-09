@@ -32,11 +32,9 @@ class SearchService {
   }
 
   // helper search function, shared cross suburb search and refined search
-  queryCriteriaHelper(query, sort, terms, room, property, feature) {
+  queryCriteriaHelper(query, sort, terms, room, property, feature, misc) {
     switch (sort) {
-      case 'photo':
-        query = query.where('imageCount').gt(0);
-        break;
+      // Note: sort is not applicable for property count
       case 'time':
         query = query.sort({'_id': -1});
         break;
@@ -98,6 +96,15 @@ class SearchService {
     if (feature && feature.length > 0) {
       query = query.where('propertyFeature', feature);
     }
+
+    switch (misc) {
+      case 'photo':
+        query = query.where('imageCount').gt(0);
+        break;
+      default:
+        query = query;
+    }
+
     return query;
   }
 
@@ -132,14 +139,14 @@ class SearchService {
     var suburb = req.params.suburb;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     var query = this.queryBuildHelper(offset, suburb, 0);
-    //refine?offset=10&sort=desc&terms=s&room=private&property=house&feature=furnished&feature=femalePrefer&feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
     var sort = req.query.sort;
     var terms = req.query.terms;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
+    var misc = req.query.misc;
 
-    this.queryCriteriaHelper(query, sort, terms, room, property, feature)
+    this.queryCriteriaHelper(query, sort, terms, room, property, feature, misc)
     .skip(offset)
     .limit(config.perPage)
     .exec(function(err, properties) {
@@ -169,7 +176,8 @@ class SearchService {
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
-    this.queryCriteriaHelper(query, sort, terms, room, property, feature)
+    var misc = req.query.misc;
+    this.queryCriteriaHelper(query, '', terms, room, property, feature, misc)
     .exec(function(err, count) {
       if (err) return next(err);
       res.send({ count: count });
