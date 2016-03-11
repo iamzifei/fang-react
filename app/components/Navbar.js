@@ -93,59 +93,61 @@ class Navbar extends React.Component {
     }
 
     return (
-      <nav className="navbar navbar-default navbar-static-top">
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed"
-            data-toggle="collapse" data-target="#navbar"
-          >
-            <span className="sr-only"><Translate content="nav.toggle" /></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <Link to="/" className="navbar-brand">
-            <span ref="triangles" className={`triangles animated ${this.props.ajaxAnimationClass}`}>
-              <div className="tri invert"></div>
-              <div className="tri invert"></div>
-              <div className="tri"></div>
-              <div className="tri invert"></div>
-              <div className="tri invert"></div>
-              <div className="tri"></div>
-              <div className="tri invert"></div>
-              <div className="tri"></div>
-              <div className="tri invert"></div>
-            </span>
-            <Translate content="nav.name" />
-          </Link>
-        </div>
-        <div id="navbar" className="navbar-collapse collapse">
-          <form ref="searchForm" className="navbar-form navbar-left animated"
-            onSubmit={this.handleSubmit}
-          >
-            <div className="input-group">
-
-              <AutoSuggest
-                theme={theme}
-                suggestions={this.props.suburbs}
-                onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
-                onSuggestionSelected={this.onSuggestionSelected}
-                getSuggestionValue={this.getSuggestionValue}
-                renderSuggestion={this.renderSuggestion}
-                inputProps={inputProps}
-              />
-
-              <span className="input-group-btn">
-                <button className="btn btn-default" onClick={this.handleSubmit}>
-                  <span className="glyphicon glyphicon-search"></span>
-                </button>
+      <nav className="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#navbar"
+            >
+              <span className="sr-only"><Translate content="nav.toggle" /></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <Link to="/" className="navbar-brand">
+              <span ref="triangles" className={`triangles animated ${this.props.ajaxAnimationClass}`}>
+                <div className="tri invert"></div>
+                <div className="tri invert"></div>
+                <div className="tri"></div>
+                <div className="tri invert"></div>
+                <div className="tri invert"></div>
+                <div className="tri"></div>
+                <div className="tri invert"></div>
+                <div className="tri"></div>
+                <div className="tri invert"></div>
               </span>
-            </div>
-          </form>
-          <ul className="nav navbar-nav">
-            <li><Link to="/"><Translate content="nav.home" /></Link></li>
-            <li><Link to="/add"><Translate content="nav.add" /></Link></li>
-          </ul>
+              <Translate content="nav.name" />
+            </Link>
+          </div>
+          <div id="navbar" className="navbar-collapse collapse">
+            <form ref="searchForm" className="navbar-form navbar-left animated"
+              onSubmit={this.handleSubmit}
+            >
+              <div className="input-group">
 
+                <AutoSuggest
+                  theme={theme}
+                  suggestions={this.props.suburbs}
+                  onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+                  onSuggestionSelected={this.onSuggestionSelected}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                />
+
+                <span className="input-group-btn">
+                  <button className="btn btn-default" onClick={this.handleSubmit}>
+                    <span className="glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+            </form>
+            <ul className="nav navbar-nav">
+              <li><Link to="/"><Translate content="nav.home" /></Link></li>
+              <li><Link to="/add"><Translate content="nav.add" /></Link></li>
+            </ul>
+
+          </div>
         </div>
       </nav>
     )

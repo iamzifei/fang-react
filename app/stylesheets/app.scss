@@ -1,4 +1,14 @@
-$main-color: #e36159;
+$brand-color: #F44336;
+$body-bg: #fff;
+$footer-bg: #212121;
+$text-color: #000;
+$revert-text-color: #fff;
+$revert-text-color-shadow: #444;
+$title-color #212121;
+$revert-title-color: #fcf9f9;
+$subtitle-color: #727272;
+$text-over-brand: #fefefe;
+
 $hover-bg-color: #f8f8f8;
 $border-color: #ececec;
 $header-color: #000;
@@ -46,7 +56,29 @@ $break-large-max: 1199px;
 }
 
 body {
-  background-color: #fff;
+  background-color: $body-bg;
+}
+
+.navbar {
+  background-color: #828282;
+  color: $revert-text-color;
+}
+
+.bg {
+  background: url('/img/jumbotron.jpg') no-repeat center center;
+  position: fixed;
+  width: 100%;
+  height: 350px; /*same height as jumbotron */
+  top:0;
+  left:0;
+  z-index: -1;
+}
+
+.jumbotron {
+  height: 350px;
+  color: $revert-text-color;
+  text-shadow: $revert-text-color-shadow 0 1px 1px;
+  background:transparent;
 }
 
 .navbar-form {
@@ -239,7 +271,7 @@ body {
     .panel-body{
       padding: 0;
       .grid-offer-photo {
-        border-bottom: 2px solid $main-color;
+        border-bottom: 2px solid $brand-color;
         overflow: hidden;
         position: relative;
         img {

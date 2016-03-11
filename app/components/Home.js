@@ -5,6 +5,7 @@ import SearchActions from '../actions/SearchActions'
 import PropertyGrid from './PropertyGrid'
 import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
+import Jumbotron from './Jumbotron'
 
 class Home extends React.Component {
   static getStores() {
@@ -47,28 +48,35 @@ class Home extends React.Component {
     )
 
     return (
-      <div className="container">
-        <Translate
-          count={this.props.propertiesCount}
-          content="home.property.list.title"
-          className="text-center"
-          component="h3"
-        />
-        <div className="row">
-          {propertyNodes}
+      <div>
+        <div className="bg"></div>
+        <div className="jumbotron">
+          <h1>Bootstrap Jumbotron</h1>
+          <p className="lead">+ Parallax Effect using jQuery</p>
         </div>
-        <div id="react-paginate">
-          <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
-            nextLabel={<Translate content="pagination.next" />}
-            breakLabel={<li className="break"><a href="">...</a></li>}
-            pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            clickCallback={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
+        <div className="container">
+          <Translate
+            count={this.props.propertiesCount}
+            content="home.property.list.title"
+            className="text-center"
+            component="h3"
           />
+          <div className="row">
+            {propertyNodes}
+          </div>
+          <div id="react-paginate">
+            <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
+              nextLabel={<Translate content="pagination.next" />}
+              breakLabel={<li className="break"><a href="">...</a></li>}
+              pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              clickCallback={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </div>
       </div>
     )
