@@ -32,6 +32,7 @@ class SearchStore {
 
   onUpdateSearchQueryValue(value) {
     this.searchQuery = value
+    this.filters.suburb = value
   }
 
   onSearchSuburbSuccess(data) {
@@ -60,20 +61,18 @@ class SearchStore {
   }
 
   onFilterChange(filter) {
-    this.filters = Object.assign(filter, this.filters)
-    const {
-      suburb,
-      ...others
-    } = this.filters
+    this.filters = filter
 
-    const querys = Object.keys(others)
-      .map(key => [key, others[key]].join('='))
+    const querys = Object.keys(this.filters)
+      .filter(key => !!this.filters[key] && key !== 'suburb')
+      .map(key => [key, this.filters[key]].join('='))
       .join('&')
 
-    // browserHistory.push({
-    //   pathname: `/api/search/refine/${suburb}`,
-    //   search: `?${querys}`
-    // })
+    browserHistory.push({
+      pathname: `/properties/${this.filters.suburb||''}`,
+      search: `?${querys}`
+    })
+
   }
 }
 
