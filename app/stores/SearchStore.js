@@ -10,6 +10,7 @@ class SearchStore {
     this.limit = 5
     this.properties = []
     this.propertiesCount = 0
+    this.filters = {}
   }
 
   onUpdateAjaxAnimation(className) {
