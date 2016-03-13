@@ -5,6 +5,10 @@
   "petAllowed": "可养宠物",
   "billInclude": "包水电",
   "fastInternet": "高速网络",
+  "whole": "整套公寓",
+  "apartment": "公寓",
+  "house": "House",
+  "studio": "Studio",
   "home": {
     "property": {
       "list": {
