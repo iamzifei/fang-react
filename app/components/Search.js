@@ -79,6 +79,10 @@ class Search extends React.Component {
       )
     })
 
+    const {
+      filters
+    } = this.props
+
     return (
       <div className="container">
         <Translate
@@ -92,7 +96,7 @@ class Search extends React.Component {
           <div id="results">
             <ul className="list-offer-col">{propertyNodes}</ul>
           </div>
-          <SearchRefine suburb={this.props.params.suburb} />
+          <SearchRefine {...filters} />
           <div id="react-paginate">
             <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
               nextLabel={<Translate content="pagination.next" />}

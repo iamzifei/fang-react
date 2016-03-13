@@ -1,5 +1,6 @@
 import alt from '../alt'
 import SearchActions from '../actions/SearchActions'
+import { browserHistory } from 'react-router'
 
 class SearchStore {
   constructor() {
@@ -56,6 +57,23 @@ class SearchStore {
 
   onGetPropertyCountFail(jqXhr) {
     toastr.error(jqXhr.responseJSON.message)
+  }
+
+  onFilterChange(filter) {
+    this.filters = Object.assign(filter, this.filters)
+    const {
+      suburb,
+      ...others
+    } = this.filters
+
+    const querys = Object.keys(others)
+      .map(key => [key, others[key]].join('='))
+      .join('&')
+
+    // browserHistory.push({
+    //   pathname: `/api/search/refine/${suburb}`,
+    //   search: `?${querys}`
+    // })
   }
 }
 
