@@ -101,8 +101,23 @@ body {
   }
 }
 
+.navbar.home {
+  .navbar-form {
+    display: block;
+    @media screen and (min-width: $break-small-theme-max) {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: $break-medium-theme-max) {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
 .navbar {
   opacity: 0.97;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
   .nav-collapse {
     background-color: $footer-bg;
   }
@@ -123,7 +138,6 @@ body {
         top: 40px;
       }
     }
-    background-color: transparent;
   }
   #navbar {
     ul {
@@ -160,14 +174,15 @@ body {
   }
   .navbar-form {
     position: absolute;
+    width: 50%;
     top: 0;
     padding: 0;
     border: 0;
-    width: 50%;
     left: 70px;
     margin: 8px 0;
-    @media screen and (min-width: $break-small-theme-max) {
-      display: none;
+    @media screen and (min-width: $break-medium-theme-max) {
+      margin: 23px 0;
+      left: 80px;
     }
   }
 }
@@ -298,7 +313,7 @@ footer {
       position: relative;
       left: 3%;
       overflow: hidden;
-      color: $text-color;
+      color: $subtitle-color;
       text-decoration: none;
       &:hover {
         cursor: pointer;
@@ -329,7 +344,7 @@ footer {
           margin: 0;
           padding: 0;
           font-weight: bold;
-          color: $header-color;
+          color: $title-color;
         }
         h2 {
           float: left;

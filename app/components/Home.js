@@ -6,6 +6,7 @@ import PropertyGrid from './PropertyGrid'
 import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
 import Jumbotron from './Jumbotron'
+import Navbar from './Navbar'
 
 class Home extends React.Component {
   static getStores() {
@@ -49,6 +50,7 @@ class Home extends React.Component {
 
     return (
       <div>
+        <Navbar pageFlag="home" history={this.props.history} />
         <Jumbotron history={this.props.history} />
         <div className="container">
           <Translate

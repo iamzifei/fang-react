@@ -94,7 +94,19 @@ class SearchBox extends React.Component {
         onSubmit={this.handleSubmit}
       >
         <div className="input-group">
-
+          <span ref="triangles"
+                className={`triangles animated ${this.props.ajaxAnimationClass}`}
+          >
+            <div className="tri invert"></div>
+            <div className="tri invert"></div>
+            <div className="tri"></div>
+            <div className="tri invert"></div>
+            <div className="tri invert"></div>
+            <div className="tri"></div>
+            <div className="tri invert"></div>
+            <div className="tri"></div>
+            <div className="tri invert"></div>
+          </span>
           <AutoSuggest
             theme={theme}
             suggestions={this.props.suburbs}
@@ -108,19 +120,6 @@ class SearchBox extends React.Component {
                 <span className="input-group-btn">
                   <button className="btn btn-default" onClick={this.handleSubmit}>
                     <span className="glyphicon glyphicon-search"></span>
-                    <span ref="triangles"
-                      className={`triangles animated ${this.props.ajaxAnimationClass}`}
-                    >
-                      <div className="tri invert"></div>
-                      <div className="tri invert"></div>
-                      <div className="tri"></div>
-                      <div className="tri invert"></div>
-                      <div className="tri invert"></div>
-                      <div className="tri"></div>
-                      <div className="tri invert"></div>
-                      <div className="tri"></div>
-                      <div className="tri invert"></div>
-                    </span>
                   </button>
                 </span>
         </div>

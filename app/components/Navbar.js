@@ -8,7 +8,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default navbar-fixed-top">
+      <nav className={`navbar navbar-default navbar-fixed-top ${this.props.pageFlag}`}>
         <div className="container-fluid">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed"
@@ -20,7 +20,7 @@ class Navbar extends React.Component {
               <span className="icon-bar"></span>
             </button>
             <Link to="/" className="navbar-brand">
-              <img alt={counterpart('nav.name')} src="img/logo.png" />
+              <img alt={counterpart('nav.name')} src="/img/logo.png" />
             </Link>
             <SearchBox history={this.props.history} />
           </div>
@@ -37,7 +37,8 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-  history: React.PropTypes.object
+  history: React.PropTypes.object,
+  pageFlag: React.PropTypes.string
 }
 
 export default Navbar
