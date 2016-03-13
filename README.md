@@ -79,6 +79,12 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * property shortlist
 * property rating/comment
 
+### stage 5
+* remove jquery dependencies
+* remove bower dependencies
+* clean up CSS
+* considering other UI component that not relying on jQuery, such as (mui, sementic-ui-react, etc)
+
 ## Deploy notes:
 
 * add/update Google Map API key

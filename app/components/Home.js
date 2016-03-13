@@ -49,11 +49,7 @@ class Home extends React.Component {
 
     return (
       <div>
-        <div className="bg"></div>
-        <div className="jumbotron">
-          <h1>Bootstrap Jumbotron</h1>
-          <p className="lead">+ Parallax Effect using jQuery</p>
-        </div>
+        <Jumbotron history={this.props.history} />
         <div className="container">
           <Translate
             count={this.props.propertiesCount}
@@ -84,6 +80,7 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
+  history: React.PropTypes.object,
   limit: React.PropTypes.number,
   properties: React.PropTypes.array,
   propertiesCount: React.PropTypes.number

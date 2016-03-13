@@ -10,6 +10,10 @@
       "list": {
         "title": "All %(count)s Properties"
       }
+    },
+    "jumbotron": {
+      "title": "Find Your Home",
+      "subtitle": "Get your perfect accommodation"
     }
   },
   "pagination": {

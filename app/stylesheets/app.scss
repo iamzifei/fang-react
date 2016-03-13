@@ -4,15 +4,15 @@ $footer-bg: #212121;
 $text-color: #000;
 $revert-text-color: #fff;
 $revert-text-color-shadow: #444;
-$title-color #212121;
+$title-color: #212121;
 $revert-title-color: #fcf9f9;
 $subtitle-color: #727272;
 $text-over-brand: #fefefe;
+$form-control-color: #cfdadc;
 
 $hover-bg-color: #f8f8f8;
 $border-color: #ececec;
 $header-color: #000;
-$text-color: #999;
 $features-bg-color: #1b2835;
 
 $break-small: 320px;
@@ -57,31 +57,139 @@ $break-large-max: 1199px;
 
 body {
   background-color: $body-bg;
+  padding-top: 100px;
+}
+
+#carousel-home {
+  margin-top: -100px;
+  .carousel-inner {
+    overflow: visible;
+  }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+    max-height: 500px;    /* Set slide height here */
+    min-width: 100%;
+    object-fit: cover;
+  }
+  .carousel-caption {
+    bottom: 25%;
+    h1 {
+      font-size: 1.6em;
+    }
+    p.lead {
+      font-size: 1.2em;
+    }
+    @media screen and (min-width: $break-small-theme-max) {
+      bottom: 35%;
+      h1 {
+        font-size: 36px;
+      }
+      p.lead {
+        font-size: 21px;
+      }
+    }
+  }
+  .navbar-form {
+    display: none;
+    @media screen and (min-width: $break-small-theme-max) {
+      display: block;
+      width: 50%;
+      left: 25%;
+      position: absolute;
+      top: 60%;
+    }
+  }
 }
 
 .navbar {
-  background-color: #828282;
-  color: $revert-text-color;
-}
-
-.bg {
-  background: url('/img/jumbotron.jpg') no-repeat center center;
-  position: fixed;
-  width: 100%;
-  height: 350px; /*same height as jumbotron */
-  top:0;
-  left:0;
-  z-index: -1;
-}
-
-.jumbotron {
-  height: 350px;
-  color: $revert-text-color;
-  text-shadow: $revert-text-color-shadow 0 1px 1px;
-  background:transparent;
+  opacity: 0.97;
+  .nav-collapse {
+    background-color: $footer-bg;
+  }
+  .navbar-brand {
+    img {
+      width: 40px;
+      margin-top: -10px;
+    }
+  }
+  @media screen and (min-width: $break-medium-theme-max) {
+    .navbar-brand {
+      img {
+        width: 50px;
+        margin-top: 0;
+      }
+      .triangles {
+        left: 90px;
+        top: 40px;
+      }
+    }
+    background-color: transparent;
+  }
+  #navbar {
+    ul {
+      li {
+        a {
+          cursor: pointer;
+          &:hover, &:active, &:focus {
+            text-decoration: none;
+            background-color: $revert-text-color-shadow;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: $break-medium-theme-max) {
+      background: transparent;
+      a {
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+      ul {
+        li {
+          a {
+            &:hover, &:active, &:focus {
+              text-decoration: none;
+              border-bottom: 4px solid $brand-color;
+              padding: 30px 5px 5px 5px;
+              margin: 0 10px 21px 10px;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+  .navbar-form {
+    position: absolute;
+    top: 0;
+    padding: 0;
+    border: 0;
+    width: 50%;
+    left: 70px;
+    margin: 8px 0;
+    @media screen and (min-width: $break-small-theme-max) {
+      display: none;
+    }
+  }
 }
 
 .navbar-form {
+  box-shadow: none;
+  .input-group {
+    width: 100%;
+    .input-group-btn {
+      width: 39px;
+      .btn-default {
+        color: $text-color;
+        border-color: $form-control-color;
+        &:hover {
+          color: $title-color;
+        }
+      }
+    }
+    input {
+      width: 100% !important;
+    }
+  }
   .search-results {
     display: block;
     position: absolute;
@@ -90,21 +198,29 @@ body {
     margin: 0;
     padding: 0px;
     background-color: #fff;
-    border: 1px solid #cfdadc;
-    width: 120%;
+    border: 1px solid $form-control-color;
+    width: 100%;
     height: 900%;
     overflow-x: hidden;
     overflow-y: scroll;
+    z-index: 99;
     .search-list-item {
       padding: 12px;
       &:hover {
-        background-color: #cfdadc;
+        background-color: $form-control-color;
         cursor: pointer;
       }
       a {
         text-decoration: none;
       }
     }
+  }
+}
+
+
+footer {
+  h1, h2, h3 {
+    color: $revert-title-color;
   }
 }
 
@@ -122,12 +238,12 @@ body {
   left: 5px;
   text-transform: uppercase;
   font-weight: bold;
-  color: #fff;
+  color: $text-over-brand;
   .estate-type {
     float: left;
     margin-right: 5px;
     padding: 0 10px 0 10px;
-    background-color: #ee7e23;
+    background-color: $brand-color;
   }
   .ads-flag {
     float: left;
@@ -138,6 +254,7 @@ body {
 
 #react-paginate {
   clear: both;
+  text-align: center;
 }
 
 #react-paginate ul {
@@ -148,6 +265,12 @@ body {
 
 #react-paginate li {
   display: inline-block;
+  .active > a,
+  a:hover, a:focus {
+    background-color: $brand-color;
+    border-color: $brand-color;
+    color: $text-over-brand;
+  }
 }
 
 #react-paginate .break a {
@@ -271,7 +394,6 @@ body {
     .panel-body{
       padding: 0;
       .grid-offer-photo {
-        border-bottom: 2px solid $brand-color;
         overflow: hidden;
         position: relative;
         img {
@@ -281,54 +403,47 @@ body {
         }
       }
       .grid-offer-text {
-        font-size: 1.1em;
-        color: $text-color;
-        padding: 20px 5px 0 5px;
+        font-size: 1em;
+        color: $subtitle-color;
+        margin: 15px;
         border: none;
-        height: 120px;
+        height: 98px;
         text-overflow: ellipsis;
         overflow: hidden;
         line-height: 1.67em;
-        .grid-offer-h2 {
-          @extend %overflow-text;
-          display: inline;
-          font-size: 1.6em;
-          color: $header-color;
-          font-weight: 700;
-        }
         .grid-offer-h4 {
           @extend %overflow-text;
-          float: left;
-          width: 90%;
-          margin-top: 2px;
+          color: $title-color;
           display: inline;
           font-size: 1.2em;
           font-weight: 700;
         }
       }
       .price-grid-cont {
-        border-top: 1px solid $border-color;
         padding: 0 30px 0 30px;
+        background-color: $brand-color;
+        color: $text-over-brand;
         .grid-price-label {
-          line-height: 42px;
+          line-height: 40px;
           font-weight: bold;
-          font-size: 1.17em;
-          width: 40%;
+          font-size: 1em;
+          width: 70%;
+          @extend %overflow-text;
         }
         .grid-price {
-          width: 60%;
-          height: 42px;
-          font-size: 1.38em;
+          width: 30%;
+          height: 40px;
+          font-size: 1.18em;
           font-weight: bold;
           text-align: right;
-          line-height: 42px;
+          line-height: 40px;
         }
       }
       .grid-offer-params {
-        background: $features-bg-color;
         float: left;
         width: 100%;
-        color: #fff;
+        color: $subtitle-color;
+        border-top: 1px solid $border-color;
         ul {
           @extend %overflow-text;
           display: block;
@@ -336,7 +451,6 @@ body {
           padding: 0 10px;
           list-style: disc;
           width: 100%;
-          font-weight: bold;
           height: 42px;
           li {
             @extend %overflow-text;

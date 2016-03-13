@@ -19,20 +19,19 @@ class PropertyGrid extends React.Component {
                   <div className="ads-flag"><Translate content="property.flags.new" /></div>
                 </div>
               </div>
-              <div className="grid-offer-text">
-                <div className="grid-offer-h2">{property.suburb}</div>
-                <div className="grid-offer-h4">{property.address}</div>
-                <div className="clearfix"></div>
-                <p>{property.details}</p>
-                <div className="clearfix"></div>
-              </div>
               <div className="price-grid-cont">
                 <div className="grid-price-label pull-left">
-                  <Translate content="property.details.price" />:
+                  {property.address}
                 </div>
                 <div className="grid-price pull-right">
                   ${property.price}
                 </div>
+                <div className="clearfix"></div>
+              </div>
+              <div className="grid-offer-text">
+                <div className="grid-offer-h4">{property.suburb}</div>
+                <div className="clearfix"></div>
+                <p>{property.details}</p>
                 <div className="clearfix"></div>
               </div>
               <div className="grid-offer-params">
