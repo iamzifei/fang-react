@@ -5,11 +5,19 @@
   "petAllowed": "可养宠物",
   "billInclude": "包水电",
   "fastInternet": "高速网络",
+  "whole": "整套公寓",
+  "apartment": "公寓",
+  "house": "House",
+  "studio": "Studio",
   "home": {
     "property": {
       "list": {
         "title": "共有%(count)s套公寓"
       }
+    },
+    "jumbotron": {
+      "title": "寻找属于你的公寓",
+      "subtitle": "帮你找到理想的住所"
     }
   },
   "pagination": {

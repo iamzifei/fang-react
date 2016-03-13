@@ -6,6 +6,7 @@ import PropertyList from './PropertyList'
 import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
 import SearchRefine from './SearchRefine'
+import Navbar from './Navbar'
 
 class Search extends React.Component {
   static getStores() {
@@ -84,31 +85,34 @@ class Search extends React.Component {
     } = this.props
 
     return (
-      <div className="container">
-        <Translate
-          suburb={suburbName}
-          content="search.title"
-          count={this.props.propertiesCount}
-          component="h3"
-          className="text-center"
-        />
-        <div className="row">
-          <div id="results">
-            <ul className="list-offer-col">{propertyNodes}</ul>
-          </div>
-          <SearchRefine {...filters} />
-          <div id="react-paginate">
-            <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
-              nextLabel={<Translate content="pagination.next" />}
-              breakLabel={<li className="break"><a href="">...</a></li>}
-              pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              clickCallback={this.handlePageClick}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
+      <div>
+        <Navbar pageFlag="searchResult" history={this.props.history} />
+        <div className="container">
+          <Translate
+            suburb={suburbName}
+            content="search.title"
+            count={this.props.propertiesCount}
+            component="h3"
+            className="text-center"
+          />
+          <div className="row">
+            <div id="results">
+              <ul className="list-offer-col">{propertyNodes}</ul>
+            </div>
+            <SearchRefine suburb={this.props.params.suburb} />
+            <div id="react-paginate">
+              <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
+                nextLabel={<Translate content="pagination.next" />}
+                breakLabel={<li className="break"><a href="">...</a></li>}
+                pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                clickCallback={this.handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ class SearchStore {
   }
 
   onSearchPropertiesSuccess(payload) {
-    payload.history.pushState(null, `/properties/${payload.suburb}`)
+    browserHistory.push(`/properties/${payload.suburb}`)
   }
 
   onSearchPropertiesFail(payload) {

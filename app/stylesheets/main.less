@@ -5,31 +5,37 @@
 /*
  * Bootstrap overrides.
  */
-@body-bg: #f0f3f4;
-@text-color: #58666f;
+@body-bg: #fff;
+@text-color: #000;
 @font-family-base: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-@link-color: #363f34;
-@link-hover-color: #141718;
+@link-color: #212121;
+@link-hover-color: #F44336;
 
-@navbar-default-bg: #fff;
-@navbar-default-link-color: #353f44;
-@navbar-default-link-hover-bg: #f6f7f7;
-@navbar-default-link-active-bg: #f6f7f7;
+@navbar-default-bg: #212121;
+@navbar-default-link-color: #fff;
+@navbar-default-link-hover-color: #fff;
+@navbar-default-link-active-color: #F44336;
+@navbar-default-link-hover-bg: transparent;
+@navbar-default-link-active-bg: transparent;
 
-@btn-default-color: #58666e;
-@btn-default-border: #dee5e7;
+@navbar-default-toggle-border-color: #333;
+@navbar-default-toggle-icon-bar-bg: #fff;
+@navbar-default-toggle-hover-bg: #333;
 
-@btn-primary-color: #fff;
-@btn-primary-bg: #7266bb;
-@btn-primary-border: #7266bb;
+@btn-default-color: #fefefe;
+@btn-default-border: #F44336;
+
+@btn-primary-color: #fefefe;
+@btn-primary-bg: #F44336;
+@btn-primary-border: #F44336;
 
 @btn-success-color: #fff;
 @btn-success-bg: #27d24b;
 @btn-success-border: #27d24b;
 
 @btn-info-color: #fff;
-@btn-info-bg: #23b7f5;
-@btn-info-border: #23b7f5;
+@btn-info-bg: #3498DB;
+@btn-info-border: #3498DB;
 
 @btn-warning-color: #fff;
 @btn-warning-bg: #fac732;
@@ -39,11 +45,11 @@
 @btn-danger-bg: #f15051;
 @btn-danger-border: #f15051;
 
-@panel-default-border: #dee5e7;
-@panel-border-radius: 2px;
-@panel-default-heading-bg: #f6f8f8;
+@panel-default-border: #ececec;
+@panel-border-radius: 5px;
+@panel-default-heading-bg: #F44336;
 
-@screen-sm: 800px;
+@screen-sm: 767px;
 
 html {
   position: relative;
@@ -59,12 +65,12 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  color: #fff;
-  background-color: #3b3f51;
+  color: #727272;
+  background-color: #212121;
 }
 
 footer a {
-  color: #fff;
+  color: #727272;
   text-decoration: underline;
 
   &:hover,
@@ -93,10 +99,6 @@ footer .thumb-md {
   top: -10px;
   padding: 2px 5px;
 }
-
-//.navbar-form .input-group-btn .btn-default {
-//  padding: 9px 12px;
-//}
 
 .input-group-btn:last-child > .btn,
 .input-group-btn:last-child > .btn-group {
@@ -286,7 +288,6 @@ footer .thumb-md {
 }
 
 .navbar-default .navbar-brand {
-  margin-left: 40px;
   font-size: 20px;
   font-weight: 700;
 }
@@ -716,8 +717,8 @@ label {
 
 .triangles {
   position: absolute;
-  top: 25px;
-  left: 30px;
+  top: 17px;
+  right: 40px;
   height: @trih * 3;
   width: @triw * 3;
   transform: translate(-50%, -50%);
