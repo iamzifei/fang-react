@@ -25,7 +25,6 @@ class SearchRefine extends React.Component {
 
     return function(event) {
       SearchActions.searchRefinedFilter(refinedFilter)
-      // SearchActions.searchPropertiesRefine(...refinedFilter)
     }
   }
 
@@ -65,10 +64,10 @@ class SearchRefine extends React.Component {
             <strong><Translate content="search.refine.term.any" /></strong>
           </li>
           <li>
-            <a href="/sydney/short-term"><Translate content="search.refine.term.short" /></a>
+            <a onClick={this._onRefine({ term: 'short' })}><Translate content="search.refine.term.short" /></a>
           </li>
           <li>
-            <a href="/sydney/long-term"><Translate content="search.refine.term.long" /></a>
+            <a onClick={this._onRefine({ term: 'long' })}><Translate content="search.refine.term.long" /></a>
           </li>
         </ul>
         <h3><Translate content="search.refine.room.label" /></h3>
