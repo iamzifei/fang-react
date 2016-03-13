@@ -80,10 +80,6 @@ class Search extends React.Component {
       )
     })
 
-    const {
-      filters
-    } = this.props
-
     return (
       <div>
         <Navbar pageFlag="searchResult" history={this.props.history} />
@@ -99,7 +95,7 @@ class Search extends React.Component {
             <div id="results">
               <ul className="list-offer-col">{propertyNodes}</ul>
             </div>
-            <SearchRefine suburb={this.props.params.suburb} />
+            <SearchRefine {...this.props.filters} />
             <div id="react-paginate">
               <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
                 nextLabel={<Translate content="pagination.next" />}
@@ -122,6 +118,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   params: React.PropTypes.object,
+  filters: React.PropTypes.object,
   limit: React.PropTypes.number,
   propertiesCount: React.PropTypes.number,
   properties: React.PropTypes.array,

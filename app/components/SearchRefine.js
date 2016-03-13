@@ -18,12 +18,14 @@ class SearchRefine extends React.Component {
   };
 
   _onRefine(filter = {}) {
-    const refinedFilter = Object.assign({}, filter)
-
-    filterList
-      .forEach(key => refinedFilter[key] = refinedFilter[key] || this.props[key])
+    const self = this
+    let refinedFilter = Object.assign({}, filter)
 
     return function(event) {
+
+      filterList
+        .forEach(key => refinedFilter[key] = refinedFilter[key] || self.props[key])
+
       SearchActions.searchRefinedFilter(refinedFilter)
     }
   }
