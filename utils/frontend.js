@@ -17,8 +17,13 @@ $(document).ready(function(){
   $(window).resize(function() {
     if($(window).width() > 767) {
       $(".navbar-fixed-top.home").css("background-color", "transparent");
+      $("#refine").removeClass("data-refine");
     } else {
       $(".navbar-fixed-top.home").css("background-color", "#212121");
     }
+  });
+
+  $(".navbar.searchResult").click(function(){
+    $("#refine").toggleClass("data-refine");
   });
 });

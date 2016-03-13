@@ -23,6 +23,7 @@ class Navbar extends React.Component {
               <img alt={counterpart('nav.name')} src="/img/logo.png" />
             </Link>
             <SearchBox history={this.props.history} />
+            <span className="glyphicon glyphicon-filter"></span>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav navbar-right">

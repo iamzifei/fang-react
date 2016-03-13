@@ -15,14 +15,9 @@ $border-color: #ececec;
 $header-color: #000;
 $features-bg-color: #1b2835;
 
-$break-small: 320px;
-$break-medium: 640px;
-$break-large: 1200px;
-
-$break-small-theme-max: 480px;
-$break-medium-theme-max: 767px;
-$break-medium-large-theme-max: 991px;
-$break-large-max: 1199px;
+$break-small: 480px;
+$break-medium: 767px;
+$break-large: 1199px;
 
 %overflow-text {
   white-space: nowrap;
@@ -79,7 +74,7 @@ body {
     p.lead {
       font-size: 1.2em;
     }
-    @media screen and (min-width: $break-small-theme-max) {
+    @media screen and (min-width: $break-small) {
       bottom: 35%;
       h1 {
         font-size: 36px;
@@ -91,7 +86,7 @@ body {
   }
   .navbar-form {
     display: none;
-    @media screen and (min-width: $break-small-theme-max) {
+    @media screen and (min-width: $break-small) {
       display: block;
       width: 50%;
       left: 25%;
@@ -104,14 +99,29 @@ body {
 .navbar.home {
   .navbar-form {
     display: block;
-    @media screen and (min-width: $break-small-theme-max) {
+    @media screen and (min-width: $break-small) {
       display: none;
     }
   }
 
-  @media screen and (min-width: $break-medium-theme-max) {
+  @media screen and (min-width: $break-medium) {
     background-color: transparent;
     box-shadow: none;
+  }
+}
+
+.navbar.searchResult {
+  .glyphicon-filter {
+    display: none;
+    @media screen and (max-width: $break-medium) {
+      padding: 16px;
+      position: absolute;
+      right: 60px;
+      color: white;
+      font-size: 18px;
+      display: block;
+      cursor: pointer;
+    }
   }
 }
 
@@ -127,7 +137,10 @@ body {
       margin-top: -10px;
     }
   }
-  @media screen and (min-width: $break-medium-theme-max) {
+  .glyphicon-filter {
+    display: none;
+  }
+  @media screen and (min-width: $break-medium) {
     .navbar-brand {
       img {
         width: 50px;
@@ -151,7 +164,7 @@ body {
         }
       }
     }
-    @media screen and (min-width: $break-medium-theme-max) {
+    @media screen and (min-width: $break-medium) {
       background: transparent;
       a {
         padding-top: 30px;
@@ -180,7 +193,7 @@ body {
     border: 0;
     left: 70px;
     margin: 8px 0;
-    @media screen and (min-width: $break-medium-theme-max) {
+    @media screen and (min-width: $break-medium) {
       margin: 23px 0;
       left: 80px;
     }
@@ -499,20 +512,21 @@ footer {
 }
 
 #refine {
-  padding: 60px 4% 20px;
   border-bottom: 0;
-  background: #fff;
-  position: fixed;
-  //display: none;
+  background: $body-bg;
   text-align: left;
   float: right;
-  height: 100%;
-  width: 320px;
   top: 0;
   right: 0;
   overflow: scroll;
   z-index: 700;
-  @extend %box-shadow;
+  padding: 70px 2% 20px;
+  display: block;
+  width: 30%;
+  height: auto;
+  position: relative;
+  padding-top: 1em !important;
+  @extend %no-box-shadow;
   a[data-closerefine] {
     position: fixed;
     top: 50px;
@@ -521,19 +535,22 @@ footer {
     color: #666;
     font-size: 1.5em;
     padding: 10px;
+    display: none;
   }
-  @media screen and (min-width: $break-medium) {
-    padding: 70px 2% 20px;
-    display: block;
-    width: 30%;
-    height: auto;
-    position: relative;
-    padding-top: 1em !important;
-    background: #fff;
-    @extend %no-box-shadow;
+  @media screen and (max-width: $break-medium) {
+    padding: 60px 4% 20px;
+    position: fixed;
+    display: none;
+    height: 100%;
+    width: 320px;
+    display: none;
     a[data-closerefine] {
-      display: none;
+      display: block;
     }
+  }
+  &.data-refine {
+    display: block;
+    @extend %box-shadow;
   }
   h3 {
     clear: both;
