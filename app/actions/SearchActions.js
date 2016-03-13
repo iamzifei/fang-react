@@ -1,6 +1,7 @@
 import alt from '../alt'
 import { assign } from 'underscore'
 import request from 'superagent'
+import { browserHistory } from 'react-router'
 
 class SearchActions {
   constructor() {
@@ -127,6 +128,21 @@ class SearchActions {
     })
   }
 
+  searchRefinedFilter(filter) {
+    const {
+      suburb, ...other
+    } = filter
+
+    const querys = Object.keys(other)
+      .map(key => [key, other[key]].join('='))
+      .join('&')
+
+    browserHistory
+      .push({
+        pathname: `/api/search/refine/${suburb}`,
+        search: `?${querys}`
+      })
+  }
 }
 
 export default alt.createActions(SearchActions)

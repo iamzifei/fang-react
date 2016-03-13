@@ -1,9 +1,34 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
-import { Link } from 'react-router'
+import SearchActions from '../actions/SearchActions'
+
+const filterList = ['suburb', 'offset', 'sort', 'terms', 'room', 'property', 'feature', 'misc']
 
 class SearchRefine extends React.Component {
+  static PropTypes = {
+    suburb: PropTypes.string,
+    offset: PropTypes.string,
+    sort: PropTypes.string,
+    terms: PropTypes.string,
+    room: PropTypes.string,
+    property: PropTypes.string,
+    feature: PropTypes.string,
+    misc: PropTypes.string
+  };
+
+  _onRefine(filter = {}) {
+    const refinedFilter = Object.assign({}, filter)
+
+    filterList
+      .forEach(key => refinedFilter[key] = refinedFilter[key] || this.props[key])
+
+    return function(event) {
+      SearchActions.searchRefinedFilter(refinedFilter)
+      // SearchActions.searchPropertiesRefine(...refinedFilter)
+    }
+  }
+
   render() {
     const propertyFeatures = [
       'furnished',
@@ -21,17 +46,17 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.sort.label" /></h3>
         <ul>
           <li>
-            <Link to={api} query={{ sort: 'time' }}>
+            <a onClick={this._onRefine({ sort: 'time' })}>
               <Translate content="search.refine.sort.newest" />
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to={api} query={{ sort: 'priceUp' }}>
+            <a onClick={this._onRefine({ sort: 'priceUp' })}>
               <Translate content="search.refine.sort.cheapest" />
-            </Link>
+            </a>
           </li>
           <li>
-            <a href="/sydney/dearest"><Translate content="search.refine.sort.dearest" /></a>
+            <a onClick={this._onRefine({ sort: 'priceDown' })}><Translate content="search.refine.sort.dearest" /></a>
           </li>
         </ul>
         <h3><Translate content="search.refine.term.label" /></h3>
