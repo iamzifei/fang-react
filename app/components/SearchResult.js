@@ -36,6 +36,9 @@ class SearchResult extends React.Component {
         duration: 300
       }
     })
+    if (this.props.location.query && this.props.location.query.suburb) {
+        SearchActions.keepSuburb(this.props.location.query.suburb)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -44,8 +47,6 @@ class SearchResult extends React.Component {
     // Fetch new properties data when URL path changes
     if (prevProps.location.pathname === this.props.location.pathname && prevProps.location.search !== this.props.location.search) {
       this.getPropertyList()
-    } else if (prevProps.location.pathname === this.props.location.pathname) {
-      //SearchActions.keepSuburb(this.props.location.query.suburb)
     }
   }
 
