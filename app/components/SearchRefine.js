@@ -3,7 +3,7 @@ import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
 
-const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
+const filterList = ['suburb', 'sort', 'term', 'room', 'property', 'feature', 'misc']
 
 class SearchRefine extends React.Component {
   static PropTypes = {
