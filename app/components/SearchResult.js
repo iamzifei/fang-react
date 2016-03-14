@@ -39,7 +39,7 @@ class SearchResult extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
-    if (prevProps.location === this.props.location && prevProps.location.search !== this.props.location.search) {
+    if (prevProps.location.pathname === this.props.location.pathname && prevProps.location.search !== this.props.location.search) {
       this.getPropertyList()
     }
   }
