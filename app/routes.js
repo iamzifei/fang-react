@@ -10,7 +10,7 @@ export default (
   <Route component={App}>
     <Route path="/" component={Home} />
       <Route path="/add" component={AddProperty} />
-      <Route path="/properties/:suburb" component={SearchResult} />
+      <Route path="/properties" component={SearchResult} />
       <Route path="/property/:id" component={Property} />
   </Route>
 )

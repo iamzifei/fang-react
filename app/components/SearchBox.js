@@ -52,10 +52,7 @@ class SearchBox extends React.Component {
   }
 
   propertySearch(searchQuery) {
-    SearchActions.searchProperties({
-      searchQuery,
-      searchForm: this.refs.searchForm
-    })
+    SearchActions.searchPropertiesBySuburb(searchQuery)
   }
 
   handleSubmit(event) {

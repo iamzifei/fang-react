@@ -57,14 +57,6 @@ app.get('/api/suburb', function(req, res, next) {
 });
 
 /**
- * GET /api/properties/count
- * Returns the total number of properties.
- */
-app.get('/api/properties/count', function(req, res, next) {
-  searchService.getNumberOfProperties(req, res, next);
-});
-
-/**
  * GET /api/properties
  * Returns all properties.
  */
@@ -73,39 +65,21 @@ app.get('/api/properties', function(req, res, next) {
 });
 
 /**
- * GET /api/properties/search
- * Looks up a property by suburb or postcode.
- */
-app.get('/api/properties/search', function(req, res, next) {
-  res.send({suburb:req.query.suburb});
-});
-
-/**
- * GET /api/search/:suburb
- * List all properties in suburb.
- */
-app.get('/api/search/:suburb', function(req, res, next) {
-  searchService.getPropertiesBySuburb(req, res, next);
-});
-
-/**
- * GET /api/search/refine/:suburb
- * ?sort=desc&terms=s&room=single&property=house&feature=furnished
+ * GET /api/search
+ * ?suburb=2134&sort=time&term=s&room=single&property=house&feature=furnished
  * &feature=femalePrefer&feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
  * Looks up a property by search refinement criteria
  */
-app.get('/api/search/refine/:suburb', function(req, res, next) {
-  searchService.getPropertiesByRefineCriteria(req, res, next);
+app.get('/api/search', function(req, res, next) {
+  searchService.getPropertiesByCriteria(req, res, next);
 });
 
 /**
- * GET /api/count/refine
- * ?sort=desc&terms=s&room=single&property=house&feature=furnished
- * &feature=femalePrefer&feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
- * Returns the total number of properties by refinement criteria
+ * GET /api/count
+ * Returns the total number of properties by filters
  */
-app.get('/api/count/refine', function(req, res, next) {
-  searchService.getNumberOfPropertiesByRefineCriteria(req, res, next);
+app.get('/api/count', function(req, res, next) {
+  searchService.getNumberOfProperties(req, res, next);
 });
 
 /**

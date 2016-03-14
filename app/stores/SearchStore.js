@@ -11,7 +11,15 @@ class SearchStore {
     this.limit = 5
     this.properties = []
     this.propertiesCount = 0
-    this.filters = {}
+    this.filters = {
+      suburb: '',
+      sort: '',
+      term: '',
+      room: '',
+      property: '',
+      feature: '',
+      misc: ''
+    }
   }
 
   onUpdateAjaxAnimation(className) {
@@ -19,15 +27,11 @@ class SearchStore {
     this.ajaxAnimationClass = className
   }
 
-  onSearchPropertiesSuccess(payload) {
-    browserHistory.push(`/properties/${payload.suburb}`)
-  }
-
-  onSearchPropertiesFail(payload) {
-    payload.searchForm.classList.add('shake')
-    setTimeout(() => {
-      payload.searchForm.classList.remove('shake')
-    }, 1000)
+  onSearchPropertiesSuccess(suburb) {
+    browserHistory.push({
+      pathname: '/properties',
+      search: `?suburb=${suburb}`
+    })
   }
 
   onUpdateSearchQueryValue(value) {
@@ -39,7 +43,7 @@ class SearchStore {
     this.suburbs = data
   }
 
-  onSearchSuburbFail(errorMessage) {
+  onDisplayFailMessage(errorMessage) {
     toastr.error(errorMessage)
   }
 
@@ -48,29 +52,21 @@ class SearchStore {
     this.limit = data.limit
   }
 
-  onGetPropertiesListFail(errorMessage) {
-    toastr.error(errorMessage)
-  }
-
   onGetPropertyCountSuccess(data) {
     this.propertiesCount = data.count
-  }
-
-  onGetPropertyCountFail(jqXhr) {
-    toastr.error(jqXhr.responseJSON.message)
   }
 
   onFilterChange(filter) {
     this.filters = filter
 
-    const querys = Object.keys(this.filters)
-      .filter(key => !!this.filters[key] && key !== 'suburb')
+    const queries = Object.keys(this.filters)
+      //.filter(key => !!this.filters[key] && key !== 'suburb')
       .map(key => [key, this.filters[key]].join('='))
       .join('&')
 
     browserHistory.push({
-      pathname: `/properties/${this.filters.suburb || ''}`,
-      search: `?${querys}`
+      pathname: `/properties`,
+      search: `?${queries}`
     })
   }
 }

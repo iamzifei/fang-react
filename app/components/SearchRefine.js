@@ -3,7 +3,7 @@ import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
 
-const filterList = ['suburb', 'offset', 'sort', 'terms', 'room', 'property', 'feature', 'misc']
+const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
 
 class SearchRefine extends React.Component {
   static PropTypes = {
@@ -38,8 +38,6 @@ class SearchRefine extends React.Component {
       'billInclude',
       'fastInternet'
     ]
-    // ?sort=desc&terms=s&room=private&property=house&feature=furnished&feature=femalePrefer
-    // &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet&misc=photo
     return (
       <div id="refine">
         <h3><Translate content="search.refine.sort.label" /></h3>
@@ -63,7 +61,7 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.term.label" /></h3>
         <ul>
           <li>
-            <a onClick={this._onRefine({ term: '' })}>
+            <a onClick={this._onRefine({ term: 'any' })}>
               <Translate content="search.refine.term.any" />
             </a>
           </li>
@@ -81,7 +79,7 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.room.label" /></h3>
         <ul>
           <li>
-            <a onClick={this._onRefine({ room: '' })}>
+            <a onClick={this._onRefine({ room: 'any' })}>
               <Translate content="search.refine.room.all" />
             </a>
           </li>
@@ -109,7 +107,7 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.property.label" /></h3>
         <ul>
           <li>
-            <a onClick={this._onRefine({ property: '' })}>
+            <a onClick={this._onRefine({ property: 'any' })}>
               <Translate content="search.refine.property.all" />
             </a>
           </li>
@@ -137,7 +135,7 @@ class SearchRefine extends React.Component {
         <h3><Translate content="search.refine.feature.label" /></h3>
         <ul>
           <li>
-            <a onClick={this._onRefine({ feature: '' })}>
+            <a onClick={this._onRefine({ feature: 'any' })}>
               <Translate content="search.refine.feature.any" />
             </a>
           </li>
