@@ -267,6 +267,9 @@ footer {
   text-transform: uppercase;
   font-weight: bold;
   color: $text-over-brand;
+  @media screen and (max-width: $break-small) {
+    display: none;
+  }
   .estate-type {
     float: left;
     margin-right: 5px;
@@ -378,6 +381,14 @@ footer {
           width: 75%;
           color: $text-color;
           @extend %overflow-text;
+        }
+        @media screen and (max-width: $break-small) {
+          h2, h3 {
+            font-size: 1.4em;
+          }
+          h4 {
+            font-size: 1em;
+          }
         }
         p {
           clear: both;

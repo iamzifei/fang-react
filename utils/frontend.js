@@ -23,7 +23,7 @@ $(document).ready(function(){
     }
   });
 
-  $(".navbar.searchResult").click(function(){
+  $(".navbar.searchResult .glyphicon-filter").click(function(){
     $("#refine").toggleClass("data-refine");
   });
 
