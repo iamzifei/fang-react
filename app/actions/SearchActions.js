@@ -1,5 +1,4 @@
 import alt from '../alt'
-import { assign } from 'underscore'
 import request from 'superagent'
 
 class SearchActions {
@@ -12,7 +11,7 @@ class SearchActions {
       'getPropertiesListSuccess',
       'getPropertyCountSuccess',
       'displayFailMessage',
-      'keepSuburbSuccess',
+      'updateFiltersSuccess',
       'filterChange'
     )
   }
@@ -61,18 +60,18 @@ class SearchActions {
    * &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
    * Looks up a property by search refinement and criteria
    */
-  getPropertyCount(suburb = -1, sort, terms, room, property, feature, misc) {
+  getPropertyCount(suburb = -1, sort, term, room, property, feature, misc) {
     request.get('/api/count')
       .query({
         suburb,
         sort,
-        terms,
+        term,
         room,
         property,
         feature,
         misc
       })
-      .end((err, res) => {3
+      .end((err, res) => {
         if (err) {
           this.actions.displayFailMessage(err.response)
         } else {
@@ -82,7 +81,7 @@ class SearchActions {
   }
 
   searchProperties(suburb, offset, sort, term, room, property, feature, misc) {
-    console.log(arguments)
+    console.log(`suburb: ${suburb}, offset: ${offset}, sort: ${sort}, term: ${term}, room: ${room}, property: ${property}, feature: ${feature}, misc: ${misc}`)
     request.get('/api/search')
     .query({
       suburb,
@@ -112,8 +111,8 @@ class SearchActions {
     this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
   }
 
-  keepSuburb(suburb) {
-    this.actions.keepSuburbSuccess(suburb)
+  updateFilters(filters) {
+    this.actions.updateFiltersSuccess(filters)
   }
 }
 

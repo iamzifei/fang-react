@@ -37,36 +37,35 @@ class SearchResult extends React.Component {
       }
     })
     if (this.props.location.query && this.props.location.query.suburb) {
-        SearchActions.keepSuburb(this.props.location.query.suburb)
+      SearchActions.updateFilters(this.props.location.query)
     }
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update prev ' + prevProps.location.search)
-    console.log('update current ' + this.props.location.search)
     // Fetch new properties data when URL path changes
-    if (prevProps.location.pathname === this.props.location.pathname && prevProps.location.search !== this.props.location.search) {
+    if (prevProps.location.pathname === this.props.location.pathname
+      && prevProps.location.search !== this.props.location.search) {
       this.getPropertyList()
     }
   }
 
   getPropertyList() {
     SearchActions.searchProperties(
-      this.props.location.query.suburb,
+      this.props.filters.suburb,
       0,
-      this.props.location.query.sort,
-      this.props.location.query.terms,
-      this.props.location.query.room,
-      this.props.location.query.property,
-      this.props.location.query.feature
+      this.props.filters.sort,
+      this.props.filters.terms,
+      this.props.filters.room,
+      this.props.filters.property,
+      this.props.filters.feature
     )
     SearchActions.getPropertyCount(
-      this.props.location.query.suburb,
-      this.props.location.query.sort,
-      this.props.location.query.terms,
-      this.props.location.query.room,
-      this.props.location.query.property,
-      this.props.location.query.feature
+      this.props.filters.suburb,
+      this.props.filters.sort,
+      this.props.filters.terms,
+      this.props.filters.room,
+      this.props.filters.property,
+      this.props.filters.feature
     )
   }
 

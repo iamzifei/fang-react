@@ -67,8 +67,8 @@
       "property": {
         "label": "物业类型",
         "all": "不限类型",
-        "house": "House内房间",
-        "apart": "公寓内房间",
+        "house": "House",
+        "apart": "Apartment/Unit",
         "studio": "Studio",
         "flat": "整套出租"
       },

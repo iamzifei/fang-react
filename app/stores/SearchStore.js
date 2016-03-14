@@ -12,7 +12,7 @@ class SearchStore {
     this.properties = []
     this.propertiesCount = 0
     this.filters = {
-      suburb: '',
+      suburb: this.searchQuery,
       sort: '',
       term: '',
       room: '',
@@ -28,6 +28,7 @@ class SearchStore {
   }
 
   onSearchPropertiesSuccess(suburb) {
+    this.filters.suburb = suburb
     browserHistory.push({
       pathname: '/properties',
       search: `?suburb=${suburb}`
@@ -39,8 +40,9 @@ class SearchStore {
     this.filters.suburb = value
   }
 
-  onKeepSuburbSuccess(suburb) {
-    this.searchQuery = suburb
+  onUpdateFiltersSuccess(filters) {
+    this.searchQuery = filters.suburb
+    this.filters = filters
   }
 
   onSearchSuburbSuccess(data) {
@@ -64,12 +66,11 @@ class SearchStore {
     this.filters = filter
 
     const queries = Object.keys(this.filters)
-      //.filter(key => !!this.filters[key] && key !== 'suburb')
       .map(key => [key, this.filters[key]].join('='))
       .join('&')
 
     browserHistory.push({
-      pathname: `/properties`,
+      pathname: '/properties',
       search: `?${queries}`
     })
   }
