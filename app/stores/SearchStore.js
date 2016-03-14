@@ -39,6 +39,10 @@ class SearchStore {
     this.filters.suburb = value
   }
 
+  onKeepSuburbSuccess(suburb) {
+    this.searchQuery = suburb
+  }
+
   onSearchSuburbSuccess(data) {
     this.suburbs = data
   }

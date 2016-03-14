@@ -12,6 +12,7 @@ class SearchActions {
       'getPropertiesListSuccess',
       'getPropertyCountSuccess',
       'displayFailMessage',
+      'keepSuburbSuccess',
       'filterChange'
     )
   }
@@ -109,6 +110,10 @@ class SearchActions {
 
     this.actions.filterChange(filter)
     this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
+  }
+
+  keepSuburb(suburb) {
+    this.actions.keepSuburbSuccess(suburb)
   }
 }
 
