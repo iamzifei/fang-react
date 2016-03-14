@@ -267,35 +267,40 @@ class AddProperty extends React.Component {
                       </div>
                       <div className="checkbox checkbox-inline">
                         <input type="checkbox" name="propertyFeature" id="femalePrefer"
-                          value="femalePrefer" checked={this.state.propertyFeature === 'femalePrefer'}
+                          value="femalePrefer"
+                          checked={this.state.propertyFeature === 'femalePrefer'}
                           onChange={this.onFieldChange}
                         />
                         <label htmlFor="femalePrefer">Female Prefer</label>
                       </div>
                       <div className="checkbox checkbox-inline">
                         <input type="checkbox" name="propertyFeature" id="nonSmoker"
-                          value="nonSmoker" checked={this.state.propertyFeature === 'nonSmoker'}
+                          value="nonSmoker"
+                          checked={this.state.propertyFeature === 'nonSmoker'}
                           onChange={this.onFieldChange}
                         />
                         <label htmlFor="nonSmoker">Non Smoker</label>
                       </div>
                       <div className="checkbox checkbox-inline">
                         <input type="checkbox" name="propertyFeature" id="petAllowed"
-                          value="petAllowed" checked={this.state.propertyFeature === 'petAllowed'}
+                          value="petAllowed"
+                          checked={this.state.propertyFeature === 'petAllowed'}
                           onChange={this.onFieldChange}
                         />
                         <label htmlFor="petAllowed">Pet Allowed</label>
                       </div>
                       <div className="checkbox checkbox-inline">
                         <input type="checkbox" name="propertyFeature" id="billInclude"
-                          value="billInclude" checked={this.state.propertyFeature === 'billInclude'}
+                          value="billInclude"
+                          checked={this.state.propertyFeature === 'billInclude'}
                           onChange={this.onFieldChange}
                         />
                         <label htmlFor="billInclude">Bill Included</label>
                       </div>
                       <div className="checkbox checkbox-inline">
                         <input type="checkbox" name="propertyFeature" id="fastInternet"
-                          value="fastInternet" checked={this.state.propertyFeature === 'fastInternet'}
+                          value="fastInternet"
+                          checked={this.state.propertyFeature === 'fastInternet'}
                           onChange={this.onFieldChange}
                         />
                         <label htmlFor="fastInternet">Fast Internet</label>

@@ -19,10 +19,9 @@ class SearchRefine extends React.Component {
 
   _onRefine(filter = {}) {
     const self = this
-    let refinedFilter = Object.assign({}, filter)
+    const refinedFilter = Object.assign({}, filter)
 
-    return function(event) {
-
+    return function (event) {
       filterList
         .forEach(key => refinedFilter[key] = refinedFilter[key] || self.props[key])
 
@@ -39,7 +38,6 @@ class SearchRefine extends React.Component {
       'billInclude',
       'fastInternet'
     ]
-    const api = `/properties/refine/${this.props.suburb}`
     // ?sort=desc&terms=s&room=private&property=house&feature=furnished&feature=femalePrefer
     // &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet&misc=photo
     return (
@@ -57,66 +55,93 @@ class SearchRefine extends React.Component {
             </a>
           </li>
           <li>
-            <a onClick={this._onRefine({ sort: 'priceDown' })}><Translate content="search.refine.sort.dearest" /></a>
+            <a onClick={this._onRefine({ sort: 'priceDown' })}>
+              <Translate content="search.refine.sort.dearest" />
+            </a>
           </li>
         </ul>
         <h3><Translate content="search.refine.term.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.term.any" /></strong>
+            <a onClick={this._onRefine({ term: '' })}>
+              <Translate content="search.refine.term.any" />
+            </a>
           </li>
           <li>
-            <a onClick={this._onRefine({ term: 'short' })}><Translate content="search.refine.term.short" /></a>
+            <a onClick={this._onRefine({ term: 's' })}>
+              <Translate content="search.refine.term.short" />
+            </a>
           </li>
           <li>
-            <a onClick={this._onRefine({ term: 'long' })}><Translate content="search.refine.term.long" /></a>
+            <a onClick={this._onRefine({ term: 'l' })}>
+              <Translate content="search.refine.term.long" />
+            </a>
           </li>
         </ul>
         <h3><Translate content="search.refine.room.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.room.all" /></strong>
+            <a onClick={this._onRefine({ room: '' })}>
+              <Translate content="search.refine.room.all" />
+            </a>
           </li>
           <li>
-            <a href="/sydney/private-rooms"><Translate content="search.refine.room.private" /></a>
+            <a onClick={this._onRefine({ room: 'private' })}>
+              <Translate content="search.refine.room.private" />
+            </a>
           </li>
           <li>
-            <a href="/sydney/shared-rooms"><Translate content="search.refine.room.shared" /></a>
+            <a onClick={this._onRefine({ room: 'shared' })}>
+              <Translate content="search.refine.room.shared" />
+            </a>
           </li>
           <li>
-            <a href="/sydney/private-rooms"><Translate content="search.refine.room.living" /></a>
+            <a onClick={this._onRefine({ room: 'living' })}>
+              <Translate content="search.refine.room.living" />
+            </a>
           </li>
           <li>
-            <a href="/sydney/shared-rooms"><Translate content="search.refine.room.master" /></a>
+            <a onClick={this._onRefine({ room: 'master' })}>
+              <Translate content="search.refine.room.master" />
+            </a>
           </li>
         </ul>
         <h3><Translate content="search.refine.property.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.property.all" /></strong>
+            <a onClick={this._onRefine({ property: '' })}>
+              <Translate content="search.refine.property.all" />
+            </a>
           </li>
           <li>
-            <a href="/share-houses/sydney"><Translate content="search.refine.property.house" /></a>
+            <a onClick={this._onRefine({ property: 'house' })}>
+              <Translate content="search.refine.property.house" />
+            </a>
           </li>
           <li>
-            <a href="/flatshares/sydney"><Translate content="search.refine.property.apart" /></a>
+            <a onClick={this._onRefine({ property: 'apartment' })}>
+              <Translate content="search.refine.property.apart" />
+            </a>
           </li>
           <li>
-            <a href="/granny-flats/sydney"><Translate content="search.refine.property.studio" /></a>
+            <a onClick={this._onRefine({ property: 'studio' })}>
+              <Translate content="search.refine.property.studio" />
+            </a>
           </li>
           <li>
-            <a href="/studios/sydney"><Translate content="search.refine.property.flat" /></a>
+            <a onClick={this._onRefine({ property: 'whole' })}>
+              <Translate content="search.refine.property.flat" />
+            </a>
           </li>
         </ul>
         <h3><Translate content="search.refine.feature.label" /></h3>
         <ul>
           <li>
-            <strong><Translate content="search.refine.feature.any" /></strong>
+            <a onClick={this._onRefine({ feature: '' })}>
+              <Translate content="search.refine.feature.any" />
+            </a>
           </li>
-          <li>
-            <Translate content="search.refine.misc.photo" />
-          </li>
-          <PropertyFeature propertyFeatures={propertyFeatures} selected="any" />
+          <PropertyFeature propertyFeatures={propertyFeatures} ref="refine" />
         </ul>
         <a data-closerefine href="#">×</a>
       </div>

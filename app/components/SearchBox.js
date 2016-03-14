@@ -95,7 +95,7 @@ class SearchBox extends React.Component {
       >
         <div className="input-group">
           <span ref="triangles"
-                className={`triangles animated ${this.props.ajaxAnimationClass}`}
+            className={`triangles animated ${this.props.ajaxAnimationClass}`}
           >
             <div className="tri invert"></div>
             <div className="tri invert"></div>

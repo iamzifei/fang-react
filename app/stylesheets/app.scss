@@ -565,15 +565,16 @@ footer {
     margin: 0;
     padding: 0;
     list-style: none;
-    strong, a {
+    a {
       display: block;
       float: left;
       width: 100%;
       padding: .5em 7%;
       color: $text-color;
       text-decoration: none;
+      cursor: pointer;
     }
-    strong {
+    a.active {
       font-weight: normal;
       color: $header-color;
       background: $border-color;

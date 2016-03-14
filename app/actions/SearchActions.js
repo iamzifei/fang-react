@@ -109,8 +109,7 @@ class SearchActions {
   }
 
   searchPropertiesRefine(suburb, offset, sort, term, room, property, feature, misc) {
-
-    console.log(arguments);
+    console.log(arguments)
     request.get(`/api/search/refine/${suburb}`)
     .query({
       offset,

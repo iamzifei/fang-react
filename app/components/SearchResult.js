@@ -8,7 +8,7 @@ import Translate from 'react-translate-component'
 import SearchRefine from './SearchRefine'
 import Navbar from './Navbar'
 
-class Search extends React.Component {
+class SearchResult extends React.Component {
   static getStores() {
     return [SearchStore]
   }
@@ -116,7 +116,7 @@ class Search extends React.Component {
   }
 }
 
-Search.propTypes = {
+SearchResult.propTypes = {
   params: React.PropTypes.object,
   filters: React.PropTypes.object,
   limit: React.PropTypes.number,
@@ -125,4 +125,4 @@ Search.propTypes = {
   location: React.PropTypes.object
 }
 
-export default connectToStores(Search)
+export default connectToStores(SearchResult)
