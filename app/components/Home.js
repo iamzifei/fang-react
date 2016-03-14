@@ -50,8 +50,8 @@ class Home extends React.Component {
 
     return (
       <div>
-        <Navbar pageFlag="home" history={this.props.history} />
-        <Jumbotron history={this.props.history} />
+        <Navbar pageFlag="home" />
+        <Jumbotron />
         <div className="container">
           <Translate
             count={this.props.propertiesCount}
@@ -82,7 +82,6 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  history: React.PropTypes.object,
   limit: React.PropTypes.number,
   properties: React.PropTypes.array,
   propertiesCount: React.PropTypes.number

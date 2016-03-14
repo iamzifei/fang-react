@@ -26,4 +26,8 @@ $(document).ready(function(){
   $(".navbar.searchResult").click(function(){
     $("#refine").toggleClass("data-refine");
   });
+
+  $("#refine a[data-closerefine]").click(function(){
+    $("#refine").removeClass("data-refine");
+  })
 });

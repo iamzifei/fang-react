@@ -16,16 +16,12 @@ class Jumbotron extends React.Component {
               <p className="lead"><Translate content="home.jumbotron.subtitle" /></p>
             </div>
           </div>
-          <SearchBox history={this.props.history} />
+          <SearchBox />
         </div>
         {/* Controls */}
       </div>
     )
   }
-}
-
-Jumbotron.propTypes = {
-  history: React.PropTypes.object
 }
 
 export default Jumbotron

@@ -561,24 +561,26 @@ footer {
     font-weight: normal;
     color: $header-color;
   }
+
   ul, li {
     margin: 0;
     padding: 0;
     list-style: none;
-    strong, a {
+    a, >span {
       display: block;
       float: left;
       width: 100%;
       padding: .5em 7%;
       color: $text-color;
       text-decoration: none;
+      cursor: pointer;
     }
-    strong {
+    a.active, >span.active {
       font-weight: normal;
       color: $header-color;
       background: $border-color;
     }
-    a:hover {
+    a:hover, >span:hover {
       background: #f8f8f8;
       color: #000;
     }

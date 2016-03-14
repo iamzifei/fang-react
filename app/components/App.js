@@ -13,7 +13,6 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  history: React.PropTypes.object,
   children: React.PropTypes.object
 }
 

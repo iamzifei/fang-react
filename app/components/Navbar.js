@@ -22,7 +22,7 @@ class Navbar extends React.Component {
             <Link to="/" className="navbar-brand">
               <img alt={counterpart('nav.name')} src="/img/logo.png" />
             </Link>
-            <SearchBox history={this.props.history} />
+            <SearchBox />
             <span className="glyphicon glyphicon-filter"></span>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
@@ -38,7 +38,6 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-  history: React.PropTypes.object,
   pageFlag: React.PropTypes.string
 }
 

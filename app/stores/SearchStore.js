@@ -69,10 +69,9 @@ class SearchStore {
       .join('&')
 
     browserHistory.push({
-      pathname: `/properties/${this.filters.suburb||''}`,
+      pathname: `/properties/${this.filters.suburb || ''}`,
       search: `?${querys}`
     })
-
   }
 }
 
