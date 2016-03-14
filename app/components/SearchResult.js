@@ -82,7 +82,7 @@ class SearchResult extends React.Component {
 
     return (
       <div>
-        <Navbar pageFlag="searchResult" history={this.props.history} />
+        <Navbar pageFlag="searchResult" />
         <div className="container">
           <Translate
             suburb={suburbName}

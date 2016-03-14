@@ -151,7 +151,7 @@ class Property extends React.Component {
 
     return (
       <div>
-        <Navbar pageFlag="property" history={this.props.history} />
+        <Navbar pageFlag="property" />
         <div className="container">
           <div className="property-img">
             {this.createImageCarousel()}
@@ -259,7 +259,6 @@ class Property extends React.Component {
 }
 
 Property.propTypes = {
-  history: React.PropTypes.object,
   params: React.PropTypes.object,
   suburb: React.PropTypes.string,
   postcode: React.PropTypes.string,

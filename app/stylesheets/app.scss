@@ -561,11 +561,12 @@ footer {
     font-weight: normal;
     color: $header-color;
   }
+
   ul, li {
     margin: 0;
     padding: 0;
     list-style: none;
-    a {
+    a, >span {
       display: block;
       float: left;
       width: 100%;
@@ -574,12 +575,12 @@ footer {
       text-decoration: none;
       cursor: pointer;
     }
-    a.active {
+    a.active, >span.active {
       font-weight: normal;
       color: $header-color;
       background: $border-color;
     }
-    a:hover {
+    a:hover, >span:hover {
       background: #f8f8f8;
       color: #000;
     }

@@ -68,7 +68,7 @@ class AddProperty extends React.Component {
   render() {
     return (
       <div>
-        <Navbar pageFlag="addProperty" history={this.props.history} />
+        <Navbar pageFlag="addProperty" />
         <div className="container">
           <div className="row">
             <div className="col-sm-8">

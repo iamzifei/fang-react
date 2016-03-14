@@ -54,8 +54,7 @@ class SearchBox extends React.Component {
   propertySearch(searchQuery) {
     SearchActions.searchProperties({
       searchQuery,
-      searchForm: this.refs.searchForm,
-      history: this.props.history
+      searchForm: this.refs.searchForm
     })
   }
 
@@ -129,7 +128,6 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  history: React.PropTypes.object,
   searchQuery: React.PropTypes.string,
   ajaxAnimationClass: React.PropTypes.string,
   suburbs: React.PropTypes.array
