@@ -8,13 +8,10 @@ class SearchActions {
       'updateAjaxAnimation',
       'updateSearchQueryValue',
       'searchPropertiesSuccess',
-      'searchPropertiesFail',
       'searchSuburbSuccess',
-      'searchSuburbFail',
       'getPropertiesListSuccess',
-      'getPropertiesListFail',
       'getPropertyCountSuccess',
-      'getPropertyCountFail',
+      'displayFailMessage',
       'filterChange'
     )
   }
@@ -25,7 +22,7 @@ class SearchActions {
         .query({ suburb })
         .end((err, res) => {
           if (err) {
-            this.actions.searchSuburbFail(err.response)
+            this.actions.displayFailMessage(err.response)
           } else {
             this.actions.searchSuburbSuccess(res.body)
           }
@@ -33,51 +30,26 @@ class SearchActions {
     }
   }
 
-  getPropertyCount(suburb = -1) {
-    request.get('/api/properties/count')
-      .query({ suburb })
-      .end((err, res) => {
-        if (err) {
-          this.actions.getPropertyCountFail(err.response)
-        } else {
-          this.actions.getPropertyCountSuccess(res.body)
-        }
-      })
-  }
-
   getAllProperties(offset) {
     request.get('/api/properties/')
       .query({ offset })
       .end((err, res) => {
         if (err) {
-          this.actions.getPropertiesListFail(err.response)
+          this.actions.displayFailMessage(err.response)
         } else {
           this.actions.getPropertiesListSuccess(res.body)
         }
       })
   }
 
-  getPropertiesInSuburb(suburb, offset) {
-    request.get(`/api/search/${suburb}`)
-      .query({ offset })
-      .end((err, res) => {
-        if (err) {
-          this.actions.getPropertiesListFail(err.response)
-        } else {
-          this.actions.getPropertiesListSuccess(res.body)
-        }
-      })
-  }
-
-  searchProperties(payload) {
-    request.get('/api/properties/search')
-    .query({ suburb: payload.searchQuery })
+  searchPropertiesBySuburb(suburb) {
+    request.get('/api/search')
+    .query(suburb)
     .end((err, res) => {
       if (err) {
-        this.actions.searchPropertiesFail(err.response)
+        this.actions.displayFailMessage(err.response)
       } else {
-        assign(payload, res.body)
-        this.actions.searchPropertiesSuccess(payload)
+        this.actions.searchPropertiesSuccess(suburb)
       }
     })
   }
@@ -88,8 +60,8 @@ class SearchActions {
    * &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
    * Looks up a property by search refinement and criteria
    */
-  getPropertyCountRefine(suburb = -1, sort, terms, room, property, feature, misc) {
-    request.get('/api/count/refine')
+  getPropertyCount(suburb = -1, sort, terms, room, property, feature, misc) {
+    request.get('/api/count')
       .query({
         suburb,
         sort,
@@ -99,19 +71,20 @@ class SearchActions {
         feature,
         misc
       })
-      .end((err, res) => {
+      .end((err, res) => {3
         if (err) {
-          this.actions.getPropertyCountFail(err.response)
+          this.actions.displayFailMessage(err.response)
         } else {
           this.actions.getPropertyCountSuccess(res.body)
         }
       })
   }
 
-  searchPropertiesRefine(suburb, offset, sort, term, room, property, feature, misc) {
+  searchProperties(suburb, offset, sort, term, room, property, feature, misc) {
     console.log(arguments)
-    request.get(`/api/search/refine/${suburb}`)
+    request.get('/api/search')
     .query({
+      suburb,
       offset,
       sort,
       term,
@@ -122,7 +95,7 @@ class SearchActions {
     })
     .end((err, res) => {
       if (err) {
-        this.actions.getPropertiesListFail(err.response)
+        this.actions.displayFailMessage(err.response)
       } else {
         this.actions.getPropertiesListSuccess(res.body)
       }
@@ -135,7 +108,7 @@ class SearchActions {
     } = filter
 
     this.actions.filterChange(filter)
-    this.actions.searchPropertiesRefine(suburb, offset, sort, term, room, property, feature, misc)
+    this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
   }
 }
 

@@ -23,28 +23,8 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.location.search === '') {
-      SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-      SearchActions.getPropertyCount(this.props.params.suburb)
-    } else {
-      SearchActions.searchPropertiesRefine(
-        this.props.params.suburb,
-        0,
-        this.props.location.query.sort,
-        this.props.location.query.terms,
-        this.props.location.query.room,
-        this.props.location.query.property,
-        this.props.location.query.feature
-      )
-      SearchActions.getPropertyCountRefine(
-        this.props.params.suburb,
-        this.props.location.query.sort,
-        this.props.location.query.terms,
-        this.props.location.query.room,
-        this.props.location.query.property,
-        this.props.location.query.feature
-      )
-    }
+    console.log(this.props.location)
+    this.getPropertyList()
     $('.magnific-popup').magnificPopup({
       type: 'image',
       mainClass: 'mfp-zoom-in',
@@ -59,10 +39,29 @@ class SearchResult extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Fetch new properties data when URL path changes
-    if (prevProps.params.suburb !== this.props.params.suburb) {
-      SearchActions.getPropertiesInSuburb(this.props.params.suburb, 0)
-      SearchActions.getPropertyCount(this.props.params.suburb)
+    if (prevProps.location === this.props.location && prevProps.location.search !== this.props.location.search) {
+      this.getPropertyList()
     }
+  }
+
+  getPropertyList() {
+    SearchActions.searchProperties(
+      this.props.location.query.suburb,
+      0,
+      this.props.location.query.sort,
+      this.props.location.query.terms,
+      this.props.location.query.room,
+      this.props.location.query.property,
+      this.props.location.query.feature
+    )
+    SearchActions.getPropertyCount(
+      this.props.location.query.suburb,
+      this.props.location.query.sort,
+      this.props.location.query.terms,
+      this.props.location.query.room,
+      this.props.location.query.property,
+      this.props.location.query.feature
+    )
   }
 
   handlePageClick(page) {

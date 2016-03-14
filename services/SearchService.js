@@ -35,6 +35,9 @@ class SearchService {
   queryCriteriaHelper(query, sort, term, room, property, feature, misc) {
     switch (sort) {
       // Note: sort is not applicable for property count
+      case 'count':
+        query = query;
+        break;
       case 'time':
         query = query.sort({'_id': -1});
         break;
@@ -45,7 +48,7 @@ class SearchService {
         query = query.sort({'price': -1});
         break;
       default:
-        query = query;
+        query = query.sort({'_id': -1});
     }
 
     switch (term) {
@@ -121,22 +124,8 @@ class SearchService {
     })
   }
 
-  getPropertiesBySuburb(req, res, next) {
-    var suburb = req.params.suburb;
-    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
-    this.queryBuildHelper(offset, suburb, 0)
-      .sort({'_id': -1})
-      .exec(function(err, properties) {
-        if (err) return next(err);
-        if (!properties) {
-          return res.status(404).send({ message: 'Property not found.' });
-        }
-        res.send({limit: config.perPage, properties: properties});
-      });
-  }
-
-  getPropertiesByRefineCriteria(req, res, next) {
-    var suburb = req.params.suburb;
+  getPropertiesByCriteria(req, res, next) {
+    var suburb = req.query.suburb;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     var query = this.queryBuildHelper(offset, suburb, 0);
     var sort = req.query.sort;
@@ -162,22 +151,13 @@ class SearchService {
 
   getNumberOfProperties(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
-    this.queryBuildHelper(0, suburb, 1).exec(function(err, count) {
-      if (err) return next(err);
-      res.send({ count: count });
-    });
-  }
-
-  getNumberOfPropertiesByRefineCriteria(req, res, next) {
-    var suburb = req.query.suburb? req.query.suburb: -1;
     var query = this.queryBuildHelper(0, suburb, 1);
-    var sort = req.query.sort;
     var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
     var misc = req.query.misc;
-    this.queryCriteriaHelper(query, '', term, room, property, feature, misc)
+    this.queryCriteriaHelper(query, 'count', term, room, property, feature, misc)
     .exec(function(err, count) {
       if (err) return next(err);
       res.send({ count: count });
