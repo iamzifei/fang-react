@@ -14,7 +14,8 @@ class SearchActions {
       'getPropertiesListSuccess',
       'getPropertiesListFail',
       'getPropertyCountSuccess',
-      'getPropertyCountFail'
+      'getPropertyCountFail',
+      'filterChange'
     )
   }
 
@@ -107,12 +108,13 @@ class SearchActions {
       })
   }
 
-  searchPropertiesRefine(suburb, offset, sort, terms, room, property, feature, misc) {
+  searchPropertiesRefine(suburb, offset, sort, term, room, property, feature, misc) {
+    console.log(arguments)
     request.get(`/api/search/refine/${suburb}`)
     .query({
       offset,
       sort,
-      terms,
+      term,
       room,
       property,
       feature,
@@ -127,6 +129,14 @@ class SearchActions {
     })
   }
 
+  searchRefinedFilter(filter) {
+    const {
+      suburb, offset, sort, term, room, property, feature, misc
+    } = filter
+
+    this.actions.filterChange(filter)
+    this.actions.searchPropertiesRefine(suburb, offset, sort, term, room, property, feature, misc)
+  }
 }
 
 export default alt.createActions(SearchActions)

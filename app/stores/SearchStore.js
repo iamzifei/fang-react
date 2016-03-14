@@ -1,5 +1,6 @@
 import alt from '../alt'
 import SearchActions from '../actions/SearchActions'
+import { browserHistory } from 'react-router'
 
 class SearchStore {
   constructor() {
@@ -10,6 +11,7 @@ class SearchStore {
     this.limit = 5
     this.properties = []
     this.propertiesCount = 0
+    this.filters = {}
   }
 
   onUpdateAjaxAnimation(className) {
@@ -18,7 +20,7 @@ class SearchStore {
   }
 
   onSearchPropertiesSuccess(payload) {
-    payload.history.pushState(null, `/properties/${payload.suburb}`)
+    browserHistory.push(`/properties/${payload.suburb}`)
   }
 
   onSearchPropertiesFail(payload) {
@@ -30,6 +32,7 @@ class SearchStore {
 
   onUpdateSearchQueryValue(value) {
     this.searchQuery = value
+    this.filters.suburb = value
   }
 
   onSearchSuburbSuccess(data) {
@@ -55,6 +58,20 @@ class SearchStore {
 
   onGetPropertyCountFail(jqXhr) {
     toastr.error(jqXhr.responseJSON.message)
+  }
+
+  onFilterChange(filter) {
+    this.filters = filter
+
+    const querys = Object.keys(this.filters)
+      .filter(key => !!this.filters[key] && key !== 'suburb')
+      .map(key => [key, this.filters[key]].join('='))
+      .join('&')
+
+    browserHistory.push({
+      pathname: `/properties/${this.filters.suburb || ''}`,
+      search: `?${querys}`
+    })
   }
 }
 

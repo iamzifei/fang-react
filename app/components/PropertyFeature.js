@@ -6,22 +6,22 @@ class PropertyFeature extends React.Component {
 
   render() {
     if (this.props.propertyFeatures) {
-      var selected = this.props.selected ? this.props.selected : ''
+      var ref = this.props.ref ? this.props.ref : ''
       var propertyFeatureNodes = this.props.propertyFeatures.map(
         (propertyFeature, index) => {
           var feature
-          if (selected === propertyFeature) {
+          if (ref === propertyFeature) {
             feature = (
               <li key={propertyFeature}>
                 <Translate content={propertyFeature} component="strong" />
               </li>
             )
-          } else if (selected !== '') {
+          } else if (ref == 'refine') {
             feature = (
               <li key={propertyFeature}>
-                <Link to={`/property/feature/${propertyFeature}`}>
+                <a>
                   <Translate content={propertyFeature} />
-                </Link>
+                </a>
               </li>
             )
           } else {
@@ -42,7 +42,7 @@ class PropertyFeature extends React.Component {
 
 PropertyFeature.propTypes = {
   propertyFeatures: React.PropTypes.array,
-  selected: React.PropTypes.string
+  ref: React.PropTypes.string
 }
 
 export default PropertyFeature

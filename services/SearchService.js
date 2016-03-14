@@ -32,7 +32,7 @@ class SearchService {
   }
 
   // helper search function, shared cross suburb search and refined search
-  queryCriteriaHelper(query, sort, terms, room, property, feature, misc) {
+  queryCriteriaHelper(query, sort, term, room, property, feature, misc) {
     switch (sort) {
       // Note: sort is not applicable for property count
       case 'time':
@@ -48,7 +48,7 @@ class SearchService {
         query = query;
     }
 
-    switch (terms) {
+    switch (term) {
       case 's':
         query = query.where('minTerm').lt(6);
         break;
@@ -140,13 +140,13 @@ class SearchService {
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     var query = this.queryBuildHelper(offset, suburb, 0);
     var sort = req.query.sort;
-    var terms = req.query.terms;
+    var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
     var misc = req.query.misc;
 
-    this.queryCriteriaHelper(query, sort, terms, room, property, feature, misc)
+    this.queryCriteriaHelper(query, sort, term, room, property, feature, misc)
     .skip(offset)
     .limit(config.perPage)
     .exec(function(err, properties) {
@@ -172,12 +172,12 @@ class SearchService {
     var suburb = req.query.suburb? req.query.suburb: -1;
     var query = this.queryBuildHelper(0, suburb, 1);
     var sort = req.query.sort;
-    var terms = req.query.terms;
+    var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
     var misc = req.query.misc;
-    this.queryCriteriaHelper(query, '', terms, room, property, feature, misc)
+    this.queryCriteriaHelper(query, '', term, room, property, feature, misc)
     .exec(function(err, count) {
       if (err) return next(err);
       res.send({ count: count });

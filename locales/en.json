@@ -5,11 +5,19 @@
   "petAllowed": "Pet Allowed",
   "billInclude": "Bill Included",
   "fastInternet": "Fast Internet",
+  "whole": "Entire Flat",
+  "apartment": "Apartment",
+  "house": "House",
+  "studio": "Studio",
   "home": {
     "property": {
       "list": {
         "title": "All %(count)s Properties"
       }
+    },
+    "jumbotron": {
+      "title": "Find Your Home",
+      "subtitle": "Get your perfect accommodation"
     }
   },
   "pagination": {
