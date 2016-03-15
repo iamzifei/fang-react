@@ -10,7 +10,8 @@ class SearchActions {
       'getPropertiesSuccess',
       'getPropertiesCountSuccess',
       'updateFiltersSuccess',
-      'resultPageRedirectSuccess'
+      'resultPageRedirectSuccess',
+      'updateOffsetSuccess'
     )
   }
 
@@ -30,6 +31,10 @@ class SearchActions {
 
   updateFilters(filters) {
     this.actions.updateFiltersSuccess(filters)
+  }
+
+  updateOffset(offset) {
+    this.actions.updateOffsetSuccess(offset)
   }
 
   // make sure updateFilters has been called before this function
@@ -92,18 +97,6 @@ class SearchActions {
       }
     })
   }
-
-  //searchRefinedFilter(filter) {
-  //  const {
-  //    suburb, offset, sort, term, room, property, feature, misc
-  //  } = filter
-  //  console.log(filter)
-  //
-  //  this.actions.filterChange(filter)
-  //  //this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
-  //}
-  //
-
 }
 
 export default alt.createActions(SearchActions)

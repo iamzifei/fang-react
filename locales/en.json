@@ -46,19 +46,19 @@
     "refine": {
       "sort": {
         "label": "Sort by",
-        "newest": "Newest first",
-        "cheapest": "Cheapest first",
-        "dearest": "Dearest first"
+        "time": "Newest first",
+        "priceUp": "Cheapest first",
+        "priceDown": "Dearest first"
       },
       "term": {
         "label": "Stay length",
         "any": "Any stay length",
-        "short": "Short-term",
-        "long": "Long-term (6+ months)"
+        "s": "Short-term",
+        "l": "Long-term (6+ months)"
       },
       "room": {
         "label": "Room type",
-        "all": "All room",
+        "any": "All room",
         "private": "Private rooms",
         "shared": "Shared rooms",
         "living": "Living rooms",
@@ -66,11 +66,11 @@
       },
       "property": {
         "label": "Accommodation type",
-        "all": "All Accommodation",
+        "any": "All Accommodation",
         "house": "Shared House",
-        "apart": "Shared Apartment",
+        "apartment": "Shared Apartment",
         "studio": "Studio",
-        "flat": "Entire Flat"
+        "whole": "Entire Flat"
       },
       "feature": {
         "label": "Other feature",

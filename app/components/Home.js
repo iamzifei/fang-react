@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
 import Jumbotron from './Jumbotron'
 import Navbar from './Navbar'
+import config from '../../config'
 
 class Home extends React.Component {
   static getStores() {
@@ -38,8 +39,7 @@ class Home extends React.Component {
   }
 
   handlePageClick(page) {
-    const selected = page.selected
-    const offset = Math.ceil(selected * this.props.limit)
+    const offset = page.selected * config.perPage
     SearchActions.getAllProperties(offset.toString())
   }
 
@@ -66,7 +66,7 @@ class Home extends React.Component {
             <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
               nextLabel={<Translate content="pagination.next" />}
               breakLabel={<li className="break"><a href="">...</a></li>}
-              pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+              pageNum={Math.ceil(this.props.propertiesCount / config.perPage)}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               clickCallback={this.handlePageClick}
@@ -82,7 +82,6 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  limit: React.PropTypes.number,
   properties: React.PropTypes.array,
   propertiesCount: React.PropTypes.number
 }

@@ -123,8 +123,6 @@ class SearchService {
     var query = this.queryBuildHelper(offset, suburb, 0);
 
     this.queryCriteriaHelper(0, query, sort, term, room, property, feature, misc)
-    .skip(offset)
-    .limit(config.perPage)
     .exec(function(err, properties) {
       if (err) return next(err);
 
@@ -132,7 +130,7 @@ class SearchService {
         return res.status(404).send({ message: 'Property not found.' });
       }
 
-      res.send({limit: config.perPage, properties: properties});
+      res.send(properties);
     });
   }
 
