@@ -61,7 +61,7 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * ~~translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))~~
 * add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
 * display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
-* narrow down search results by price, type & features
+* narrow down search results by price and property/room type
 * style polish & responsive
 
 ### stage 2
@@ -72,8 +72,9 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * property management
 
 ### stage 3
-* nearby facilities for property
-* search by facilities
+* display nearby facilities for property
+* search property by facilities
+* filter search result by property features
 
 ### stage 4
 * property shortlist
