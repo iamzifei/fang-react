@@ -24,8 +24,6 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.filters)
-    console.log(this.props.location.query)
     this.getPropertyList(this.props.location.query)
     this.getPropertyCount(this.props.location.query)
     $('.magnific-popup').magnificPopup({
@@ -41,10 +39,6 @@ class SearchResult extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update')
-    if (this.props.location.query && this.props.location.query.suburb) {
-      //SearchActions.updateFilters(this.props.location.query)
-    }
     // Fetch new properties data when URL path changes
     if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
       this.getPropertyList(this.props.location.query)
@@ -53,7 +47,6 @@ class SearchResult extends React.Component {
   }
 
   getPropertyList(filters) {
-    console.log('suburb: ' + filters.suburb)
     SearchActions.searchProperties(
       filters.suburb,
       filters.offset,
@@ -93,7 +86,7 @@ class SearchResult extends React.Component {
   render() {
     var suburbName = this.props.filters.suburb
     var propertyNodes = this.props.properties.map((property, index) => {
-      //suburbName = property.suburb
+      suburbName = property.suburb
       return (
         <PropertyList property={property} key={property._id} />
       )

@@ -46,7 +46,7 @@ class SearchActions {
         if (err) {
           this.actions.displayFailMessage(err.response)
         } else {
-          this.actions.getPropertiesSuccess({res: res.body, filter: {}})
+          this.actions.getPropertiesSuccess({ res: res.body, filter: {} })
         }
       })
   }
@@ -88,7 +88,7 @@ class SearchActions {
       if (err) {
         this.actions.displayFailMessage(err.response)
       } else {
-        this.actions.getPropertiesSuccess({res: res.body, filter})
+        this.actions.getPropertiesSuccess({ res: res.body, filter })
       }
     })
   }

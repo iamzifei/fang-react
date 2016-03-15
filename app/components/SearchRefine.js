@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
+import _ from 'underscore'
 
 const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
 
@@ -12,9 +13,12 @@ class SearchRefine extends React.Component {
 
     return function (event) {
       filterList
-        .forEach(key => refinedFilter[key] = refinedFilter[key] || self.props[key])
-
-      SearchActions.searchRefinedFilter(refinedFilter)
+        .forEach(
+          key =>
+            refinedFilter[key] = refinedFilter[key] || self.props[key]
+        )
+      console.log(refinedFilter)
+      //SearchActions.searchRefinedFilter(refinedFilter)
     }
   }
 
@@ -27,6 +31,7 @@ class SearchRefine extends React.Component {
       'billInclude',
       'fastInternet'
     ]
+
     return (
       <div id="refine">
         <h3><Translate content="search.refine.sort.label" /></h3>
