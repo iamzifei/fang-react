@@ -11,6 +11,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 
 var mongoose = require('mongoose');
 var config = require('./config');
@@ -43,6 +44,7 @@ mongoose.connection.on('error', function() {
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
+app.use(favicon('./public/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
@@ -107,7 +109,9 @@ app.use(function(req, res) {
       res.status(302).redirect(redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
       var html = ReactDOM.renderToString(React.createElement(Router.RouterContext, renderProps));
-      var page = swig.renderFile('views/index.html', { html: html });
+      var title = counterpart('site.title');
+      var desc = counterpart('site.desc');
+      var page = swig.renderFile('views/index.html', { html: html, title: title, desc: desc });
       res.status(200).send(page);
     } else {
       res.status(404).send('Page Not Found')

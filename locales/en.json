@@ -1,4 +1,8 @@
 {
+  "site": {
+    "title": "OZ Fang",
+    "desc": "Australia's latest accommodation site. Browse up-to-date listing. Easy to advertise your place. Find and book the best student accommodation"
+  },
   "furnished": "Furnished",
   "femalePrefer": "Female Prefer",
   "nonSmoker": "Non-smoking",

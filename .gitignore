@@ -39,8 +39,13 @@ dist
 data/db/*
 !data/db/README.md
 
+# Uploaded Iamges
+data/upload/*
+!data/upload/README.md
+
 # Compiled files
 public/css/*
 public/js/*
 data/property_images
-public/property_images
+public/property_images/*
+!public/property_images/README.md

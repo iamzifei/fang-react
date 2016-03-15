@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const multer = require('multer');
-const upload = multer({dest: '../../data/upload/'}).any();
+const upload = multer({dest: '../data/upload/'}).any();
 
 const Property = require('../models/property');
 const config = require('../config');
