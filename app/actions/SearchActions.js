@@ -92,18 +92,6 @@ class SearchActions {
       }
     })
   }
-
-  //searchRefinedFilter(filter) {
-  //  const {
-  //    suburb, offset, sort, term, room, property, feature, misc
-  //  } = filter
-  //  console.log(filter)
-  //
-  //  this.actions.filterChange(filter)
-  //  //this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
-  //}
-  //
-
 }
 
 export default alt.createActions(SearchActions)

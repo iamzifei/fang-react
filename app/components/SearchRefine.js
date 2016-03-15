@@ -39,21 +39,21 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ sort: 'time' })}
               className={this.props.sort === 'time' ? 'active' : ''}
             >
-              <Translate content="search.refine.sort.newest" />
+              <Translate content="search.refine.sort.time" />
             </a>
           </li>
           <li>
             <a onClick={this._onRefine({ sort: 'priceUp' })}
               className={this.props.sort === 'priceUp' ? 'active' : ''}
             >
-              <Translate content="search.refine.sort.cheapest" />
+              <Translate content="search.refine.sort.priceUp" />
             </a>
           </li>
           <li>
             <a onClick={this._onRefine({ sort: 'priceDown' })}
               className={this.props.sort === 'priceDown' ? 'active' : ''}
             >
-              <Translate content="search.refine.sort.dearest" />
+              <Translate content="search.refine.sort.priceDown" />
             </a>
           </li>
         </ul>
@@ -70,14 +70,14 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ term: 's' })}
               className={this.props.term === 's' ? 'active' : ''}
             >
-              <Translate content="search.refine.term.short" />
+              <Translate content="search.refine.term.s" />
             </a>
           </li>
           <li>
             <a onClick={this._onRefine({ term: 'l' })}
               className={this.props.term === 'l' ? 'active' : ''}
             >
-              <Translate content="search.refine.term.long" />
+              <Translate content="search.refine.term.l" />
             </a>
           </li>
         </ul>
@@ -87,7 +87,7 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ room: 'any' })}
               className={this.props.room === 'any' ? 'active' : ''}
             >
-              <Translate content="search.refine.room.all" />
+              <Translate content="search.refine.room.any" />
             </a>
           </li>
           <li>
@@ -125,7 +125,7 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ property: 'any' })}
               className={this.props.property === 'any' ? 'active' : ''}
             >
-              <Translate content="search.refine.property.all" />
+              <Translate content="search.refine.property.any" />
             </a>
           </li>
           <li>
@@ -139,7 +139,7 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ property: 'apartment' })}
               className={this.props.property === 'apartment' ? 'active' : ''}
             >
-              <Translate content="search.refine.property.apart" />
+              <Translate content="search.refine.property.apartment" />
             </a>
           </li>
           <li>
@@ -153,7 +153,7 @@ class SearchRefine extends React.Component {
             <a onClick={this._onRefine({ property: 'whole' })}
               className={this.props.property === 'whole' ? 'active' : ''}
             >
-              <Translate content="search.refine.property.flat" />
+              <Translate content="search.refine.property.whole" />
             </a>
           </li>
         </ul>
@@ -181,8 +181,8 @@ SearchRefine.propTypes = {
   term: React.PropTypes.string,
   room: React.PropTypes.string,
   property: React.PropTypes.string,
-  feature: React.PropTypes.string,
-  misc: React.PropTypes.string
+  feature: React.PropTypes.array,
+  misc: React.PropTypes.array
 }
 
 export default SearchRefine

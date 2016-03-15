@@ -46,19 +46,19 @@
     "refine": {
       "sort": {
         "label": "排序",
-        "newest": "最新房源优先",
-        "cheapest": "按价格从低到高",
-        "dearest": "按价格从高到低"
+        "time": "最新房源优先",
+        "priceUp": "按价格从低到高",
+        "priceDown": "按价格从高到低"
       },
       "term": {
         "label": "住宿期限",
         "any": "不限期限",
-        "short": "短租",
-        "long": "长租 (6个月以上)"
+        "s": "短租",
+        "l": "长租 (6个月以上)"
       },
       "room": {
         "label": "房屋类型",
-        "all": "不限类型",
+        "any": "不限类型",
         "private": "单人间",
         "shared": "与人合住",
         "living": "客厅",
@@ -66,11 +66,11 @@
       },
       "property": {
         "label": "物业类型",
-        "all": "不限类型",
+        "any": "不限类型",
         "house": "House",
-        "apart": "Apartment/Unit",
+        "apartment": "Apartment/Unit",
         "studio": "Studio",
-        "flat": "整套出租"
+        "whole": "整套出租"
       },
       "feature": {
         "label": "其他",
