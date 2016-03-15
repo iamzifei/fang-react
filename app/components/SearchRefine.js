@@ -158,17 +158,6 @@ class SearchRefine extends React.Component {
             </a>
           </li>
         </ul>
-        <h3><Translate content="search.refine.feature.label" /></h3>
-        <ul>
-          <li>
-            <a onClick={this._onRefine({ feature: 'any' })}
-              className={this.props.feature === 'any' ? 'active' : ''}
-            >
-              <Translate content="search.refine.feature.any" />
-            </a>
-          </li>
-          <PropertyFeature propertyFeatures={propertyFeatures} ref="refine" />
-        </ul>
         <a data-closerefine href="#">×</a>
       </div>
     )
