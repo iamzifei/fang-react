@@ -40,7 +40,7 @@ class Home extends React.Component {
   handlePageClick(page) {
     const selected = page.selected
     const offset = Math.ceil(selected * this.props.limit)
-    SearchActions.getAllProperties(offset)
+    SearchActions.getAllProperties(offset.toString())
   }
 
   render() {

@@ -16,7 +16,7 @@ class PropertyFeature extends React.Component {
                 <Translate content={propertyFeature} component="strong" />
               </li>
             )
-          } else if (ref == 'refine') {
+          } else if (ref === 'refine') {
             feature = (
               <li key={propertyFeature}>
                 <a>

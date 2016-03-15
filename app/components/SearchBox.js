@@ -40,7 +40,16 @@ class SearchBox extends React.Component {
   }
 
   onChange(event, object) {
-    SearchActions.updateSearchQueryValue(object.newValue)
+    SearchActions.updateFilters({
+      suburb: object.newValue.trim(),
+      offset: '0',
+      sort: 'time',
+      term: 'any',
+      room: 'any',
+      property: 'any',
+      feature: 'any',
+      misc: 'any'
+    })
   }
 
   onSuggestionSelected(event, object) {
@@ -51,18 +60,13 @@ class SearchBox extends React.Component {
     return suggestion.value
   }
 
-  propertySearch(searchQuery) {
-    SearchActions.searchPropertiesBySuburb(searchQuery)
+  propertySearch() {
+    SearchActions.resultPageRedirect()
   }
 
   handleSubmit(event) {
     event.preventDefault()
-
-    const searchQuery = this.props.searchQuery.trim()
-
-    if (searchQuery) {
-      this.propertySearch(searchQuery)
-    }
+    this.propertySearch()
   }
 
   renderSuggestion(suggestion) {
@@ -79,7 +83,7 @@ class SearchBox extends React.Component {
     }
 
     const inputProps = {
-      value: this.props.searchQuery,
+      value: this.props.filters.suburb,
       onChange: this.onChange,
       type: 'search',
       placeholder: counterpart('nav.search.placeholder')
@@ -125,7 +129,7 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  searchQuery: React.PropTypes.string,
+  filters: React.PropTypes.object,
   ajaxAnimationClass: React.PropTypes.string,
   suburbs: React.PropTypes.array
 }

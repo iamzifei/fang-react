@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate'
 import Translate from 'react-translate-component'
 import SearchRefine from './SearchRefine'
 import Navbar from './Navbar'
+import _ from 'underscore'
 
 class SearchResult extends React.Component {
   static getStores() {
@@ -23,9 +24,8 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.location)
-
-    this.getPropertyList()
+    this.getPropertyList(this.props.location.query)
+    this.getPropertyCount(this.props.location.query)
     $('.magnific-popup').magnificPopup({
       type: 'image',
       mainClass: 'mfp-zoom-in',
@@ -36,48 +36,57 @@ class SearchResult extends React.Component {
         duration: 300
       }
     })
-    if (this.props.location.query && this.props.location.query.suburb) {
-        SearchActions.keepSuburb(this.props.location.query.suburb)
-    }
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update prev ' + prevProps.location.search)
-    console.log('update current ' + this.props.location.search)
     // Fetch new properties data when URL path changes
-    if (prevProps.location.pathname === this.props.location.pathname && prevProps.location.search !== this.props.location.search) {
-      this.getPropertyList()
+    if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
+      this.getPropertyList(this.props.location.query)
+      this.getPropertyCount(this.props.location.query)
     }
   }
 
-  getPropertyList() {
+  getPropertyList(filters) {
     SearchActions.searchProperties(
-      this.props.location.query.suburb,
-      0,
-      this.props.location.query.sort,
-      this.props.location.query.terms,
-      this.props.location.query.room,
-      this.props.location.query.property,
-      this.props.location.query.feature
+      filters.suburb,
+      filters.offset,
+      filters.sort,
+      filters.term,
+      filters.room,
+      filters.property,
+      filters.feature,
+      filters.misc
     )
+  }
+
+  getPropertyCount(filters) {
     SearchActions.getPropertyCount(
-      this.props.location.query.suburb,
-      this.props.location.query.sort,
-      this.props.location.query.terms,
-      this.props.location.query.room,
-      this.props.location.query.property,
-      this.props.location.query.feature
+      filters.suburb,
+      filters.sort,
+      filters.term,
+      filters.room,
+      filters.property,
+      filters.feature,
+      filters.misc
     )
   }
 
   handlePageClick(page) {
     const selected = page.selected
     const offset = Math.ceil(selected * this.props.limit)
-    SearchActions.searchProperties(this.props.location.query.suburb, offset)
+    SearchActions.searchProperties(
+      this.props.filters.suburb,
+      offset.toString(),
+      this.props.filters.sort,
+      this.props.filters.terms,
+      this.props.filters.room,
+      this.props.filters.property,
+      this.props.filters.feature
+    )
   }
 
   render() {
-    var suburbName = this.props.location.query.suburb
+    var suburbName = this.props.filters.suburb
     var propertyNodes = this.props.properties.map((property, index) => {
       suburbName = property.suburb
       return (
@@ -100,7 +109,7 @@ class SearchResult extends React.Component {
             <div id="results">
               <ul className="list-offer-col">{propertyNodes}</ul>
             </div>
-            <SearchRefine {...this.props.filters} />
+            <SearchRefine {...this.props.location.query} />
             <div id="react-paginate">
               <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
                 nextLabel={<Translate content="pagination.next" />}
@@ -122,7 +131,7 @@ class SearchResult extends React.Component {
 }
 
 SearchResult.propTypes = {
-  params: React.PropTypes.object,
+  jumpFlag: React.PropTypes.bool,
   filters: React.PropTypes.object,
   limit: React.PropTypes.number,
   propertiesCount: React.PropTypes.number,

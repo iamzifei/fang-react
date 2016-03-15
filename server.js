@@ -61,7 +61,7 @@ app.get('/api/suburb', function(req, res, next) {
  * Returns all properties.
  */
 app.get('/api/properties', function(req, res, next) {
-  searchService.getAllProperties(req, res, next);
+  searchService.getProperties(req, res, next);
 });
 
 /**
@@ -71,7 +71,7 @@ app.get('/api/properties', function(req, res, next) {
  * Looks up a property by search refinement criteria
  */
 app.get('/api/search', function(req, res, next) {
-  searchService.getPropertiesByCriteria(req, res, next);
+  searchService.getProperties(req, res, next);
 });
 
 /**
@@ -79,7 +79,7 @@ app.get('/api/search', function(req, res, next) {
  * Returns the total number of properties by filters
  */
 app.get('/api/count', function(req, res, next) {
-  searchService.getNumberOfProperties(req, res, next);
+  searchService.getPropertiesCount(req, res, next);
 });
 
 /**
