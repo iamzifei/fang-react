@@ -8,10 +8,7 @@
 * `cd` to the project root in terminal, run `npm run watch`
 * open another terminal window/tab, `cd` to the project root and run `gulp`
 * run `sh import-suburb.sh` to import suburb table, you may need to change the database name in the shell script
-
-## Testing data import
-
-call `http://localhost:3000/api/load` to load testing data, you only need to do this once
+* run `sh import-property.sh` to import testing properties
 
 ## Mongodb command tips
 
