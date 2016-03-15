@@ -8,6 +8,7 @@ import Translate from 'react-translate-component'
 import SearchRefine from './SearchRefine'
 import Navbar from './Navbar'
 import _ from 'underscore'
+import config from '../../config'
 
 class SearchResult extends React.Component {
   static getStores() {
@@ -72,17 +73,11 @@ class SearchResult extends React.Component {
   }
 
   handlePageClick(page) {
-    const selected = page.selected
-    const offset = Math.ceil(selected * this.props.limit)
-    SearchActions.searchProperties(
-      this.props.filters.suburb,
-      offset.toString(),
-      this.props.filters.sort,
-      this.props.filters.terms,
-      this.props.filters.room,
-      this.props.filters.property,
-      this.props.filters.feature
+    const offset = page.selected * config.perPage
+    SearchActions.updateOffset(
+      offset.toString()
     )
+    SearchActions.resultPageRedirect()
   }
 
   render() {
@@ -114,13 +109,14 @@ class SearchResult extends React.Component {
               <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
                 nextLabel={<Translate content="pagination.next" />}
                 breakLabel={<li className="break"><a href="">...</a></li>}
-                pageNum={Math.ceil(this.props.propertiesCount / this.props.limit)}
+                pageNum={Math.ceil(this.props.propertiesCount / config.perPage)}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 clickCallback={this.handlePageClick}
                 containerClassName={"pagination"}
                 subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
+                forceSelected={parseInt(this.props.location.query.offset, 10) / config.perPage}
               />
             </div>
           </div>
@@ -133,7 +129,6 @@ class SearchResult extends React.Component {
 SearchResult.propTypes = {
   jumpFlag: React.PropTypes.bool,
   filters: React.PropTypes.object,
-  limit: React.PropTypes.number,
   propertiesCount: React.PropTypes.number,
   properties: React.PropTypes.array,
   location: React.PropTypes.object

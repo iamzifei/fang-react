@@ -17,6 +17,7 @@ class SearchRefine extends React.Component {
             (refinedFilter[key] = refinedFilter[key] || self.props[key])
         )
       SearchActions.updateFilters(refinedFilter)
+      SearchActions.updateOffset('0')
       SearchActions.resultPageRedirect()
     }
   }
@@ -181,8 +182,8 @@ SearchRefine.propTypes = {
   term: React.PropTypes.string,
   room: React.PropTypes.string,
   property: React.PropTypes.string,
-  feature: React.PropTypes.array,
-  misc: React.PropTypes.array
+  feature: React.PropTypes.string,
+  misc: React.PropTypes.string
 }
 
 export default SearchRefine

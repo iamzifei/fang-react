@@ -10,7 +10,8 @@ class SearchActions {
       'getPropertiesSuccess',
       'getPropertiesCountSuccess',
       'updateFiltersSuccess',
-      'resultPageRedirectSuccess'
+      'resultPageRedirectSuccess',
+      'updateOffsetSuccess'
     )
   }
 
@@ -30,6 +31,10 @@ class SearchActions {
 
   updateFilters(filters) {
     this.actions.updateFiltersSuccess(filters)
+  }
+
+  updateOffset(offset) {
+    this.actions.updateOffsetSuccess(offset)
   }
 
   // make sure updateFilters has been called before this function

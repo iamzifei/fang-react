@@ -7,7 +7,6 @@ class SearchStore {
     this.bindActions(SearchActions)
     this.ajaxAnimationClass = ''
     this.suburbs = []
-    this.limit = 5
     this.properties = []
     this.propertiesCount = 0
     this.filters = {
@@ -20,6 +19,7 @@ class SearchStore {
       feature: 'any',
       misc: 'any'
     }
+    this.offset = this.filters.offset
   }
 
   onUpdateAjaxAnimation(className) {
@@ -50,8 +50,7 @@ class SearchStore {
   }
 
   onGetPropertiesSuccess(data) {
-    this.properties = data.res.properties
-    this.limit = data.res.limit
+    this.properties = data.res
     if (data.filter.suburb) {
       // make sure to update filter when query successful
       this.filters = data.filter
@@ -62,7 +61,10 @@ class SearchStore {
     this.propertiesCount = data.count
   }
 
-
+  onUpdateOffsetSuccess(offset) {
+    this.offset = offset
+    this.filters.offset = offset
+  }
 }
 
 export default alt.createStore(SearchStore)
