@@ -5,14 +5,12 @@ class SearchActions {
   constructor() {
     this.generateActions(
       'updateAjaxAnimation',
-      'updateSearchQueryValue',
-      'searchPropertiesSuccess',
-      'searchSuburbSuccess',
-      'getPropertiesListSuccess',
-      'getPropertyCountSuccess',
       'displayFailMessage',
+      'getSuburbsSuccess',
+      'getPropertiesSuccess',
+      'getPropertiesCountSuccess',
       'updateFiltersSuccess',
-      'filterChange'
+      'resultPageRedirectSuccess'
     )
   }
 
@@ -24,10 +22,21 @@ class SearchActions {
           if (err) {
             this.actions.displayFailMessage(err.response)
           } else {
-            this.actions.searchSuburbSuccess(res.body)
+            this.actions.getSuburbsSuccess(res.body)
           }
         })
     }
+  }
+
+  updateFilters(filters) {
+    this.actions.updateFiltersSuccess(filters)
+  }
+
+  // make sure updateFilters has been called before this function
+  // so the filters state will be always be updated, which doesn't
+  // require to parse it in as parameter here
+  resultPageRedirect() {
+    this.actions.resultPageRedirectSuccess()
   }
 
   getAllProperties(offset) {
@@ -37,29 +46,11 @@ class SearchActions {
         if (err) {
           this.actions.displayFailMessage(err.response)
         } else {
-          this.actions.getPropertiesListSuccess(res.body)
+          this.actions.getPropertiesSuccess({res: res.body, filter: {}})
         }
       })
   }
 
-  searchPropertiesBySuburb(suburb) {
-    request.get('/api/search')
-    .query(suburb)
-    .end((err, res) => {
-      if (err) {
-        this.actions.displayFailMessage(err.response)
-      } else {
-        this.actions.searchPropertiesSuccess(suburb)
-      }
-    })
-  }
-
-  /**
-   * GET /api/properties/:suburb/refine
-   * ?sort=desc&terms=s&room=single&property=house&feature=furnished&feature=femalePrefer
-   * &feature=nonSmoker&feature=petAllowed&feature=billInclude&feature=fastInternet
-   * Looks up a property by search refinement and criteria
-   */
   getPropertyCount(suburb = -1, sort, term, room, property, feature, misc) {
     request.get('/api/count')
       .query({
@@ -75,15 +66,13 @@ class SearchActions {
         if (err) {
           this.actions.displayFailMessage(err.response)
         } else {
-          this.actions.getPropertyCountSuccess(res.body)
+          this.actions.getPropertiesCountSuccess(res.body)
         }
       })
   }
 
   searchProperties(suburb, offset, sort, term, room, property, feature, misc) {
-    console.log(`suburb: ${suburb}, offset: ${offset}, sort: ${sort}, term: ${term}, room: ${room}, property: ${property}, feature: ${feature}, misc: ${misc}`)
-    request.get('/api/search')
-    .query({
+    const filter = {
       suburb,
       offset,
       sort,
@@ -92,28 +81,29 @@ class SearchActions {
       property,
       feature,
       misc
-    })
+    }
+    request.get('/api/search')
+    .query(filter)
     .end((err, res) => {
       if (err) {
         this.actions.displayFailMessage(err.response)
       } else {
-        this.actions.getPropertiesListSuccess(res.body)
+        this.actions.getPropertiesSuccess({res: res.body, filter})
       }
     })
   }
 
-  searchRefinedFilter(filter) {
-    const {
-      suburb, offset, sort, term, room, property, feature, misc
-    } = filter
+  //searchRefinedFilter(filter) {
+  //  const {
+  //    suburb, offset, sort, term, room, property, feature, misc
+  //  } = filter
+  //  console.log(filter)
+  //
+  //  this.actions.filterChange(filter)
+  //  //this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
+  //}
+  //
 
-    this.actions.filterChange(filter)
-    this.actions.searchProperties(suburb, offset, sort, term, room, property, feature, misc)
-  }
-
-  updateFilters(filters) {
-    this.actions.updateFiltersSuccess(filters)
-  }
 }
 
 export default alt.createActions(SearchActions)

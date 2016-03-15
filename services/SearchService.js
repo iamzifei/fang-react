@@ -32,23 +32,21 @@ class SearchService {
   }
 
   // helper search function, shared cross suburb search and refined search
-  queryCriteriaHelper(query, sort, term, room, property, feature, misc) {
-    switch (sort) {
-      // Note: sort is not applicable for property count
-      case 'count':
-        query = query;
-        break;
-      case 'time':
-        query = query.sort({'_id': -1});
-        break;
-      case 'priceUp':
-        query = query.sort({'price': 1});
-        break;
-      case 'priceDown':
-        query = query.sort({'price': -1});
-        break;
-      default:
-        query = query.sort({'_id': -1});
+  queryCriteriaHelper(countFlag, query, sort, term, room, property, feature, misc) {
+    if(!countFlag) {
+      switch (sort) {
+        case 'time':
+          query = query.sort({'_id': -1});
+          break;
+        case 'priceUp':
+          query = query.sort({'price': 1});
+          break;
+        case 'priceDown':
+          query = query.sort({'price': -1});
+          break;
+        default:
+          query = query.sort({'_id': -1});
+      }
     }
 
     switch (term) {
@@ -96,7 +94,9 @@ class SearchService {
         query = query;
     }
 
-    if (feature && feature.length > 0) {
+    if (feature === 'any') {
+      query = query;
+    } else if (feature && feature.length > 0) {
       query = query.where('propertyFeature', feature);
     }
 
@@ -111,31 +111,18 @@ class SearchService {
     return query;
   }
 
-  getAllProperties(req, res, next) {
+  getProperties(req, res, next) {
+    var suburb = req.query.suburb? req.query.suburb: -1;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
-    this.queryBuildHelper(offset, -1, 0)
-    .sort({'_id': -1})
-    .exec(function(err, properties) {
-      if (err) return next(err);
-      if (!properties) {
-        return res.status(404).send({ message: 'Properties not found.' });
-      }
-      res.send({limit: config.perPage, properties: properties});
-    })
-  }
-
-  getPropertiesByCriteria(req, res, next) {
-    var suburb = req.query.suburb;
-    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
-    var query = this.queryBuildHelper(offset, suburb, 0);
     var sort = req.query.sort;
     var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
     var misc = req.query.misc;
+    var query = this.queryBuildHelper(offset, suburb, 0);
 
-    this.queryCriteriaHelper(query, sort, term, room, property, feature, misc)
+    this.queryCriteriaHelper(0, query, sort, term, room, property, feature, misc)
     .skip(offset)
     .limit(config.perPage)
     .exec(function(err, properties) {
@@ -149,15 +136,16 @@ class SearchService {
     });
   }
 
-  getNumberOfProperties(req, res, next) {
+  getPropertiesCount(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
-    var query = this.queryBuildHelper(0, suburb, 1);
     var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
     var feature = req.query.feature;
     var misc = req.query.misc;
-    this.queryCriteriaHelper(query, 'count', term, room, property, feature, misc)
+
+    var query = this.queryBuildHelper(0, suburb, 1);
+    this.queryCriteriaHelper(1, query, 'count', term, room, property, feature, misc)
     .exec(function(err, count) {
       if (err) return next(err);
       res.send({ count: count });

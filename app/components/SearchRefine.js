@@ -3,7 +3,7 @@ import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
 
-const filterList = ['suburb', 'sort', 'term', 'room', 'property', 'feature', 'misc']
+const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
 
 class SearchRefine extends React.Component {
   _onRefine(filter = {}) {
@@ -172,7 +172,7 @@ class SearchRefine extends React.Component {
 
 SearchRefine.propTypes = {
   suburb: React.PropTypes.string,
-  offset: React.PropTypes.number,
+  offset: React.PropTypes.string,
   sort: React.PropTypes.string,
   term: React.PropTypes.string,
   room: React.PropTypes.string,
