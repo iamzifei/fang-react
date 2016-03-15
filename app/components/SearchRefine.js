@@ -1,11 +1,24 @@
 import React from 'react'
 import Translate from 'react-translate-component'
-import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
+import Slider from 'react-slider'
+import config from '../../config'
 
-const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
+const filterList = ['suburb', 'price', 'offset',
+  'sort', 'term', 'room', 'property', 'feature', 'misc']
 
 class SearchRefine extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.handleSliderAfterChange = this.handleSliderAfterChange.bind(this)
+  }
+
+  handleSliderAfterChange(price) {
+    SearchActions.updatePrice(price.toString())
+    SearchActions.updateOffset('0')
+    SearchActions.resultPageRedirect()
+  }
+
   _onRefine(filter = {}) {
     const self = this
     const refinedFilter = Object.assign({}, filter)
@@ -23,17 +36,22 @@ class SearchRefine extends React.Component {
   }
 
   render() {
-    const propertyFeatures = [
-      'furnished',
-      'femalePrefer',
-      'nonSmoker',
-      'petAllowed',
-      'billInclude',
-      'fastInternet'
-    ]
-
+    var price = this.props.price === '' ? 0 : parseInt(this.props.price, 10)
     return (
       <div id="refine">
+        <h3><Translate content="search.refine.price.label" /></h3>
+        <Slider
+          min={config.rentalMin}
+          max={config.rentalMax}
+          step={config.rentalStep}
+          value={price}
+          defaultValue={config.rentalMax}
+          withBars
+          className="price-slider"
+          onAfterChange={this.handleSliderAfterChange}
+        >
+          <span>{`~$${price}`}</span>
+        </Slider>
         <h3><Translate content="search.refine.sort.label" /></h3>
         <ul>
           <li>
@@ -119,6 +137,13 @@ class SearchRefine extends React.Component {
               <Translate content="search.refine.room.master" />
             </a>
           </li>
+          <li>
+            <a onClick={this._onRefine({ room: 'car' })}
+              className={this.props.room === 'car' ? 'active' : ''}
+            >
+              <Translate content="search.refine.room.car" />
+            </a>
+          </li>
         </ul>
         <h3><Translate content="search.refine.property.label" /></h3>
         <ul>
@@ -166,6 +191,7 @@ class SearchRefine extends React.Component {
 
 SearchRefine.propTypes = {
   suburb: React.PropTypes.string,
+  price: React.PropTypes.string,
   offset: React.PropTypes.string,
   sort: React.PropTypes.string,
   term: React.PropTypes.string,

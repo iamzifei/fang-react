@@ -32,7 +32,7 @@ class SearchService {
   }
 
   // helper search function, shared cross suburb search and refined search
-  queryCriteriaHelper(countFlag, query, sort, term, room, property, feature, misc) {
+  queryCriteriaHelper(countFlag, query, price, sort, term, room, property, feature, misc) {
     if(!countFlag) {
       switch (sort) {
         case 'time':
@@ -49,12 +49,16 @@ class SearchService {
       }
     }
 
+    if (price !== '') {
+      query = query.where('price').lte(parseInt(price, 10) + config.rentalBuffer);
+    }
+
     switch (term) {
       case 's':
         query = query.where('minTerm').lt(6);
         break;
       case 'l':
-        query = query.where('minTerm').gt(6);
+        query = query.where('minTerm').gte(6);
         break;
       default:
         query = query;
@@ -72,6 +76,9 @@ class SearchService {
         break;
       case 'master':
         query = query.where('roomType').equals('master');
+        break;
+      case 'car':
+        query = query.where('roomType').equals('car');
         break;
       default:
         query = query;
@@ -113,6 +120,7 @@ class SearchService {
 
   getProperties(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
+    var price = req.query.price? req.query.price: '';
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     var sort = req.query.sort;
     var term = req.query.term;
@@ -122,7 +130,7 @@ class SearchService {
     var misc = req.query.misc;
     var query = this.queryBuildHelper(offset, suburb, 0);
 
-    this.queryCriteriaHelper(0, query, sort, term, room, property, feature, misc)
+    this.queryCriteriaHelper(0, query, price, sort, term, room, property, feature, misc)
     .exec(function(err, properties) {
       if (err) return next(err);
 
@@ -136,6 +144,7 @@ class SearchService {
 
   getPropertiesCount(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
+    var price = req.query.price? req.query.price: '';
     var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
@@ -143,7 +152,7 @@ class SearchService {
     var misc = req.query.misc;
 
     var query = this.queryBuildHelper(0, suburb, 1);
-    this.queryCriteriaHelper(1, query, 'count', term, room, property, feature, misc)
+    this.queryCriteriaHelper(1, query, price, 'count', term, room, property, feature, misc)
     .exec(function(err, count) {
       if (err) return next(err);
       res.send({ count: count });
