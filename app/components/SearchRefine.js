@@ -1,8 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import Translate from 'react-translate-component'
 import PropertyFeature from './PropertyFeature'
 import SearchActions from '../actions/SearchActions'
-import _ from 'underscore'
 
 const filterList = ['suburb', 'offset', 'sort', 'term', 'room', 'property', 'feature', 'misc']
 
@@ -11,14 +10,14 @@ class SearchRefine extends React.Component {
     const self = this
     const refinedFilter = Object.assign({}, filter)
 
-    return function (event) {
+    return function onClick(event) {
       filterList
         .forEach(
           key =>
-            refinedFilter[key] = refinedFilter[key] || self.props[key]
+            (refinedFilter[key] = refinedFilter[key] || self.props[key])
         )
-      console.log(refinedFilter)
-      //SearchActions.searchRefinedFilter(refinedFilter)
+      SearchActions.updateFilters(refinedFilter)
+      SearchActions.resultPageRedirect()
     }
   }
 

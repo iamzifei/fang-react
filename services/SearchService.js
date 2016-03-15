@@ -54,7 +54,7 @@ class SearchService {
         query = query.where('minTerm').lt(6);
         break;
       case 'l':
-        query = query.where('minTerm').gte(6);
+        query = query.where('minTerm').gt(6);
         break;
       default:
         query = query;

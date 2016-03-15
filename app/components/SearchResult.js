@@ -51,10 +51,11 @@ class SearchResult extends React.Component {
       filters.suburb,
       filters.offset,
       filters.sort,
-      filters.terms,
+      filters.term,
       filters.room,
       filters.property,
-      filters.feature
+      filters.feature,
+      filters.misc
     )
   }
 
@@ -62,10 +63,11 @@ class SearchResult extends React.Component {
     SearchActions.getPropertyCount(
       filters.suburb,
       filters.sort,
-      filters.terms,
+      filters.term,
       filters.room,
       filters.property,
-      filters.feature
+      filters.feature,
+      filters.misc
     )
   }
 
@@ -107,7 +109,7 @@ class SearchResult extends React.Component {
             <div id="results">
               <ul className="list-offer-col">{propertyNodes}</ul>
             </div>
-            <SearchRefine {...this.props.filters} />
+            <SearchRefine {...this.props.location.query} />
             <div id="react-paginate">
               <ReactPaginate previousLabel={<Translate content="pagination.previous" />}
                 nextLabel={<Translate content="pagination.next" />}
