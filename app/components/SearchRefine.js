@@ -10,13 +10,18 @@ const filterList = ['suburb', 'price', 'offset',
 class SearchRefine extends React.Component {
   constructor(props, context) {
     super(props, context)
+    this.handleSliderChange = this.handleSliderChange.bind(this)
     this.handleSliderAfterChange = this.handleSliderAfterChange.bind(this)
   }
 
-  handleSliderAfterChange(price) {
+  handleSliderChange(price) {
     SearchActions.updatePrice(price.toString())
     SearchActions.updateOffset('0')
     SearchActions.resultPageRedirect()
+  }
+
+  handleSliderAfterChange(price) {
+
   }
 
   _onRefine(filter = {}) {
@@ -36,7 +41,10 @@ class SearchRefine extends React.Component {
   }
 
   render() {
-    var price = this.props.price === '' ? 0 : parseInt(this.props.price, 10)
+    var price = config.rentalMax
+    if (!isNaN(this.props.price)) {
+      price = this.props.price === '' ? config.rentalMax : parseInt(this.props.price, 10)
+    }
     return (
       <div id="refine">
         <h3><Translate content="search.refine.price.label" /></h3>
@@ -48,6 +56,7 @@ class SearchRefine extends React.Component {
           defaultValue={config.rentalMax}
           withBars
           className="price-slider"
+          onChange={this.handleSliderChange}
           onAfterChange={this.handleSliderAfterChange}
         >
           <span>{`~$${price}`}</span>

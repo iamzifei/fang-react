@@ -98,15 +98,6 @@ app.post('/api/properties', function(req, res, next) {
   propertyService.addProperty(req, res, next);
 });
 
-/**
- * GET /api/load
- * Load test data into database, for testing purpose
- * TODO: this needs removed in prod environment
- */
-app.get('/api/load', function(req, res, next) {
-  propertyService.loadProperties(req, res, next);
-});
-
 // React middleware
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {

@@ -49,7 +49,7 @@ class SearchService {
       }
     }
 
-    if (price !== '') {
+    if (!isNaN(price) && price !== '') {
       query = query.where('price').lte(parseInt(price, 10) + config.rentalBuffer);
     }
 
@@ -120,7 +120,7 @@ class SearchService {
 
   getProperties(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
-    var price = req.query.price? req.query.price: '';
+    var price = req.query.price;
     var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
     var sort = req.query.sort;
     var term = req.query.term;
@@ -144,7 +144,7 @@ class SearchService {
 
   getPropertiesCount(req, res, next) {
     var suburb = req.query.suburb? req.query.suburb: -1;
-    var price = req.query.price? req.query.price: '';
+    var price = req.query.price;
     var term = req.query.term;
     var room = req.query.room;
     var property = req.query.property;
