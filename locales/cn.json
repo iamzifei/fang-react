@@ -44,6 +44,9 @@
   "search": {
     "title": "在%(suburb)s共找到%(count)s套房源信息",
     "refine": {
+      "price": {
+        "label": "每周租金"
+      },
       "sort": {
         "label": "排序",
         "time": "最新房源优先",
@@ -62,7 +65,8 @@
         "private": "单人间",
         "shared": "与人合住",
         "living": "客厅",
-        "master": "主人房"
+        "master": "主人房",
+        "car": "车位/车库"
       },
       "property": {
         "label": "物业类型",

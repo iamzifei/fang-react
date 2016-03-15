@@ -1,6 +1,7 @@
 import alt from '../alt'
 import SearchActions from '../actions/SearchActions'
 import { browserHistory } from 'react-router'
+import config from '../../config'
 
 class SearchStore {
   constructor() {
@@ -11,6 +12,7 @@ class SearchStore {
     this.propertiesCount = 0
     this.filters = {
       suburb: '',
+      price: `${config.rentalMax}`,
       offset: '0',
       sort: 'time',
       term: 'any',
@@ -20,6 +22,7 @@ class SearchStore {
       misc: 'any'
     }
     this.offset = this.filters.offset
+    this.price = this.filters.price
   }
 
   onUpdateAjaxAnimation(className) {
@@ -64,6 +67,11 @@ class SearchStore {
   onUpdateOffsetSuccess(offset) {
     this.offset = offset
     this.filters.offset = offset
+  }
+
+  onUpdatePriceSuccess(price) {
+    this.price = price
+    this.filters.price = price
   }
 }
 

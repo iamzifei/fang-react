@@ -7,11 +7,12 @@ class SearchActions {
       'updateAjaxAnimation',
       'displayFailMessage',
       'getSuburbsSuccess',
+      'resultPageRedirectSuccess',
       'getPropertiesSuccess',
       'getPropertiesCountSuccess',
       'updateFiltersSuccess',
-      'resultPageRedirectSuccess',
-      'updateOffsetSuccess'
+      'updateOffsetSuccess',
+      'updatePriceSuccess'
     )
   }
 
@@ -37,6 +38,10 @@ class SearchActions {
     this.actions.updateOffsetSuccess(offset)
   }
 
+  updatePrice(price) {
+    this.actions.updatePriceSuccess(price)
+  }
+
   // make sure updateFilters has been called before this function
   // so the filters state will be always be updated, which doesn't
   // require to parse it in as parameter here
@@ -56,10 +61,11 @@ class SearchActions {
       })
   }
 
-  getPropertyCount(suburb = -1, sort, term, room, property, feature, misc) {
+  getPropertyCount(suburb = -1, price, sort, term, room, property, feature, misc) {
     request.get('/api/count')
       .query({
         suburb,
+        price,
         sort,
         term,
         room,
@@ -76,9 +82,10 @@ class SearchActions {
       })
   }
 
-  searchProperties(suburb, offset, sort, term, room, property, feature, misc) {
+  searchProperties(suburb, price, offset, sort, term, room, property, feature, misc) {
     const filter = {
       suburb,
+      price,
       offset,
       sort,
       term,

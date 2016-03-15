@@ -50,6 +50,7 @@ class SearchResult extends React.Component {
   getPropertyList(filters) {
     SearchActions.searchProperties(
       filters.suburb,
+      filters.price,
       filters.offset,
       filters.sort,
       filters.term,
@@ -63,6 +64,7 @@ class SearchResult extends React.Component {
   getPropertyCount(filters) {
     SearchActions.getPropertyCount(
       filters.suburb,
+      filters.price,
       filters.sort,
       filters.term,
       filters.room,

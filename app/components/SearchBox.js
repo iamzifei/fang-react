@@ -4,6 +4,7 @@ import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions'
 import AutoSuggest from 'react-autosuggest'
 import counterpart from 'counterpart'
+import config from '../../config'
 
 class SearchBox extends React.Component {
   static getStores() {
@@ -42,6 +43,7 @@ class SearchBox extends React.Component {
   onChange(event, object) {
     SearchActions.updateFilters({
       suburb: object.newValue.trim(),
+      price: `${config.rentalMax}`,
       offset: '0',
       sort: 'time',
       term: 'any',

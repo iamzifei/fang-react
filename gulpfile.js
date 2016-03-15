@@ -6,6 +6,7 @@ var cssmin = require('gulp-cssmin');
 var less = require('gulp-less');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
+var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
@@ -106,31 +107,39 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
 
 /*
  |--------------------------------------------------------------------------
- | Compile LESS stylesheets.
+ | Compile stylesheets.
  |--------------------------------------------------------------------------
  */
 gulp.task('styles', function() {
-  return gulp.src('app/stylesheets/main.less')
+  var lessStream = gulp.src('app/stylesheets/*.less')
     .pipe(plumber())
-    .pipe(less())
+    .pipe(less());
+
+  var scssStream = gulp.src('app/stylesheets/*.scss')
+    .pipe(plumber())
+    .pipe(sass().on('error', sass.logError));
+
+  var cssStream = gulp.src([
+    'app/stylesheets/*.css',
+    'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'
+    ]);
+
+  var mergedStream = merge(cssStream, lessStream, scssStream)
+    .pipe(concat('styles.css'))
     .pipe(autoprefixer())
     .pipe(gulpif(production, cssmin()))
     .pipe(gulp.dest('public/css'));
+
+  return mergedStream;
 });
 
-gulp.task('sass', function () {
-  return gulp.src('app/stylesheets/*.scss')
-    .pipe(plumber())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer())
-    .pipe(gulpif(production, cssmin()))
-    .pipe(gulp.dest('public/css'));
-});
 
 gulp.task('watch', function() {
-  gulp.watch('app/stylesheets/**/*.less', ['styles']);
-  gulp.watch('app/stylesheets/**/*.scss', ['sass']);
+  gulp.watch([
+    'app/stylesheets/**/*.less',
+    'app/stylesheets/**/*.scss'
+  ], ['styles']);
 });
 
-gulp.task('default', ['styles', 'sass', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['styles', 'sass', 'vendor', 'browserify']);
+gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'watch']);
+gulp.task('build', ['styles', 'vendor', 'browserify']);

@@ -59,9 +59,9 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * ~~suburb/postcode search auto-complete~~
 * ~~google map integration for property details page~~
 * ~~translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))~~
+* ~~narrow down search results by price and property/room type~~
 * add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
 * display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
-* narrow down search results by price and property/room type
 * style polish & responsive
 
 ### stage 2
@@ -74,11 +74,13 @@ for more details, please refer to [React Translate Componenent](https://github.c
 ### stage 3
 * display nearby facilities for property
 * search property by facilities
-* filter search result by property features
+* filter search result by property features 
+* allow user select multiple search filters in the same category
 
 ### stage 4
 * property shortlist
 * property rating/comment
+* search surrounding suburbs
 
 ### stage 5
 * remove jquery dependencies

@@ -44,6 +44,9 @@
   "search": {
     "title": "Found %(count)s properties in %(suburb)s",
     "refine": {
+      "price": {
+        "label": "Rental Per Week"
+      },
       "sort": {
         "label": "Sort by",
         "time": "Newest first",
@@ -62,7 +65,8 @@
         "private": "Private rooms",
         "shared": "Shared rooms",
         "living": "Living rooms",
-        "master": "Master rooms"
+        "master": "Master rooms",
+        "car": "Car Space/Garage"
       },
       "property": {
         "label": "Accommodation type",
