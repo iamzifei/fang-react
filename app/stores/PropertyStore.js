@@ -1,7 +1,7 @@
 import { assign } from 'underscore'
 import alt from '../alt'
 import PropertyActions from '../actions/PropertyActions'
-import Logger from '../../utils/Logger'
+import { browserHistory } from 'react-router'
 
 class PropertyStore {
   constructor() {
@@ -10,8 +10,6 @@ class PropertyStore {
   }
 
   onInitState() {
-    Logger.log('PropertyStore.onInitState()')
-
     delete this._id
     delete this.files
     delete this.suburb
@@ -54,6 +52,17 @@ class PropertyStore {
   onSelectFilesToUpload(files) {
     this.files = files
   }
+
+  onAddPropertySuccess(id) {
+    browserHistory.push({
+      pathname: `/property/${id}`
+    })
+  }
+
+  onAddPropertyFail(error) {
+    toastr.error(error)
+  }
+
 }
 
 export default alt.createStore(PropertyStore)

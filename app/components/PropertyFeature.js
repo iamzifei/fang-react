@@ -1,6 +1,5 @@
 import React from 'react'
 import Translate from 'react-translate-component'
-import { Link } from 'react-router'
 
 class PropertyFeature extends React.Component {
 

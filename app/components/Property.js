@@ -19,22 +19,10 @@ class Property extends React.Component {
 
   constructor(props) {
     super(props)
-    this.createImageCarousel = this.createImageCarousel.bind(this)
   }
 
   componentDidMount() {
     PropertyActions.getProperty(this.props.params.id)
-
-    $('.magnific-popup').magnificPopup({
-      type: 'image',
-      mainClass: 'mfp-zoom-in',
-      closeOnContentClick: true,
-      midClick: true,
-      zoom: {
-        enabled: true,
-        duration: 300
-      }
-    })
   }
 
   componentDidUpdate(prevProps) {
@@ -64,80 +52,6 @@ class Property extends React.Component {
     })
   }
 
-  createImageCarousel() {
-    const Decorators = [
-      {
-        component: React.createClass({
-          render() {
-            return (
-              <button
-                style={this.getButtonStyles(this.props.currentSlide === 0)}
-                onClick={this.handleClick}
-              >
-                <i className="fa fa-chevron-left"></i>
-              </button>
-            )
-          },
-          handleClick(e) {
-            e.preventDefault()
-            this.props.previousSlide()
-          },
-          getButtonStyles(disabled) {
-            return {
-              border: 0,
-              background: 'rgba(0,0,0,0.4)',
-              color: 'white',
-              padding: 10,
-              outline: 0,
-              opacity: disabled ? 0.3 : 1,
-              cursor: 'pointer'
-            }
-          }
-        }),
-        position: 'CenterLeft'
-      },
-      {
-        component: React.createClass({
-          render() {
-            return (
-              <button
-                style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
-                onClick={this.handleClick}
-              >
-                <i className="fa fa-chevron-right"></i>
-              </button>
-            )
-          },
-          handleClick(e) {
-            e.preventDefault()
-            this.props.nextSlide()
-          },
-          getButtonStyles(disabled) {
-            return {
-              border: 0,
-              background: 'rgba(0,0,0,0.4)',
-              color: 'white',
-              padding: 10,
-              outline: 0,
-              opacity: disabled ? 0.3 : 1,
-              cursor: 'pointer'
-            }
-          }
-        }),
-        position: 'CenterRight'
-      }
-    ]
-
-    if (this.props.imageCount > 0) {
-      var rows = []
-      for (var i = 1; i <= this.props.imageCount; i++) {
-        var filename = 'property_image_{0}_{1}'.format(this.props._id, i)
-        rows.push(<img key={filename} src={'/property_images/{0}'.format(filename)}/>)
-      }
-      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>
-    }
-  }
-
   render() {
     const propertyAddress = this.props.address
       + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia'
@@ -152,17 +66,12 @@ class Property extends React.Component {
     return (
       <div>
         <Navbar pageFlag="property" />
+        <div className="property-cover row">
+          <img src="/img/grid-offer.jpg" />
+        </div>
         <div className="container">
-          <div className="property-img">
-            {this.createImageCarousel()}
-          </div>
           <div className="row">
             <div className="property-info col-sm-6">
-              <h3>
-                <strong>
-                  <Translate content="property.details.title" />:
-                </strong>
-              </h3>
               <h4 className="lead">
                 <Translate content="property.details.suburb" />:
                 <strong>{this.props.suburb}, {this.props.postcode}</strong>
@@ -186,6 +95,10 @@ class Property extends React.Component {
                 <Translate content="property.details.roomType" />:
                 <strong>{this.props.roomType}</strong>
               </h4>
+              <h2><strong>{this.props.title}</strong></h2>
+              <h4 className="lead"><Translate content="property.details.details" />:
+                <strong>{this.props.details}</strong>
+              </h4>
             </div>
             <div className="contact-details col-sm-6">
               <h3><strong><Translate content="property.details.contact.title" />:</strong></h3>
@@ -207,13 +120,6 @@ class Property extends React.Component {
                 <Translate content="property.details.contact.prefer" />
               </h4>
             </div>
-          </div>
-          <hr />
-          <div className="row">
-            <h2><strong>{this.props.title}</strong></h2>
-            <h4 className="lead"><Translate content="property.details.details" />:
-              <strong>{this.props.details}</strong>
-            </h4>
           </div>
           <hr />
           <div className="row">
@@ -273,7 +179,7 @@ Property.propTypes = {
   contactEmail: React.PropTypes.string,
   contactSocial: React.PropTypes.string,
   preferredContact: React.PropTypes.string,
-  bond: React.PropTypes.string,
+  bond: React.PropTypes.number,
   availableStart: React.PropTypes.string,
   minTerm: React.PropTypes.number,
   propertyFeature: React.PropTypes.array,

@@ -27,16 +27,6 @@ class SearchResult extends React.Component {
   componentDidMount() {
     this.getPropertyList(this.props.location.query)
     this.getPropertyCount(this.props.location.query)
-    $('.magnific-popup').magnificPopup({
-      type: 'image',
-      mainClass: 'mfp-zoom-in',
-      closeOnContentClick: true,
-      midClick: true,
-      zoom: {
-        enabled: true,
-        duration: 300
-      }
-    })
   }
 
   componentDidUpdate(prevProps) {

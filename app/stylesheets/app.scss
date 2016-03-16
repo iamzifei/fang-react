@@ -45,6 +45,9 @@ $break-large: 1199px;
 body {
   background-color: $body-bg;
   padding-top: 100px;
+  @media screen and (max-width: $break-medium) {
+    padding-top: 70px;
+  }
 }
 
 #carousel-home {
@@ -546,7 +549,7 @@ footer {
     display: none;
     height: 100%;
     width: 320px;
-    display: none;
+    margin-top: 50px;
     a[data-closerefine] {
       display: block;
     }
@@ -631,5 +634,13 @@ footer {
       background-color: $light-brand-color;
     }
   }
+}
 
+.property-cover {
+  margin-top: -20px;
+  img {
+    object-fit: cover;
+    max-height: 500px;
+    width: 100%;
+  }
 }
