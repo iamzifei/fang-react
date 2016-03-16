@@ -21,24 +21,28 @@ var processSuburbs = function (res, suburbs) {
 
 class LocationService {
   getSuburbSuggestions(req, res, next) {
-    var suburb = req.query.suburb;
-    // if it's number, consider as postcode
-    if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
-      suburb = new RegExp('^' + req.query.suburb, 'i');
-      Suburb.find({postcode: suburb})
-        .lean()
-        .exec(function (err, suburbs) {
-          if (err) return next(err);
-          processSuburbs(res, suburbs);
-        });
-    } else {
-      suburb = new RegExp('^' + req.query.suburb, 'i');
-      Suburb.find({suburb: suburb})
-        .lean()
-        .exec(function (err, suburbs) {
-          if (err) return next(err);
-          processSuburbs(res, suburbs);
-        });
+    try {
+      var suburb = req.query.suburb;
+      // if it's number, consider as postcode
+      if (!isNaN(parseFloat(suburb)) && isFinite(suburb)) {
+        suburb = new RegExp('^' + req.query.suburb, 'i');
+        Suburb.find({postcode: suburb})
+          .lean()
+          .exec(function (err, suburbs) {
+            if (err) return next(err);
+            processSuburbs(res, suburbs);
+          });
+      } else {
+        suburb = new RegExp('^' + req.query.suburb, 'i');
+        Suburb.find({suburb: suburb})
+          .lean()
+          .exec(function (err, suburbs) {
+            if (err) return next(err);
+            processSuburbs(res, suburbs);
+          });
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 }

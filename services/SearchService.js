@@ -119,44 +119,52 @@ class SearchService {
   }
 
   getProperties(req, res, next) {
-    var suburb = req.query.suburb? req.query.suburb: -1;
-    var price = req.query.price;
-    var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
-    var sort = req.query.sort;
-    var term = req.query.term;
-    var room = req.query.room;
-    var property = req.query.property;
-    var feature = req.query.feature;
-    var misc = req.query.misc;
-    var query = this.queryBuildHelper(offset, suburb, 0);
+    try {
+      var suburb = req.query.suburb? req.query.suburb: -1;
+      var price = req.query.price;
+      var offset = req.query.offset? parseInt(req.query.offset, 10) : 0;
+      var sort = req.query.sort;
+      var term = req.query.term;
+      var room = req.query.room;
+      var property = req.query.property;
+      var feature = req.query.feature;
+      var misc = req.query.misc;
+      var query = this.queryBuildHelper(offset, suburb, 0);
 
-    this.queryCriteriaHelper(0, query, price, sort, term, room, property, feature, misc)
-    .exec(function(err, properties) {
-      if (err) return next(err);
+      this.queryCriteriaHelper(0, query, price, sort, term, room, property, feature, misc)
+      .exec(function(err, properties) {
+        if (err) return next(err);
 
-      if (!properties) {
-        return res.status(404).send({ message: 'Property not found.' });
-      }
+        if (!properties) {
+          return res.status(404).send({ message: 'Property not found.' });
+        }
 
-      res.send(properties);
-    });
+        res.send(properties);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   getPropertiesCount(req, res, next) {
-    var suburb = req.query.suburb? req.query.suburb: -1;
-    var price = req.query.price;
-    var term = req.query.term;
-    var room = req.query.room;
-    var property = req.query.property;
-    var feature = req.query.feature;
-    var misc = req.query.misc;
+    try {
+      var suburb = req.query.suburb? req.query.suburb: -1;
+      var price = req.query.price;
+      var term = req.query.term;
+      var room = req.query.room;
+      var property = req.query.property;
+      var feature = req.query.feature;
+      var misc = req.query.misc;
 
-    var query = this.queryBuildHelper(0, suburb, 1);
-    this.queryCriteriaHelper(1, query, price, 'count', term, room, property, feature, misc)
-    .exec(function(err, count) {
-      if (err) return next(err);
-      res.send({ count: count });
-    });
+      var query = this.queryBuildHelper(0, suburb, 1);
+      this.queryCriteriaHelper(1, query, price, 'count', term, room, property, feature, misc)
+      .exec(function(err, count) {
+        if (err) return next(err);
+        res.send({ count: count });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
