@@ -18,8 +18,8 @@ $header-color: #000;
 $features-bg-color: #1b2835;
 
 $break-small: 480px;
-$break-medium: 767px;
-$break-large: 1199px;
+$break-medium: 768px;
+$break-large: 1170px;
 
 %overflow-text {
   white-space: nowrap;
@@ -200,7 +200,7 @@ body {
   .input-group {
     width: 100%;
     .input-group-btn {
-      width: 39px;
+      width: 39px !important;
       .btn-default {
         color: $text-color;
         border-color: $form-control-color;
@@ -636,11 +636,101 @@ footer {
   }
 }
 
-.property-cover {
-  margin-top: -20px;
-  img {
-    object-fit: cover;
-    max-height: 500px;
-    width: 100%;
+.property-details-container {
+  line-height: 2em;
+  font-size: 1.2em;
+  color: $title-color;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .property-cover {
+    margin-top: -20px;
+    img {
+      object-fit: cover;
+      max-height: 500px;
+      width: 100%;
+    }
+  }
+  .top-section {
+    margin-left: 60px;
+    margin-right:60px;
+    .property-info {
+      padding-right: 60px;
+      padding-left: 0;
+      .primary {
+        padding: 30px 0;
+        span.price {
+          color: $title-color;
+          font-weight: bold;
+          font-size: 1.8em;
+        }
+        .property-type {
+          .grid {
+            border-right: 1px solid $border-color;
+            display: inline-block;
+            line-height: 60px;
+            height: 60px;
+            width: 49%;
+            text-align: center;
+            &:last-child {
+              border-right: none;
+            }
+          }
+        }
+      }
+      .desc {
+        text-align: justify;
+        color: $subtitle-color;
+      }
+    }
+    .contact-details {
+      background-color: $hover-bg-color;
+      border-bottom: 5px solid $brand-color;
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      text-align: center;
+      padding: 30px;
+    }
+  }
+
+  .map-container {
+    margin: 50px 0;
+  }
+
+  .property-misc {
+    background-color: $hover-bg-color;
+    padding: 60px;
+    h3 {
+      margin-top: 0;
+    }
+  }
+  @media screen and (max-width: $break-medium) {
+    .top-section {
+      margin-left: 10px;
+      margin-right:10px;
+      .property-info {
+        padding-right: 0px;
+        padding-left: 0;
+        .property-type {
+          margin-top: 10px;
+        }
+      }
+      .contact-details {
+        border-top: 1px solid $border-color;
+        margin-top: 40px;
+      }
+    }
+    .property-misc {
+      text-align: center;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .lease-details {
+        margin-top: 20px;
+      }
+    }
   }
 }

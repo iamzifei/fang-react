@@ -98,7 +98,7 @@
       "suburb": "Suburb",
       "address": "Address",
       "price": "Price",
-      "priceValue": "$%(price)s per week",
+      "priceValue": "per week",
       "propertyType": "Property Type",
       "roomType": "Room Type",
       "title": "Title",

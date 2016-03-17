@@ -66,73 +66,56 @@ class Property extends React.Component {
     return (
       <div>
         <Navbar pageFlag="property" />
-        <div className="property-cover row">
-          <img src="/img/grid-offer.jpg" />
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="property-info col-sm-6">
-              <h4 className="lead">
-                <Translate content="property.details.suburb" />:
-                <strong>{this.props.suburb}, {this.props.postcode}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.address" />:<strong>{this.props.address}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.price" />:
-                <Translate
-                  price={this.props.price}
-                  content="property.details.priceValue"
-                  component="strong"
-                />
-              </h4>
-              <h4 className="lead">
-                <i className="ri-md ri  ri-swimming-pool-indoor"></i>
-                Property Type: <strong>{this.props.propertyType}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.roomType" />:
-                <strong>{this.props.roomType}</strong>
-              </h4>
-              <h2><strong>{this.props.title}</strong></h2>
-              <h4 className="lead"><Translate content="property.details.details" />:
-                <strong>{this.props.details}</strong>
-              </h4>
+        <div className=".container-fluid property-details-container">
+          <div className="property-cover">
+            <img src="/img/grid-offer.jpg" />
+          </div>
+          <div className="row top-section">
+            <div className="property-info col-xs-12 col-sm-8">
+              <div className="row primary">
+                <div className="col-xs-12 col-sm-6">
+                  <span className="price">${this.props.price}</span>
+                  <Translate content="property.details.priceValue" />
+                  <div>{propertyAddress}</div>
+                </div>
+                <div className="property-type col-xs-12 col-sm-6">
+                  <span className="grid">{this.props.propertyType}</span>
+                  <span className="grid">{this.props.roomType}</span>
+                </div>
+              </div>
+              <div className="row desc">
+                {this.props.details}
+              </div>
             </div>
-            <div className="contact-details col-sm-6">
-              <h3><strong><Translate content="property.details.contact.title" />:</strong></h3>
-              <h4 className="lead">
-                <Translate content="property.details.contact.name" />:
-                <strong>{this.props.contactName}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.phoneNumber" />:
-                <strong>{this.props.contactNumber}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.email" />:
-                <strong>{this.props.contactEmail}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.social" />:
-                <strong>{this.props.contactSocial}</strong>
+            <div className="contact-details col-xs-12 col-sm-4">
+              <div>{this.props.contactName}</div>
+              <div>{this.props.contactNumber}</div>
+              <div>{this.props.contactEmail}</div>
+              <div>
+                <Translate content="property.details.contact.social" />
+                {this.props.contactSocial}
                 <Translate content="property.details.contact.prefer" />
-              </h4>
+              </div>
             </div>
           </div>
-          <hr />
-          <div className="row">
+          <div className="row map-container">
+            <GoogleMap
+              onGoogleApiLoaded={
+                ({ map, maps }) => this.getLatlngByAddress(map, maps, propertyAddress)
+              }
+              yesIWantToUseGoogleMapApiInternals
+              options={createMapOptions}
+              center={this.props.geolocation}
+              defaultZoom={16}
+            />
+          </div>
+          <div className="row property-misc">
             <div className="property-feature col-sm-6">
-              <h3 className="lead">
-                <strong><Translate content="property.details.feature.title" />: </strong>
-              </h3>
+              <Translate content="property.details.feature.title" component="h3" />
               <PropertyFeature propertyFeatures={this.props.propertyFeature} />
             </div>
             <div className="lease-details col-sm-6">
-              <h3 className="lead">
-                <strong><Translate content="property.details.lease.title" />:</strong>
-              </h3>
+              <Translate content="property.details.lease.title" component="h3" />
               <ul>
                 <li><Translate bond={this.props.bond} content="property.details.lease.bond" /></li>
                 <li><Translate bond={this.props.minTerm} content="property.details.lease.term" /></li>
@@ -142,20 +125,6 @@ class Property extends React.Component {
                   />
                 </li>
               </ul>
-            </div>
-          </div>
-          <div className="row">
-            <h3><strong><Translate content="property.details.location.title" />:</strong></h3>
-            <div className="map-container">
-              <GoogleMap
-                onGoogleApiLoaded={
-                  ({ map, maps }) => this.getLatlngByAddress(map, maps, propertyAddress)
-                }
-                yesIWantToUseGoogleMapApiInternals
-                options={createMapOptions}
-                center={this.props.geolocation}
-                defaultZoom={16}
-              />
             </div>
           </div>
         </div>
