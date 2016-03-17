@@ -15,7 +15,9 @@ class PropertyGrid extends React.Component {
               <div className="grid-offer-photo">
                 <img src="/img/grid-offer.jpg" alt="" />
                 <div className="type-container">
-                  <div className="estate-type"><Translate content={property.propertyType} /></div>
+                  <div className="estate-type">
+                    <Translate content={`search.refine.property.${property.propertyType}`} />
+                  </div>
                   <div className="ads-flag"><Translate content="property.flags.new" /></div>
                 </div>
               </div>

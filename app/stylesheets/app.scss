@@ -1,3 +1,5 @@
+@import "flaticon";
+
 $brand-color: #F44336;
 $light-brand-color: #F77970;
 $dark-brand-color: #E11B0C;
@@ -645,9 +647,7 @@ footer {
     margin-right: 0;
   }
   .property-cover {
-    #lightgallery {
-      display: none;
-    }
+    cursor: pointer;
     margin-top: -20px;
     img {
       object-fit: cover;

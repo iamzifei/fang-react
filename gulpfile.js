@@ -112,11 +112,11 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
  |--------------------------------------------------------------------------
  */
 gulp.task('styles', function() {
-  var lessStream = gulp.src('app/stylesheets/*.less')
+  var lessStream = gulp.src('app/stylesheets/main.less')
     .pipe(plumber())
     .pipe(less());
 
-  var scssStream = gulp.src('app/stylesheets/*.scss')
+  var scssStream = gulp.src('app/stylesheets/app.scss')
     .pipe(plumber())
     .pipe(sass().on('error', sass.logError));
 

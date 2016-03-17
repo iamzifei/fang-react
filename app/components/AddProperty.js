@@ -156,7 +156,7 @@ class AddProperty extends React.Component {
                         <input type="radio" name="roomType" id="private" value="private"
                           checked={this.state.roomType === 'private'} onChange={this.onFieldChange}
                         />
-                        <label htmlFor="single">Single Room</label>
+                        <label htmlFor="private">Single Room</label>
                       </div>
                       <div className="radio radio-inline">
                         <input type="radio" name="roomType" id="shared" value="shared"
@@ -186,7 +186,7 @@ class AddProperty extends React.Component {
                       <span className="help-block">{this.state.contactNameHelpBlock}</span>
                     </div>
                     <div className={`form-group ${this.state.contactNumberValidateState}`}>
-                      <label className="control-label">Contact Name</label>
+                      <label className="control-label">Contact Number</label>
                       <input type="text" className="form-control" ref="contactNumberTextField"
                         value={this.state.contactNumber} name="contactNumber"
                         onChange={this.onFieldChange}
@@ -249,7 +249,7 @@ class AddProperty extends React.Component {
                       <span className="help-block">{this.state.availableStartHelpBlock}</span>
                     </div>
                     <div className={`form-group ${this.state.minTermValidateState}`}>
-                      <label className="control-label">Available Date</label>
+                      <label className="control-label">Minimum Terms</label>
                       <input type="text" className="form-control" ref="minTermTextField"
                         value={this.state.minTerm} name="minTerm"
                         onChange={this.onFieldChange}

@@ -43,12 +43,11 @@ class PropertyActions {
       )
     }
 
-    const thisAction = this
     req.end((error, response) => {
       if (error) {
-        thisAction.actions.addPropertyFail(error)
+        this.actions.addPropertyFail(error)
       } else {
-        thisAction.actions.addPropertySuccess(response.body.id)
+        this.actions.addPropertySuccess(response.body.id)
       }
     })
   }

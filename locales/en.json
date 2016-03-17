@@ -9,10 +9,6 @@
   "petAllowed": "Pet Allowed",
   "billInclude": "Bill Included",
   "fastInternet": "Fast Internet",
-  "whole": "Entire Flat",
-  "apartment": "Apartment",
-  "house": "House",
-  "studio": "Studio",
   "home": {
     "property": {
       "list": {
