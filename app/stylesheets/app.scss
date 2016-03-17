@@ -645,6 +645,9 @@ footer {
     margin-right: 0;
   }
   .property-cover {
+    #lightgallery {
+      display: none;
+    }
     margin-top: -20px;
     img {
       object-fit: cover;

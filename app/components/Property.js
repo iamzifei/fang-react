@@ -7,6 +7,7 @@ import GoogleMap from 'google-map-react'
 import Carousel from 'nuka-carousel'
 import Translate from 'react-translate-component'
 import Navbar from './Navbar'
+import LightGallery from './LightGallery'
 
 class Property extends React.Component {
   static getStores() {
@@ -67,9 +68,7 @@ class Property extends React.Component {
       <div>
         <Navbar pageFlag="property" />
         <div className=".container-fluid property-details-container">
-          <div className="property-cover">
-            <img src="/img/grid-offer.jpg" />
-          </div>
+          <LightGallery />
           <div className="row top-section">
             <div className="property-info col-xs-12 col-sm-8">
               <div className="row primary">

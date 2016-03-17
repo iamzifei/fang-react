@@ -35,8 +35,9 @@ gulp.task('vendor', function() {
   return gulp.src([
     'bower_components/jquery/dist/jquery.js',
     'bower_components/bootstrap/dist/js/bootstrap.js',
-    'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
     'bower_components/toastr/toastr.js',
+    'node_modules/lightgallery/dist/js/lightgallery.min.js',
+    'node_modules/lightgallery/dist/js/lg-thumbnail.js',
     'utils/frontend.js'
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
@@ -121,7 +122,8 @@ gulp.task('styles', function() {
 
   var cssStream = gulp.src([
     'app/stylesheets/*.css',
-    'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'
+    'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
+    'node_modules/lightgallery/dist/css/lightgallery.min.css'
     ]);
 
   var mergedStream = merge(cssStream, lessStream, scssStream)
