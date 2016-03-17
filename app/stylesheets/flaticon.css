@@ -1,7 +1,7 @@
-/*
-Flaticon icon font: Flaticon
-Creation date: 17/03/2016 12:52
-*/
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 17/03/2016 12:52
+  	*/
 
 @font-face {
   font-family: "Flaticon";
@@ -21,19 +21,12 @@ Creation date: 17/03/2016 12:52
   }
 }
 
-.fi:before{
-  display: inline-block;
-  font-family: "Flaticon";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  line-height: 1;
-  text-decoration: inherit;
-  text-rendering: optimizeLegibility;
-  text-transform: none;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
 }
 
 .flaticon-aircon:before { content: "\f100"; }
@@ -57,25 +50,3 @@ Creation date: 17/03/2016 12:52
 .flaticon-private-room:before { content: "\f112"; }
 .flaticon-shared-room:before { content: "\f113"; }
 .flaticon-swimming:before { content: "\f114"; }
-
-$font-Flaticon-aircon: "\f100";
-$font-Flaticon-apartment: "\f101";
-$font-Flaticon-bbq: "\f102";
-$font-Flaticon-bill-include: "\f103";
-$font-Flaticon-cctv: "\f104";
-$font-Flaticon-cooking: "\f105";
-$font-Flaticon-ensuite: "\f106";
-$font-Flaticon-female-prefer: "\f107";
-$font-Flaticon-furnished: "\f108";
-$font-Flaticon-garage: "\f109";
-$font-Flaticon-gym: "\f10a";
-$font-Flaticon-house: "\f10b";
-$font-Flaticon-internet: "\f10c";
-$font-Flaticon-living-room: "\f10d";
-$font-Flaticon-location: "\f10e";
-$font-Flaticon-master-room: "\f10f";
-$font-Flaticon-no-smoking: "\f110";
-$font-Flaticon-pet-friendly: "\f111";
-$font-Flaticon-private-room: "\f112";
-$font-Flaticon-shared-room: "\f113";
-$font-Flaticon-swimming: "\f114";

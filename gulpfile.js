@@ -121,9 +121,9 @@ gulp.task('styles', function() {
     .pipe(sass().on('error', sass.logError));
 
   var cssStream = gulp.src([
-    'app/stylesheets/*.css',
     'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
-    'node_modules/lightgallery/dist/css/lightgallery.min.css'
+    'node_modules/lightgallery/dist/css/lightgallery.min.css',
+    'app/stylesheets/*.css'
     ]);
 
   var mergedStream = merge(cssStream, lessStream, scssStream)

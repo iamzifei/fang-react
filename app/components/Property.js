@@ -102,6 +102,7 @@ class Property extends React.Component {
                 </div>
                 <div className="property-type col-xs-12 col-sm-6">
                   <span className="grid">
+                    <i className="flaticon-apartment"></i>
                     {counterpart(`search.refine.property.${this.props.propertyType}`)}
                   </span>
                   <span className="grid">
