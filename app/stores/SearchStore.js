@@ -2,6 +2,7 @@ import alt from '../alt'
 import SearchActions from '../actions/SearchActions'
 import { browserHistory } from 'react-router'
 import config from '../../config'
+import toastr from 'toastr'
 
 class SearchStore {
   constructor() {

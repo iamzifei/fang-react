@@ -2,6 +2,7 @@ import { assign } from 'underscore'
 import alt from '../alt'
 import PropertyActions from '../actions/PropertyActions'
 import { browserHistory } from 'react-router'
+import toastr from 'toastr'
 
 class PropertyStore {
   constructor() {
