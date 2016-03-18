@@ -33,11 +33,11 @@ var dependencies = [
  */
 gulp.task('vendor', function() {
   return gulp.src([
-    'bower_components/jquery/dist/jquery.js',
-    'bower_components/bootstrap/dist/js/bootstrap.js',
-    'bower_components/toastr/toastr.js',
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/toastr/toastr.js',
     'node_modules/lightgallery/dist/js/lightgallery.min.js',
-    'node_modules/lightgallery/dist/js/lg-thumbnail.js',
+    'node_modules/lightgallery/dist/js/lg-thumbnail.min.js',
     'utils/frontend.js'
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
@@ -111,6 +111,22 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
  | Compile stylesheets.
  |--------------------------------------------------------------------------
  */
+gulp.task('fonts', function() {
+  return gulp.src([
+    'node_modules/bootstrap/dist/fonts/*',
+    'node_modules/lightgallery/dist/fonts/*',
+    'node_modules/font-awesome/fonts/*'
+  ])
+  .pipe(gulp.dest('public/fonts/'));
+});
+
+gulp.task('img', function() {
+  return gulp.src([
+    'node_modules/lightgallery/dist/img/*',
+  ])
+  .pipe(gulp.dest('public/img/'));
+})
+
 gulp.task('styles', function() {
   var lessStream = gulp.src('app/stylesheets/main.less')
     .pipe(plumber())
@@ -121,8 +137,8 @@ gulp.task('styles', function() {
     .pipe(sass().on('error', sass.logError));
 
   var cssStream = gulp.src([
-    'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
     'node_modules/lightgallery/dist/css/lightgallery.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css',
     'app/stylesheets/*.css'
     ]);
 
@@ -143,5 +159,5 @@ gulp.task('watch', function() {
   ], ['styles']);
 });
 
-gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['styles', 'vendor', 'browserify']);
+gulp.task('default', ['styles', 'vendor', 'fonts', 'img', 'browserify-watch', 'watch']);
+gulp.task('build', ['styles', 'vendor', 'fonts', 'img', 'browserify']);

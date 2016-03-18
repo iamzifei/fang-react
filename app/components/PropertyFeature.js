@@ -1,31 +1,36 @@
 import React from 'react'
 import Translate from 'react-translate-component'
+import config from '../../config'
 
 class PropertyFeature extends React.Component {
 
   render() {
     if (this.props.propertyFeatures) {
-      var ref = this.props.ref ? this.props.ref : ''
+      var from = this.props.from ? this.props.from : ''
       var propertyFeatureNodes = this.props.propertyFeatures.map(
         (propertyFeature, index) => {
           var feature
-          if (ref === propertyFeature) {
-            feature = (
-              <li key={propertyFeature}>
-                <Translate content={propertyFeature} component="strong" />
-              </li>
-            )
-          } else if (ref === 'refine') {
-            feature = (
-              <li key={propertyFeature}>
-                <a>
+          switch (from) {
+            case 'refine':
+              feature = (
+                <li key={propertyFeature}>
+                  <a>
+                    <Translate content={propertyFeature} />
+                  </a>
+                </li>
+              )
+              break
+            case 'property':
+              feature = (
+                <li key={propertyFeature}>
+                  <i className={`property-icon ${config.iconMapping[propertyFeature]}`} />
                   <Translate content={propertyFeature} />
-                </a>
-              </li>
-            )
-          } else {
-            feature =
-              <li key={propertyFeature}><Translate content={propertyFeature} /></li>
+                </li>
+              )
+              break
+            default:
+              feature =
+                <li key={propertyFeature}><Translate content={propertyFeature} /></li>
           }
           return feature
         }
@@ -41,7 +46,7 @@ class PropertyFeature extends React.Component {
 
 PropertyFeature.propTypes = {
   propertyFeatures: React.PropTypes.array,
-  ref: React.PropTypes.string
+  from: React.PropTypes.string
 }
 
 export default PropertyFeature

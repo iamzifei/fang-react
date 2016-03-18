@@ -8,6 +8,7 @@ import Translate from 'react-translate-component'
 import Navbar from './Navbar'
 import LightGallery from './LightGallery'
 import counterpart from 'counterpart'
+import config from '../../config'
 
 class Property extends React.Component {
   static getStores() {
@@ -102,11 +103,14 @@ class Property extends React.Component {
                 </div>
                 <div className="property-type col-xs-12 col-sm-6">
                   <span className="grid">
-                    <i className="flaticon-apartment"></i>
-                    {counterpart(`search.refine.property.${this.props.propertyType}`)}
+                    <i className={`property-icon ${config.iconMapping[this.props.propertyType]}`}>
+                      {counterpart(`search.refine.property.${this.props.propertyType}`)}
+                    </i>
                   </span>
                   <span className="grid">
-                    {counterpart(`search.refine.room.${this.props.roomType}`)}
+                    <i className={`property-icon ${config.iconMapping[this.props.roomType]}`}>
+                      {counterpart(`search.refine.room.${this.props.roomType}`)}
+                    </i>
                   </span>
                 </div>
               </div>
@@ -115,11 +119,11 @@ class Property extends React.Component {
               </div>
             </div>
             <div className="contact-details col-xs-12 col-sm-4">
-              <div>{this.props.contactName}</div>
-              <div>{this.props.contactNumber}</div>
-              <div>{this.props.contactEmail}</div>
+              <div><i className="fa fa-user" />{this.props.contactName}</div>
+              <div><i className="fa fa-phone"></i>{this.props.contactNumber}</div>
+              <div><i className="fa fa-envelope"></i>{this.props.contactEmail}</div>
               <div>
-                <Translate content="property.details.contact.social" />
+                <i className="fa fa-weixin"></i>
                 {this.props.contactSocial}
                 <Translate content="property.details.contact.prefer" />
               </div>
@@ -139,7 +143,7 @@ class Property extends React.Component {
           <div className="row property-misc">
             <div className="property-feature col-sm-6">
               <Translate content="property.details.feature.title" component="h3" />
-              <PropertyFeature propertyFeatures={this.props.propertyFeature} />
+              <PropertyFeature propertyFeatures={this.props.propertyFeature} from="property" />
             </div>
             <div className="lease-details col-sm-6">
               <Translate content="property.details.lease.title" component="h3" />

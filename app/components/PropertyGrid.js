@@ -23,6 +23,7 @@ class PropertyGrid extends React.Component {
               </div>
               <div className="price-grid-cont">
                 <div className="grid-price-label pull-left">
+                  <i className="property-icon flaticon-location" />
                   {property.address}
                 </div>
                 <div className="grid-price pull-right">
