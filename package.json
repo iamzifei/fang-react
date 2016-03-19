@@ -17,7 +17,7 @@
     "build": "gulp build",
     "jshint": "jshint --verbose ./app",
     "test": "NODE_ENV=test eslint ./app && jshint",
-    "postinstall": "bower install && gulp build"
+    "postinstall": "gulp build"
   },
   "dependencies": {
     "alt": "^0.17.8",
