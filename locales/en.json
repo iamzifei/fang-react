@@ -9,10 +9,6 @@
   "petAllowed": "Pet Allowed",
   "billInclude": "Bill Included",
   "fastInternet": "Fast Internet",
-  "whole": "Entire Flat",
-  "apartment": "Apartment",
-  "house": "House",
-  "studio": "Studio",
   "home": {
     "property": {
       "list": {
@@ -98,7 +94,7 @@
       "suburb": "Suburb",
       "address": "Address",
       "price": "Price",
-      "priceValue": "$%(price)s per week",
+      "priceValue": "per week",
       "propertyType": "Property Type",
       "roomType": "Room Type",
       "title": "Title",

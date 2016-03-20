@@ -1,0 +1,52 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 17/03/2016 12:52
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../fonts/Flaticon.eot");
+  src: url("../fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/Flaticon.woff") format("woff"),
+       url("../fonts/Flaticon.ttf") format("truetype"),
+       url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-aircon:before { content: "\f100"; }
+.flaticon-apartment:before { content: "\f101"; }
+.flaticon-bbq:before { content: "\f102"; }
+.flaticon-bill-include:before { content: "\f103"; }
+.flaticon-cctv:before { content: "\f104"; }
+.flaticon-cooking:before { content: "\f105"; }
+.flaticon-ensuite:before { content: "\f106"; }
+.flaticon-female-prefer:before { content: "\f107"; }
+.flaticon-furnished:before { content: "\f108"; }
+.flaticon-garage:before { content: "\f109"; }
+.flaticon-gym:before { content: "\f10a"; }
+.flaticon-house:before { content: "\f10b"; }
+.flaticon-internet:before { content: "\f10c"; }
+.flaticon-living-room:before { content: "\f10d"; }
+.flaticon-location:before { content: "\f10e"; }
+.flaticon-master-room:before { content: "\f10f"; }
+.flaticon-no-smoking:before { content: "\f110"; }
+.flaticon-pet-friendly:before { content: "\f111"; }
+.flaticon-private-room:before { content: "\f112"; }
+.flaticon-shared-room:before { content: "\f113"; }
+.flaticon-swimming:before { content: "\f114"; }

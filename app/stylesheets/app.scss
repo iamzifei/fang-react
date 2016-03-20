@@ -18,8 +18,8 @@ $header-color: #000;
 $features-bg-color: #1b2835;
 
 $break-small: 480px;
-$break-medium: 767px;
-$break-large: 1199px;
+$break-medium: 768px;
+$break-large: 1170px;
 
 %overflow-text {
   white-space: nowrap;
@@ -45,6 +45,16 @@ $break-large: 1199px;
 body {
   background-color: $body-bg;
   padding-top: 100px;
+  @media screen and (max-width: $break-medium) {
+    padding-top: 70px;
+  }
+}
+
+i.property-icon {
+  font-style: normal;
+  &:before {
+    margin: 0;
+  }
 }
 
 #carousel-home {
@@ -197,7 +207,7 @@ body {
   .input-group {
     width: 100%;
     .input-group-btn {
-      width: 39px;
+      width: 39px !important;
       .btn-default {
         color: $text-color;
         border-color: $form-control-color;
@@ -456,7 +466,7 @@ footer {
         }
       }
       .price-grid-cont {
-        padding: 0 30px 0 30px;
+        padding: 0 20px;
         background-color: $brand-color;
         color: $text-over-brand;
         .grid-price-label {
@@ -465,6 +475,9 @@ footer {
           font-size: 1em;
           width: 70%;
           @extend %overflow-text;
+          i.property-icon:before {
+            font-size: 14px;
+          }
         }
         .grid-price {
           width: 30%;
@@ -546,7 +559,7 @@ footer {
     display: none;
     height: 100%;
     width: 320px;
-    display: none;
+    margin-top: 50px;
     a[data-closerefine] {
       display: block;
     }
@@ -631,5 +644,142 @@ footer {
       background-color: $light-brand-color;
     }
   }
+}
 
+.property-details-container {
+  line-height: 2em;
+  font-size: 1.2em;
+  color: $title-color;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .property-cover {
+    cursor: pointer;
+    margin-top: -20px;
+    >div {
+      position: relative;
+      >span {
+        position: absolute;
+        top: 50%;
+        margin-top: -24px;
+        color: $revert-title-color;
+        z-index: 99;
+        font-size: 48px;
+        &.glyphicon-menu-right {
+          right: 0;
+        }
+        &.glyphicon-menu-left {
+          left: 0;
+        }
+        text-shadow: $revert-text-color-shadow;
+      }
+    }
+    img {
+      object-fit: cover;
+      max-height: 500px;
+      width: 100%;
+    }
+  }
+  .top-section {
+    margin-left: 60px;
+    margin-right:60px;
+    .property-info {
+      padding-right: 60px;
+      padding-left: 0;
+      .primary {
+        padding: 30px 0;
+        span.price {
+          color: $title-color;
+          font-weight: bold;
+          font-size: 1.8em;
+        }
+        .property-type {
+          .grid {
+            border-right: 1px solid $border-color;
+            display: inline-block;
+            width: 49%;
+            text-align: center;
+            &:last-child {
+              border-right: none;
+            }
+            .property-icon {
+              &:before {
+                font-size: 40px;
+                display: block;
+                color: $subtitle-color;
+              }
+            }
+          }
+        }
+      }
+      .desc {
+        text-align: justify;
+        color: $subtitle-color;
+      }
+    }
+    .contact-details {
+      background-color: $hover-bg-color;
+      border-bottom: 5px solid $brand-color;
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      padding: 30px;
+      .fa {
+        margin-right: 4px;
+        color: $subtitle-color;
+      }
+    }
+  }
+
+  .map-container {
+    margin: 50px 0;
+  }
+
+  .property-misc {
+    background-color: $hover-bg-color;
+    padding: 60px;
+    h3 {
+      margin-top: 0;
+    }
+    .property-feature {
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        .property-icon {
+          &:before {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $break-medium) {
+    .top-section {
+      margin-left: 10px;
+      margin-right:10px;
+      .property-info {
+        padding-right: 0px;
+        padding-left: 0;
+        .property-type {
+          margin-top: 10px;
+        }
+      }
+      .contact-details {
+        border-top: 1px solid $border-color;
+        margin-top: 40px;
+      }
+    }
+    .property-misc {
+      text-align: center;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .lease-details {
+        margin-top: 20px;
+      }
+    }
+  }
 }

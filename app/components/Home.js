@@ -8,6 +8,7 @@ import Translate from 'react-translate-component'
 import Jumbotron from './Jumbotron'
 import Navbar from './Navbar'
 import config from '../../config'
+import $ from 'jquery'
 
 class Home extends React.Component {
   static getStores() {

@@ -7,7 +7,7 @@ const config = require('../config');
 class SearchService {
   // helper search function, shared cross suburb search and refined search
   queryBuildHelper(offset, suburb, countFlag) {
-    var autocomplete = new RegExp('^([a-z\']+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
+    var autocomplete = new RegExp('^([a-z\'\\s]+)[,\\s]*([0-9]+)[,\\s]*([a-z]+)$', 'i');
     var match, query;
     var paginateFlag = !countFlag;
     if (suburb == -1) {

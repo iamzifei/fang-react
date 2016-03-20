@@ -15,12 +15,15 @@ class PropertyGrid extends React.Component {
               <div className="grid-offer-photo">
                 <img src="/img/grid-offer.jpg" alt="" />
                 <div className="type-container">
-                  <div className="estate-type"><Translate content={property.propertyType} /></div>
+                  <div className="estate-type">
+                    <Translate content={`search.refine.property.${property.propertyType}`} />
+                  </div>
                   <div className="ads-flag"><Translate content="property.flags.new" /></div>
                 </div>
               </div>
               <div className="price-grid-cont">
                 <div className="grid-price-label pull-left">
+                  <i className="property-icon flaticon-location" />
                   {property.address}
                 </div>
                 <div className="grid-price pull-right">

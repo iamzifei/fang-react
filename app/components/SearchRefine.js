@@ -59,7 +59,7 @@ class SearchRefine extends React.Component {
           onChange={this.handleSliderChange}
           onAfterChange={this.handleSliderAfterChange}
         >
-          <span>{`~$${price}`}</span>
+          <span>{`$${price}`}</span>
         </Slider>
         <h3><Translate content="search.refine.sort.label" /></h3>
         <ul>

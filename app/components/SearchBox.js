@@ -5,6 +5,7 @@ import SearchActions from '../actions/SearchActions'
 import AutoSuggest from 'react-autosuggest'
 import counterpart from 'counterpart'
 import config from '../../config'
+import $ from 'jquery'
 
 class SearchBox extends React.Component {
   static getStores() {

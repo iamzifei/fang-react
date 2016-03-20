@@ -1,12 +1,15 @@
 import React from 'react'
+import alt from '../alt'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import PropertyStore from '../stores/PropertyStore'
 import PropertyActions from '../actions/PropertyActions'
 import PropertyFeature from './PropertyFeature'
 import GoogleMap from 'google-map-react'
-import Carousel from 'nuka-carousel'
 import Translate from 'react-translate-component'
 import Navbar from './Navbar'
+import LightGallery from './LightGallery'
+import counterpart from 'counterpart'
+import config from '../../config'
 
 class Property extends React.Component {
   static getStores() {
@@ -17,24 +20,8 @@ class Property extends React.Component {
     return PropertyStore.getState()
   }
 
-  constructor(props) {
-    super(props)
-    this.createImageCarousel = this.createImageCarousel.bind(this)
-  }
-
   componentDidMount() {
     PropertyActions.getProperty(this.props.params.id)
-
-    $('.magnific-popup').magnificPopup({
-      type: 'image',
-      mainClass: 'mfp-zoom-in',
-      closeOnContentClick: true,
-      midClick: true,
-      zoom: {
-        enabled: true,
-        duration: 300
-      }
-    })
   }
 
   componentDidUpdate(prevProps) {
@@ -42,6 +29,10 @@ class Property extends React.Component {
     if (prevProps.params.id !== this.props.params.id) {
       PropertyActions.getProperty(this.props.params.id)
     }
+  }
+
+  componentWillUnmount() {
+    alt.recycle(PropertyStore)
   }
 
   getLatlngByAddress(map, maps, address) {
@@ -64,83 +55,9 @@ class Property extends React.Component {
     })
   }
 
-  createImageCarousel() {
-    const Decorators = [
-      {
-        component: React.createClass({
-          render() {
-            return (
-              <button
-                style={this.getButtonStyles(this.props.currentSlide === 0)}
-                onClick={this.handleClick}
-              >
-                <i className="fa fa-chevron-left"></i>
-              </button>
-            )
-          },
-          handleClick(e) {
-            e.preventDefault()
-            this.props.previousSlide()
-          },
-          getButtonStyles(disabled) {
-            return {
-              border: 0,
-              background: 'rgba(0,0,0,0.4)',
-              color: 'white',
-              padding: 10,
-              outline: 0,
-              opacity: disabled ? 0.3 : 1,
-              cursor: 'pointer'
-            }
-          }
-        }),
-        position: 'CenterLeft'
-      },
-      {
-        component: React.createClass({
-          render() {
-            return (
-              <button
-                style={this.getButtonStyles(this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount)}
-                onClick={this.handleClick}
-              >
-                <i className="fa fa-chevron-right"></i>
-              </button>
-            )
-          },
-          handleClick(e) {
-            e.preventDefault()
-            this.props.nextSlide()
-          },
-          getButtonStyles(disabled) {
-            return {
-              border: 0,
-              background: 'rgba(0,0,0,0.4)',
-              color: 'white',
-              padding: 10,
-              outline: 0,
-              opacity: disabled ? 0.3 : 1,
-              cursor: 'pointer'
-            }
-          }
-        }),
-        position: 'CenterRight'
-      }
-    ]
-
-    if (this.props.imageCount > 0) {
-      var rows = []
-      for (var i = 1; i <= this.props.imageCount; i++) {
-        var filename = 'property_image_{0}_{1}'.format(this.props._id, i)
-        rows.push(<img key={filename} src={'/property_images/{0}'.format(filename)}/>)
-      }
-      return <Carousel dragging={true} edgeEasing="easeOutElastic" decorators={Decorators}>{rows}</Carousel>
-    }
-  }
-
   render() {
-    const propertyAddress = this.props.address
-      + ', ' + this.props.suburb + ', ' + this.props.postcode + ', Australia'
+    const propertyAddress = `${this.props.address},
+    ${this.props.suburb}, ${this.props.postcode}, Australia`
 
     function createMapOptions(maps) {
       return {
@@ -149,107 +66,105 @@ class Property extends React.Component {
       }
     }
 
+    /**
+     * the format for images array
+     [
+     {
+       "src":"/img/jumbotron.jpg",
+       "thumb":"/img/logo.png",
+       "mobileSrc":"/img/grid-offer.jpg"
+     },
+     {
+       "src":"/img/jumbotron.jpg",
+       "thumb":"/img/logo.png",
+       "mobileSrc":"/img/grid-offer.jpg"
+     }
+     ]
+     **/
+    var images = []
+    if (this.props.imageCount > 0) {
+      for (var i = 1; i <= this.props.imageCount; i++) {
+        var filename = `/property_images/property_image_${this.props.params.id}_${i}`
+        var imageObj = {}
+        imageObj.src = filename
+        imageObj.thumb = filename
+        imageObj.mobileSrc = filename
+        images.push(imageObj)
+      }
+    }
+
     return (
       <div>
         <Navbar pageFlag="property" />
-        <div className="container">
-          <div className="property-img">
-            {this.createImageCarousel()}
-          </div>
-          <div className="row">
-            <div className="property-info col-sm-6">
-              <h3>
-                <strong>
-                  <Translate content="property.details.title" />:
-                </strong>
-              </h3>
-              <h4 className="lead">
-                <Translate content="property.details.suburb" />:
-                <strong>{this.props.suburb}, {this.props.postcode}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.address" />:<strong>{this.props.address}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.price" />:
-                <Translate
-                  price={this.props.price}
-                  content="property.details.priceValue"
-                  component="strong"
-                />
-              </h4>
-              <h4 className="lead">
-                <i className="ri-md ri  ri-swimming-pool-indoor"></i>
-                Property Type: <strong>{this.props.propertyType}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.roomType" />:
-                <strong>{this.props.roomType}</strong>
-              </h4>
+        <div className=".container-fluid property-details-container">
+          <LightGallery images={images} />
+          <div className="row top-section">
+            <div className="property-info col-xs-12 col-sm-8">
+              <div className="row primary">
+                <div className="col-xs-12 col-sm-6">
+                  <span className="price">${this.props.price}</span>
+                  <Translate content="property.details.priceValue" />
+                  <div>{propertyAddress}</div>
+                </div>
+                <div className="property-type col-xs-12 col-sm-6">
+                  <span className="grid">
+                    <i className={`property-icon ${config.iconMapping[this.props.propertyType]}`}>
+                      {counterpart(`search.refine.property.${this.props.propertyType}`)}
+                    </i>
+                  </span>
+                  <span className="grid">
+                    <i className={`property-icon ${config.iconMapping[this.props.roomType]}`}>
+                      {counterpart(`search.refine.room.${this.props.roomType}`)}
+                    </i>
+                  </span>
+                </div>
+              </div>
+              <div className="row desc">
+                {this.props.details}
+              </div>
             </div>
-            <div className="contact-details col-sm-6">
-              <h3><strong><Translate content="property.details.contact.title" />:</strong></h3>
-              <h4 className="lead">
-                <Translate content="property.details.contact.name" />:
-                <strong>{this.props.contactName}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.phoneNumber" />:
-                <strong>{this.props.contactNumber}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.email" />:
-                <strong>{this.props.contactEmail}</strong>
-              </h4>
-              <h4 className="lead">
-                <Translate content="property.details.contact.social" />:
-                <strong>{this.props.contactSocial}</strong>
+            <div className="contact-details col-xs-12 col-sm-4">
+              <div><i className="fa fa-user" />{this.props.contactName}</div>
+              <div><i className="fa fa-phone"></i>{this.props.contactNumber}</div>
+              <div><i className="fa fa-envelope"></i>{this.props.contactEmail}</div>
+              <div>
+                <i className="fa fa-weixin"></i>
+                {this.props.contactSocial}
                 <Translate content="property.details.contact.prefer" />
-              </h4>
+              </div>
             </div>
           </div>
-          <hr />
-          <div className="row">
-            <h2><strong>{this.props.title}</strong></h2>
-            <h4 className="lead"><Translate content="property.details.details" />:
-              <strong>{this.props.details}</strong>
-            </h4>
+          <div className="row map-container">
+            <GoogleMap
+              onGoogleApiLoaded={
+                ({ map, maps }) => this.getLatlngByAddress(map, maps, propertyAddress)
+              }
+              yesIWantToUseGoogleMapApiInternals
+              options={createMapOptions}
+              center={this.props.geolocation}
+              defaultZoom={16}
+            />
           </div>
-          <hr />
-          <div className="row">
+          <div className="row property-misc">
             <div className="property-feature col-sm-6">
-              <h3 className="lead">
-                <strong><Translate content="property.details.feature.title" />: </strong>
-              </h3>
-              <PropertyFeature propertyFeatures={this.props.propertyFeature} />
+              <Translate content="property.details.feature.title" component="h3" />
+              <PropertyFeature propertyFeatures={this.props.propertyFeature} from="property" />
             </div>
             <div className="lease-details col-sm-6">
-              <h3 className="lead">
-                <strong><Translate content="property.details.lease.title" />:</strong>
-              </h3>
+              <Translate content="property.details.lease.title" component="h3" />
               <ul>
-                <li><Translate bond={this.props.bond} content="property.details.lease.bond" /></li>
-                <li><Translate bond={this.props.minTerm} content="property.details.lease.term" /></li>
                 <li>
-                  <Translate bond={this.props.availableStart}
+                  <Translate bond={this.props.bond} content="property.details.lease.bond" />
+                </li>
+                <li>
+                  <Translate term={this.props.minTerm} content="property.details.lease.term" />
+                </li>
+                <li>
+                  <Translate startDate={this.props.availableStart}
                     content="property.details.lease.start"
                   />
                 </li>
               </ul>
-            </div>
-          </div>
-          <div className="row">
-            <h3><strong><Translate content="property.details.location.title" />:</strong></h3>
-            <div className="map-container">
-              <GoogleMap
-                onGoogleApiLoaded={
-                  ({ map, maps }) => this.getLatlngByAddress(map, maps, propertyAddress)
-                }
-                yesIWantToUseGoogleMapApiInternals
-                options={createMapOptions}
-                center={this.props.geolocation}
-                defaultZoom={16}
-              />
             </div>
           </div>
         </div>
@@ -262,7 +177,7 @@ Property.propTypes = {
   params: React.PropTypes.object,
   suburb: React.PropTypes.string,
   postcode: React.PropTypes.string,
-  price: React.PropTypes.number,
+  price: React.PropTypes.string,
   address: React.PropTypes.string,
   title: React.PropTypes.string,
   details: React.PropTypes.string,
@@ -275,8 +190,9 @@ Property.propTypes = {
   preferredContact: React.PropTypes.string,
   bond: React.PropTypes.string,
   availableStart: React.PropTypes.string,
-  minTerm: React.PropTypes.number,
+  minTerm: React.PropTypes.string,
   propertyFeature: React.PropTypes.array,
+  imageCount: React.PropTypes.number,
   geolocation: React.PropTypes.object
 }
 

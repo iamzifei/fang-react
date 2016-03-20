@@ -2,8 +2,6 @@ import alt from '../alt'
 
 import request from 'superagent'
 
-import Logger from '../../utils/Logger'
-
 class PropertyActions {
   constructor() {
     this.generateActions(
@@ -11,14 +9,13 @@ class PropertyActions {
       'getPropertyFail',
       'updateGeoLocation',
       'fieldValueChanges',
+      'checkboxValueChanges',
       'addPropertySuccess',
       'addPropertyFail',
-      'selectFilesToUpload',
-      'initState'
+      'selectFilesToUpload'
     )
   }
 
-  // TODO: put properties CRUD actions in this one
   getProperty(_id) {
     request.get(`/api/property/${_id}`)
     .end((err, res) => {
@@ -31,10 +28,8 @@ class PropertyActions {
   }
 
   addProperty(property) {
-    Logger.log('PropertyActions.addProperty(property)')
-
     var req = request.post('/api/properties')
-    req.set('Accept', 'application/json')
+      .set('Accept', 'application/json')
 
     // attach all input fields
     Object.keys(property).forEach((key, index) =>
@@ -48,18 +43,11 @@ class PropertyActions {
       )
     }
 
-    Logger.log('property')
-    Logger.logObject(property)
-
-    const thisAction = this
     req.end((error, response) => {
       if (error) {
-        Logger.logObject(error)
-        thisAction.actions.addPropertyFail(error)
+        this.actions.addPropertyFail(error)
       } else {
-        Logger.logObject(response)
-        thisAction.actions.addPropertySuccess(response)
-        window.location.replace(`/property/${response.body.id}`)
+        this.actions.addPropertySuccess(response.body.id)
       }
     })
   }

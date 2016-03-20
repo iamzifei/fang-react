@@ -9,10 +9,6 @@
   "petAllowed": "可养宠物",
   "billInclude": "包水电",
   "fastInternet": "高速网络",
-  "whole": "整套公寓",
-  "apartment": "公寓",
-  "house": "House",
-  "studio": "Studio",
   "home": {
     "property": {
       "list": {
@@ -98,7 +94,7 @@
       "suburb": "区域",
       "address": "地址",
       "price": "价格",
-      "priceValue": "每周$%(price)s",
+      "priceValue": "每周",
       "propertyType": "物业类型",
       "roomType": "房屋类型",
       "title": "标题",
