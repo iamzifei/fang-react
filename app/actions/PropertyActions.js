@@ -9,10 +9,10 @@ class PropertyActions {
       'getPropertyFail',
       'updateGeoLocation',
       'fieldValueChanges',
+      'checkboxValueChanges',
       'addPropertySuccess',
       'addPropertyFail',
-      'selectFilesToUpload',
-      'initState'
+      'selectFilesToUpload'
     )
   }
 

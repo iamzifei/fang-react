@@ -1,4 +1,5 @@
 import React from 'react'
+import alt from '../alt'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import PropertyStore from '../stores/PropertyStore'
 import PropertyActions from '../actions/PropertyActions'
@@ -28,6 +29,10 @@ class Property extends React.Component {
     if (prevProps.params.id !== this.props.params.id) {
       PropertyActions.getProperty(this.props.params.id)
     }
+  }
+
+  componentWillUnmount() {
+    alt.recycle(PropertyStore)
   }
 
   getLatlngByAddress(map, maps, address) {
@@ -152,10 +157,10 @@ class Property extends React.Component {
                   <Translate bond={this.props.bond} content="property.details.lease.bond" />
                 </li>
                 <li>
-                  <Translate bond={this.props.minTerm} content="property.details.lease.term" />
+                  <Translate term={this.props.minTerm} content="property.details.lease.term" />
                 </li>
                 <li>
-                  <Translate bond={this.props.availableStart}
+                  <Translate startDate={this.props.availableStart}
                     content="property.details.lease.start"
                   />
                 </li>
@@ -172,7 +177,7 @@ Property.propTypes = {
   params: React.PropTypes.object,
   suburb: React.PropTypes.string,
   postcode: React.PropTypes.string,
-  price: React.PropTypes.number,
+  price: React.PropTypes.string,
   address: React.PropTypes.string,
   title: React.PropTypes.string,
   details: React.PropTypes.string,
@@ -183,9 +188,9 @@ Property.propTypes = {
   contactEmail: React.PropTypes.string,
   contactSocial: React.PropTypes.string,
   preferredContact: React.PropTypes.string,
-  bond: React.PropTypes.number,
+  bond: React.PropTypes.string,
   availableStart: React.PropTypes.string,
-  minTerm: React.PropTypes.number,
+  minTerm: React.PropTypes.string,
   propertyFeature: React.PropTypes.array,
   imageCount: React.PropTypes.number,
   geolocation: React.PropTypes.object

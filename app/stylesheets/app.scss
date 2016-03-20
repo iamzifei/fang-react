@@ -657,6 +657,24 @@ footer {
   .property-cover {
     cursor: pointer;
     margin-top: -20px;
+    >div {
+      position: relative;
+      >span {
+        position: absolute;
+        top: 50%;
+        margin-top: -24px;
+        color: $revert-title-color;
+        z-index: 99;
+        font-size: 48px;
+        &.glyphicon-menu-right {
+          right: 0;
+        }
+        &.glyphicon-menu-left {
+          left: 0;
+        }
+        text-shadow: $revert-text-color-shadow;
+      }
+    }
     img {
       object-fit: cover;
       max-height: 500px;

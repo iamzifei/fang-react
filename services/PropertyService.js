@@ -7,8 +7,6 @@ const upload = multer({dest: '../data/upload/'}).any();
 const Property = require('../models/property');
 const config = require('../config');
 
-const Logger = require('../utils/Logger');
-
 class PropertyService {
 
   getPropertyById(req, res, next) {
@@ -20,7 +18,10 @@ class PropertyService {
       if (!property) {
         return res.status(404).send({ message: 'Property not found.' });
       }
-
+      // convert number to string for component
+      property.price = property.price ? property.price.toString() : property.price;
+      property.minTerm = property.minTerm ? property.minTerm.toString() : property.minTerm;
+      property.bond = property.bond ? property.bond.toString() : property.bond;
       res.send(property);
     });
   }
@@ -32,18 +33,18 @@ class PropertyService {
       }
 
       var property = new Property();
-
       //attach all input fields
       Object.keys(req.body).forEach(function(key, index) {
-        property[key] = req.body[key];
+        if (key === 'propertyFeature') {
+          property.propertyFeature = req.body.propertyFeature.split(/[\s,]+/);
+        } else {
+          property[key] = req.body[key];
+        }
       });
 
       if (req.files) {
         property.imageCount = req.files.length;
       }
-
-      Logger.log("PropertyService.addProperty(...)");
-      Logger.logObject(property);
 
       try {
         property.save(function(err) {
@@ -51,17 +52,14 @@ class PropertyService {
 
           // get doc id
           var docID = property["_id"];
-          Logger.log("property id: {0}", docID);
 
           // move uploaded images to target folder and rename them with id
-          const imageFilenamePattern = "./public/property_images/property_image_{0}_{1}";
           for (var i = 0; i < property.imageCount; i++) {
-            var targetPath = imageFilenamePattern.format(docID, i + 1);
-            Logger.log("moving {0} to {1}".format(req.files[i].path, targetPath));
+            var targetPath = `./public/property_images/property_image_${docID}_${i + 1}`;
             fs.rename(req.files[i].path, targetPath,
               function (err) {
                 if (err) {
-                  Logger.log("moving the file failed");
+                  console.log("moving the file failed");
                 }
               }
             );

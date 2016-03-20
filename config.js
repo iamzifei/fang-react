@@ -20,7 +20,7 @@ module.exports = {
       femalePrefer: 'flaticon-female-prefer',
       nonSmoker: 'flaticon-no-smoking',
       petAllowed: 'flaticon-pet-friendly',
-      billInclude: 'flaticon-bill-included',
+      billInclude: 'flaticon-bill-include',
       fastInternet: 'flaticon-internet'
     }
 };
