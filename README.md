@@ -2,7 +2,7 @@
 
 ## How to build and run the project
 
-* run `npm install && bower install` for dependencies
+* run `npm install` for dependencies
 * create data/db folder under project root
 * run `sh start-db.sh` to start mongodb
 * `cd` to the project root in terminal, run `npm run watch`
