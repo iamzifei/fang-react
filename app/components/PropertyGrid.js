@@ -7,18 +7,19 @@ class PropertyGrid extends React.Component {
 
   render() {
     var property = this.props.property
+    var cover = property.imageCount > 0 ?
+      `/property_images/property_image_${property._id}_1` : '/img/grid-offer.jpg'
     return (
       <Link to={`/property/${property._id}`}>
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col">
           <div className="panel grid-offer">
             <div className="panel-body">
               <div className="grid-offer-photo">
-                <img src="/img/grid-offer.jpg" alt="" />
+                <img src={cover} alt={property.details} />
                 <div className="type-container">
                   <div className="estate-type">
                     <Translate content={`search.refine.property.${property.propertyType}`} />
                   </div>
-                  <div className="ads-flag"><Translate content="property.flags.new" /></div>
                 </div>
               </div>
               <div className="price-grid-cont">

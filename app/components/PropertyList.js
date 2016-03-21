@@ -7,16 +7,17 @@ class PropertyList extends React.Component {
 
   render() {
     var property = this.props.property
+    var cover = property.imageCount > 0 ?
+      `/property_images/property_image_${property._id}_1` : '/img/grid-offer.jpg'
     return (
       <li className="list-offer" id={property._id}>
         <Link to={`/property/${property._id}`}>
           <span>
-            <img src="/img/grid-offer.jpg" alt="" />
+            <img src={cover} alt={property.details} />
             <div className="type-container">
               <div className="estate-type">
                 <Translate content={`search.refine.property.${property.propertyType}`} />
               </div>
-              <div className="ads-flag"><Translate content="property.flags.new" /></div>
             </div>
           </span>
           <div>
