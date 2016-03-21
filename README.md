@@ -49,7 +49,7 @@
   ```
 for more details, please refer to [React Translate Componenent](https://github.com/martinandert/react-translate-component) and [Counterpart](https://github.com/martinandert/counterpart)
 
-## Todo:
+## Plan:
 
 ### stage 1
 * ~~pagination (may use this one: [react-paginate](https://github.com/AdeleD/react-paginate))~~
@@ -57,9 +57,9 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * ~~google map integration for property details page~~
 * ~~translation (Using [React Translate Componenent](https://github.com/martinandert/react-translate-component), later on can move to [React-Intl V2](https://github.com/yahoo/react-intl/issues/162))~~
 * ~~narrow down search results by price and property/room type~~
-* add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))
-* display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))
-* style polish & responsive
+* ~~add property with image upload (may use this one: [react-dropzone](https://github.com/okonet/react-dropzone))~~
+* ~~display property images carousel in property details page (may use this one: [react-responsive-carousel](https://github.com/leandrowd/react-responsive-carousel))~~
+* ~~style polish & responsive~~
 
 ### stage 2
 * user register/login
@@ -91,6 +91,9 @@ for more details, please refer to [React Translate Componenent](https://github.c
 * remove the testing data and relevant API
 * import suburb/postcode information into DB
 * solving the test errors
+
+## Known Issues:
+Please see the [issues](ISSUES.md)
 
 ## references:
 
