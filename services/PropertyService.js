@@ -4,6 +4,14 @@ const fs = require('fs');
 const multer = require('multer');
 const upload = multer({dest: '../data/upload/'}).any();
 
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'hbp3fdj8n',
+  api_key: '814451126269292',
+  api_secret: 'GCjMnFL85OEpbY_4AsAdNjk_QK4'
+});
+
 const Property = require('../models/property');
 const config = require('../config');
 
@@ -61,6 +69,11 @@ class PropertyService {
                 if (err) {
                   console.log("moving the file failed");
                 }
+
+                console.log("moved the file to: " + targetPath);
+                cloudinary.uploader.upload(targetPath, function(result) {
+                  console.log(result)
+                });
               }
             );
           }
