@@ -1,7 +1,6 @@
 'use strict'
 
 // First, checks if it isn't implemented yet.
-// "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
 if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
@@ -17,9 +16,18 @@ if (!String.prototype.format) {
 const DEBUG = true;
 
 class Logger {
-  static log(pattern, ...parameters) {
+  /*
+   usage: log('This is a test for {0} from {1}', 'A', 'B')
+   output: 'This is a test for A from B'
+   */
+  static log() {
     if (DEBUG) {
-      return console.log(pattern.format(parameters)); //ToDo: there is a bug here, {0} {1} not working
+      var args = Array.prototype.slice.call(arguments);
+      var output = args[0].replace(/{(\d+)}/g, function(match, number) {
+        var index = parseInt(number) + 1;
+        return typeof args[index] != 'undefined' ? args[index] : match;
+      });
+      console.log(output);
     }
   }
 
