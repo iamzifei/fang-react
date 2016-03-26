@@ -80,6 +80,7 @@ class PropertyService {
                     console.log("moved the file to: " + targetPath);
                     cloudinary.uploader.upload(targetPath, function(result) {
                       console.log(result);
+                      property.photos.push(result.url);
                       resolve(result);
                     });
                   }
@@ -89,7 +90,7 @@ class PropertyService {
 
             uploadPhotoPromise.then(
               function(result) {
-                console.log('uploadPhotoPromise() uploaded the file, public id is: ' + result.public_id);
+                console.log('uploadPhotoPromise() uploaded the file, url is: ' + result.url);
               }
             ).catch(
               function(err) {
@@ -104,6 +105,7 @@ class PropertyService {
           Promise.all(uploadPhotoPromises).then(
             function() {
               console.log('upload all the photos');
+              console.log(property);
               res.send({
                 message: 'Property at ' + property.address + ' has been added successfully!',
                 id: docID
