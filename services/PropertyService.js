@@ -36,6 +36,8 @@ class PropertyService {
   }
 
   addProperty(req, res, next) {
+    var thisPropertyService = this;
+
     upload(req, res, function (err) {
       if (err) {
         return res.end(err);
@@ -51,76 +53,69 @@ class PropertyService {
         }
       });
 
+      // upload photos if any
       if (req.files) {
         property.imageCount = req.files.length;
-      }
 
-      try {
-        property.save(function(err) {
-          if (err) return next(err);
+        // move uploaded images to target folder and rename them with id
+        var uploadPhotoPromises = [];
 
-          // get doc id
-          var docID = property["_id"];
-
-          // move uploaded images to target folder and rename them with id
-          var uploadPhotoPromises = [];
-
-          for (var i = 0; i < property.imageCount; i++) {
-            var uploadPhotoPromise = new Promise(
-              function(resolve, reject) {
-                var targetPath = `./public/property_images/property_image_${docID}_${i + 1}`;
-                console.log("moving {0} to {1} ".format(req.files[i].path, targetPath));
-
-                fs.rename(req.files[i].path, targetPath,
-                  function (err) {
-                    if (err) {
-                      reject(err);
-                    }
-
-                    console.log("moved the file to: " + targetPath);
-                    cloudinary.uploader.upload(targetPath, function(result) {
-                      console.log(result);
-                      property.photos.push(result.url);
-                      resolve(result);
-                    });
-                  }
-                );
-              }
-            );
-
-            uploadPhotoPromise.then(
-              function(result) {
-                console.log('uploadPhotoPromise() uploaded the file, url is: ' + result.url);
-              }
-            ).catch(
-              function(err) {
-                console.log('uploadPhotoPromise() failed due to: ' + err);
-              }
-            );
-
-            uploadPhotoPromises.push(uploadPhotoPromise);
-          }
-
-          // execute all the promises and send response after all of them have finished resolve/reject
-          Promise.all(uploadPhotoPromises).then(
-            function() {
-              console.log('upload all the photos');
-              console.log(property);
-              res.send({
-                message: 'Property at ' + property.address + ' has been added successfully!',
-                id: docID
+        for (var i = 0; i < property.imageCount; i++) {
+          var uploadPhotoPromise = new Promise(
+            function(resolve, reject) {
+              console.log("uploading " + req.files[i].path);
+              cloudinary.uploader.upload(req.files[i].path, function(result) {
+                console.log(result);
+                property.photos.push(result.url);
+                resolve(result);
               });
+            }
+          );
+
+          uploadPhotoPromise.then(
+            function(result) {
+              console.log('uploadPhotoPromise() uploaded the file, url is: ' + result.url);
             }
           ).catch(
             function(err) {
-              console.log('upload photos failed due to: ' + err);
+              console.log('uploadPhotoPromise() failed due to: ' + err);
             }
           );
-        });
-      } catch (e) {
-        res.status(404).send({ message: ' Could not add the property.' });
+
+          uploadPhotoPromises.push(uploadPhotoPromise);
+        }
+
+        // execute all the promises and send response after all of them have finished resolve/reject
+        Promise.all(uploadPhotoPromises).then(
+          function() {
+            console.log('upload all the photos');
+            console.log(property);
+            thisPropertyService.saveProperty(property, res);
+          }
+        ).catch(
+          function(err) {
+            console.log('upload photos failed due to: ' + err);
+          }
+        );
+      } else { // no photos, save the property
+        this.saveProperty(property, res);
       }
     });
+  }
+
+  saveProperty(property, res) {
+    try {
+      property.save(function(err) {
+        if (err) return next(err);
+
+        res.send({
+          message: 'Property at ' + property.address + ' has been added successfully!',
+          id: property["_id"]
+        });
+      });
+    } catch (e) {
+      res.status(404).send({ message: ' Could not save the property to database due to: ' + e });
+    }
   }
 }
 
