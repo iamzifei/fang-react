@@ -82,15 +82,13 @@ class Property extends React.Component {
      ]
      **/
     var images = []
-    if (this.props.imageCount > 0) {
-      for (var i = 1; i <= this.props.imageCount; i++) {
-        var filename = `/property_images/property_image_${this.props.params.id}_${i}`
-        var imageObj = {}
-        imageObj.src = filename
-        imageObj.thumb = filename
-        imageObj.mobileSrc = filename
-        images.push(imageObj)
-      }
+    for(var i in this.props.photos) {
+      var photo = this.props.photos[i];
+      var imageObj = {}
+      imageObj.src = photo
+      imageObj.thumb = photo
+      imageObj.mobileSrc = photo
+      images.push(imageObj)
     }
 
     return (

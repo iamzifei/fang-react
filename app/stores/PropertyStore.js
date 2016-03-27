@@ -60,7 +60,7 @@ class PropertyStore {
     this.minTermHelpBlock
     this.propertyFeatureValidateState
     this.bondValidateState
-    this.files
+    this.photos
   }
 
   onGetPropertySuccess(data) {
