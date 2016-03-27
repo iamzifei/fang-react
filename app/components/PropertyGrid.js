@@ -7,8 +7,8 @@ class PropertyGrid extends React.Component {
 
   render() {
     var property = this.props.property
-    var cover = property.imageCount > 0 ?
-      `/property_images/property_image_${property._id}_1` : '/img/grid-offer.jpg'
+    var cover = property.photos.length > 0 ?
+      property.photos[0] : '/img/grid-offer.jpg'
     return (
       <Link to={`/property/${property._id}`}>
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-offer-col">

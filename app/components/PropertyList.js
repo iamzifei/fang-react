@@ -7,8 +7,8 @@ class PropertyList extends React.Component {
 
   render() {
     var property = this.props.property
-    var cover = property.imageCount > 0 ?
-      `/property_images/property_image_${property._id}_1` : '/img/grid-offer.jpg'
+    var cover = property.photos.length > 0 ?
+      property.photos[0] : '/img/grid-offer.jpg'
     return (
       <li className="list-offer" id={property._id}>
         <Link to={`/property/${property._id}`}>
