@@ -4,7 +4,7 @@ import App from './components/App'
 import Home from './components/Home'
 import SearchResult from './components/SearchResult'
 import Property from './components/Property'
-import AddProperty from './components/AddProperty'
+import AddProperty from './components/AddPropertyForm'
 
 export default (
   <Route component={App}>

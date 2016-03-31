@@ -22,5 +22,7 @@ module.exports = {
       petAllowed: 'flaticon-pet-friendly',
       billInclude: 'flaticon-bill-include',
       fastInternet: 'flaticon-internet'
-    }
+    },
+
+    propertyReduxModelName: 'property'
 };
