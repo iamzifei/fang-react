@@ -6,21 +6,40 @@ class PropertyActions {
   constructor() {
     this.generateActions(
       'getPropertySuccess',
-      'getPropertyFail',
+      'displayFailMessage',
       'updateGeoLocation',
       'fieldValueChanges',
       'checkboxValueChanges',
       'addPropertySuccess',
-      'addPropertyFail',
-      'selectFilesToUpload'
+      'selectFilesToUpload',
+      'getSuburbsSuccess',
+      'updateSuburbSearchSuccess'
     )
+  }
+
+  updateSuburbSearch(keyword) {
+    this.actions.updateSuburbSearchSuccess(keyword)
+  }
+
+  getSuburbs(suburb) {
+    if (suburb.length > 2) {
+      request.get('/api/suburb/')
+        .query({ suburb })
+        .end((err, res) => {
+          if (err) {
+            this.actions.displayFailMessage(err.response)
+          } else {
+            this.actions.getSuburbsSuccess(res.body)
+          }
+        })
+    }
   }
 
   getProperty(_id) {
     request.get(`/api/property/${_id}`)
     .end((err, res) => {
       if (err) {
-        this.actions.getPropertyFail(err.response)
+        this.actions.displayFailMessage(err.response)
       } else {
         this.actions.getPropertySuccess(res.body)
       }
@@ -45,7 +64,7 @@ class PropertyActions {
 
     req.end((error, response) => {
       if (error) {
-        this.actions.addPropertyFail(error)
+        this.actions.displayFailMessage(error)
       } else {
         this.actions.addPropertySuccess(response.body.id)
       }

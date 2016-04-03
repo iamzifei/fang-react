@@ -2,6 +2,7 @@ import { assign } from 'underscore'
 import alt from '../alt'
 import PropertyActions from '../actions/PropertyActions'
 import { browserHistory } from 'react-router'
+import moment from 'moment'
 import toastr from 'toastr'
 
 class PropertyStore {
@@ -24,15 +25,11 @@ class PropertyStore {
     this.contactSocial
     this.preferredContact
     this.bond
-    this.availableStart
+    this.availableStart = moment()
     this.minTerm
     this.propertyFeature = []
     this.geolocation = {}
 
-    this.suburbValidateState
-    this.suburbHelpBlock
-    this.postcodeValidateState
-    this.postcodeHelpBlock
     this.priceValidateState
     this.priceHelpBlock
     this.addressValidateState
@@ -60,15 +57,32 @@ class PropertyStore {
     this.minTermHelpBlock
     this.propertyFeatureValidateState
     this.bondValidateState
+
     this.photos
+    this.suburbSearch = ''
+    this.suburbSearchValidateState
+    this.suburbSearchHelpBlock
+    this.suburbs = []
+  }
+
+  onGetSuburbsSuccess(data) {
+    this.suburbs = data
+  }
+
+  onUpdateSuburbSearchSuccess(keyword) {
+    this.suburbSearch = keyword
   }
 
   onGetPropertySuccess(data) {
-    assign(this, data)
+    var property = data
+    property.price = data.price.toString()
+    property.bond = data.bond.toString()
+    property.minTerm = data.minTerm.toString()
+    assign(this, property)
   }
 
-  onGetPropertyFail(jqXhr) {
-    toastr.error(jqXhr.responseJSON.message)
+  onDisplayFailMessage(error) {
+    toastr.error(error)
   }
 
   onUpdateGeoLocation(location) {
@@ -91,10 +105,6 @@ class PropertyStore {
     browserHistory.push({
       pathname: `/property/${id}`
     })
-  }
-
-  onAddPropertyFail(error) {
-    toastr.error(error)
   }
 
 }
