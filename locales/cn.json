@@ -60,6 +60,7 @@
         "l": "长租 (6个月以上)"
       },
       "room": {
+        "undefined": "",
         "label": "房屋类型",
         "any": "不限类型",
         "private": "单人间",
@@ -69,6 +70,7 @@
         "car": "车位/车库"
       },
       "property": {
+        "undefined": "",
         "label": "物业类型",
         "any": "不限类型",
         "house": "House",
