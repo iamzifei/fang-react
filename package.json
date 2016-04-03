@@ -10,10 +10,10 @@
     "type": "git",
     "url": "https://github.com/iamzifei/fang-react.git"
   },
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon server.js",
+    "start": "node main.js",
+    "watch": "nodemon main.js",
     "build": "gulp build",
     "jshint": "jshint --verbose ./app",
     "test": "NODE_ENV=test eslint ./app && jshint",
