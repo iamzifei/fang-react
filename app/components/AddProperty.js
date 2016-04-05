@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import InputText from './form/InputText'
 import TextArea from './form/TextArea'
+import SelectInput from './form/SelectInput'
 
 const DropzoneStyles = {
   width: '100%',
@@ -62,6 +63,18 @@ class AddProperty extends React.Component {
     PropertyActions.updateSuburbSearch(object.newValue.trim())
   }
 
+  onPropertyTypeChange(option) {
+    console.log(option)
+  }
+
+  onRoomTypeChange(option) {
+    console.log(option)
+  }
+
+  onPropertyFeatureChange(option) {
+    console.log(option)
+  }
+
   onCheckboxChange(event) {
     PropertyActions.checkboxValueChanges({
       fieldName: event.target.name,
@@ -110,6 +123,29 @@ class AddProperty extends React.Component {
       placeholder: counterpart('nav.search.placeholder')
     }
 
+    const propertyTypeOptions = [
+      {value: 'apartment', label: 'Apartment/Unit'},
+      {value: 'studio', label: 'Studio'},
+      {value: 'house', label: 'House/Townhouse'},
+      {value: 'whole', label: 'Entire flat'}
+    ]
+
+    const roomTypeOptions = [
+      {value: 'private', label: 'Single Room'},
+      {value: 'shared', label: 'Shared Room'},
+      {value: 'living', label: 'Living Room'},
+      {value: 'master', label: 'Master Room'}
+    ]
+
+    const propertyFeatureOptions = [
+      {value: 'furnished', label: 'Furnished'},
+      {value: 'femalePrefer', label: 'Female Prefer'},
+      {value: 'nonSmoker', label: 'Non Smoker'},
+      {value: 'petAllowed', label: 'Pet Allowed'},
+      {value: 'billInclude', label: 'Bill Included'},
+      {value: 'fastInternet', label: 'Fast Internet'}
+    ]
+
     return (
       <div>
         <Navbar pageFlag="addProperty" />
@@ -139,7 +175,8 @@ class AddProperty extends React.Component {
                   <div className="col-sm-9">
                     <DatePicker
                       className="form-control"
-                      selected={this.props.availableStart}
+                      selected={moment(this.props.availableStart, 'YYYY-MM-DD')}
+                      dateFormat="YYYY-MM-DD"
                       onChange={this.onChange}
                     />
                     <span className="help-block">{this.props.availableStartHelpBlock}</span>
@@ -202,203 +239,98 @@ class AddProperty extends React.Component {
                   onChange={this.onChange}
                   helpBlock={this.props.detailsHelpBlock}
                 />
-
-
+                <SelectInput
+                  multi={false}
+                  validateSate={this.props.propertyTypeValidateState}
+                  label="Property Type"
+                  model={this.props.propertyType}
+                  fieldName="propertyType"
+                  options={propertyTypeOptions}
+                  onChange={this.onPropertyTypeChange}
+                  helpBlock={this.props.propertyTypeHelpBlock}
+                />
+                <SelectInput
+                  multi={false}
+                  validateSate={this.props.roomTypeValidateState}
+                  label="Room Type"
+                  model={this.props.roomType}
+                  fieldName="propertyType"
+                  options={roomTypeOptions}
+                  onChange={this.onRoomTypeChange}
+                  helpBlock={this.props.roomTypeHelpBlock}
+                />
+                <SelectInput
+                  multi={true}
+                  validateSate={this.props.propertyFeatureValidateState}
+                  label="Property Feature"
+                  model={this.props.propertyFeature.toString()}
+                  fieldName="propertyFeature"
+                  options={propertyFeatureOptions}
+                  onChange={this.onPropertyFeatureChange}
+                  helpBlock={this.props.propertyFeatureHelpBlock}
+                />
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">Property Images</label>
+                  <div className="col-sm-9">
+                    <Dropzone onDrop={this.onDrop} style={DropzoneStyles}>
+                      <div style={TextCenterDivStyles}>
+                        Drop photos here or click to select photos to upload.
+                      </div>
+                    </Dropzone>
+                    {
+                      this.props.files ?
+                        <div>
+                          <div>
+                            {
+                              this.props.files.map((file, i) =>
+                                <img key={`image-preview-${i}`}
+                                     src={file.preview} style={ImagePreviewStyles}
+                                />
+                              )
+                            }
+                          </div>
+                        </div> : null
+                    }
+                  </div>
+                </div>
               </section>
               <section className="contact">
+                <InputText
+                  validateSate={this.props.contactNameValidateState}
+                  label="Contact Name"
+                  model={this.props.contactName}
+                  fieldName="contactName"
+                  onChange={this.onChange}
+                  helpBlock={this.props.contactNameHelpBlock}
+                />
+                <InputText
+                  validateSate={this.props.contactNumberValidateState}
+                  label="Contact Number"
+                  model={this.props.contactNumber}
+                  fieldName="contactNumber"
+                  onChange={this.onChange}
+                  helpBlock={this.props.contactNumberHelpBlock}
+                />
+                <InputText
+                  validateSate={this.props.contactEmailValidateState}
+                  label="Contact Email"
+                  model={this.props.contactEmail}
+                  fieldName="contactEmail"
+                  onChange={this.onChange}
+                  helpBlock={this.props.contactEmailHelpBlock}
+                />
+                <InputText
+                  validateSate={this.props.contactSocialValidateState}
+                  label="Wechat"
+                  model={this.props.contactSocial}
+                  fieldName="contactSocial"
+                  onChange={this.onChange}
+                  helpBlock={this.props.contactSocialHelpBlock}
+                />
               </section>
 
 
-
-              <div className={`form-group ${this.props.propertyTypeValidateState}`}>
-                <div className="control-label">Property Type</div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="propertyType" id="apartment" value="apartment"
-                    checked={this.props.propertyType === 'apartment'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="apartment">Apartment/Unit</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="propertyType" id="studio" value="studio"
-                    checked={this.props.propertyType === 'studio'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="unit">Studio</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="propertyType" id="house" value="house"
-                    checked={this.props.propertyType === 'house'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="house">House/Townhouse</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="propertyType" id="whole" value="whole"
-                    checked={this.props.propertyType === 'whole'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="unit">Entire flat</label>
-                </div>
-              </div>
-              <div className={`form-group ${this.props.roomTypeValidateState}`}>
-                <div className="control-label">Room Type</div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="roomType" id="private" value="private"
-                    checked={this.props.roomType === 'private'} onChange={this.onChange}
-                  />
-                  <label htmlFor="private">Single Room</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="roomType" id="shared" value="shared"
-                    checked={this.props.roomType === 'shared'} onChange={this.onChange}
-                  />
-                  <label htmlFor="shared">Shared Room</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="roomType" id="living" value="living"
-                    checked={this.props.roomType === 'living'} onChange={this.onChange}
-                  />
-                  <label htmlFor="living">Living Room</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="roomType" id="master" value="master"
-                    checked={this.props.roomType === 'master'} onChange={this.onChange}
-                  />
-                  <label htmlFor="master">Master Room</label>
-                </div>
-              </div>
-              <div className={`form-group ${this.props.contactNameValidateState}`}>
-                <label className="control-label">Contact Name</label>
-                <input type="text" className="form-control" ref="contactNameTextField"
-                  value={this.props.contactName} name="contactName"
-                  onChange={this.onChange}
-                />
-                <span className="help-block">{this.props.contactNameHelpBlock}</span>
-              </div>
-              <div className={`form-group ${this.props.contactNumberValidateState}`}>
-                <label className="control-label">Contact Number</label>
-                <input type="text" className="form-control" ref="contactNumberTextField"
-                  value={this.props.contactNumber} name="contactNumber"
-                  onChange={this.onChange}
-                />
-                <span className="help-block">{this.props.contactNumberHelpBlock}</span>
-              </div>
-              <div className={`form-group ${this.props.contactEmailValidateState}`}>
-                <label className="control-label">Contact Email</label>
-                <input type="text" className="form-control" ref="contactEmailTextField"
-                  value={this.props.contactEmail} name="contactEmail"
-                  onChange={this.onChange}
-                />
-                <span className="help-block">{this.props.contactEmailHelpBlock}</span>
-              </div>
-              <div className={`form-group ${this.props.contactSocialValidateState}`}>
-                <label className="control-label">Wechat</label>
-                <input type="text" className="form-control" ref="contactNameTextField"
-                  value={this.props.contactSocial} onChange={this.onChange}
-                />
-                <span className="help-block">{this.props.contactSocialHelpBlock}</span>
-              </div>
-              <div className={`form-group ${this.props.preferredContactValidateState}`}>
-                <div className="control-label">Preferred Contact Method</div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="preferredContact" id="phone" value="phone"
-                    checked={this.props.preferredContact === 'phone'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="phone">Phone</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="preferredContact" id="email" value="email"
-                    checked={this.props.preferredContact === 'email'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-                <div className="radio radio-inline">
-                  <input type="radio" name="preferredContact" id="social" value="social"
-                    checked={this.props.preferredContact === 'social'}
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="social">Wechat</label>
-                </div>
-              </div>
-
-
-
-              <div className={`form-group ${this.props.propertyFeatureValidateState}`}>
-                <div className="control-label">Property Features</div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="furnished"
-                    value="furnished"
-                    checked={_.contains(this.props.propertyFeature, 'furnished')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="furnished">Furnished</label>
-                </div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="femalePrefer"
-                    value="femalePrefer"
-                    checked={_.contains(this.props.propertyFeature, 'femalePrefer')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="femalePrefer">Female Prefer</label>
-                </div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="nonSmoker"
-                    value="nonSmoker"
-                    checked={_.contains(this.props.propertyFeature, 'nonSmoker')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="nonSmoker">Non Smoker</label>
-                </div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="petAllowed"
-                    value="petAllowed"
-                    checked={_.contains(this.props.propertyFeature, 'petAllowed')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="petAllowed">Pet Allowed</label>
-                </div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="billInclude"
-                    value="billInclude"
-                    checked={_.contains(this.props.propertyFeature, 'billInclude')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="billInclude">Bill Included</label>
-                </div>
-                <div className="checkbox checkbox-inline">
-                  <input type="checkbox" name="propertyFeature" id="fastInternet"
-                    value="fastInternet"
-                    checked={_.contains(this.props.propertyFeature, 'fastInternet')}
-                    onChange={this.onCheckboxChange}
-                  />
-                  <label htmlFor="fastInternet">Fast Internet</label>
-                </div>
-              </div>
-              <div className={`form-group ${this.props.bondValidateState}`}>
-                <Dropzone onDrop={this.onDrop} style={DropzoneStyles}>
-                  <div style={TextCenterDivStyles}>
-                    Drop photos here or click to select photos to upload.
-                  </div>
-                </Dropzone>
-                {
-                  this.props.files ?
-                    <div>
-                      <div>
-                        {
-                          this.props.files.map((file, i) =>
-                            <img key={`image-preview-${i}`}
-                              src={file.preview} style={ImagePreviewStyles}
-                            />
-                          )
-                        }
-                      </div>
-                    </div> : null
-                }
-              </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-primary pull-right">Submit</button>
             </form>
         </div>
       </div>
@@ -424,7 +356,7 @@ AddProperty.propTypes = {
   contactSocial: React.PropTypes.string,
   preferredContact: React.PropTypes.string,
   bond: React.PropTypes.string,
-  availableStart: React.PropTypes.object,
+  availableStart: React.PropTypes.string,
   minTerm: React.PropTypes.string,
   propertyFeature: React.PropTypes.array,
 
@@ -437,7 +369,9 @@ AddProperty.propTypes = {
   detailsValidateState: React.PropTypes.string,
   detailsHelpBlock: React.PropTypes.string,
   propertyTypeValidateState: React.PropTypes.string,
+  propertyTypeHelpBlock: React.PropTypes.string,
   roomTypeValidateState: React.PropTypes.string,
+  roomTypeHelpBlock: React.PropTypes.string,
   contactNameValidateState: React.PropTypes.string,
   contactNameHelpBlock: React.PropTypes.string,
   contactNumberValidateState: React.PropTypes.string,
@@ -454,6 +388,7 @@ AddProperty.propTypes = {
   minTermValidateState: React.PropTypes.string,
   minTermHelpBlock: React.PropTypes.string,
   propertyFeatureValidateState: React.PropTypes.string,
+  propertyFeatureHelpBlock: React.PropTypes.string,
   files: React.PropTypes.array
 }
 

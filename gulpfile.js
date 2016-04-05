@@ -140,6 +140,7 @@ gulp.task('styles', function() {
     'node_modules/lightgallery/dist/css/lightgallery.min.css',
     'node_modules/font-awesome/css/font-awesome.min.css',
     'node_modules/react-datepicker/dist/react-datepicker.css',
+    'node_modules/react-select/dist/react-select.css',
     'app/stylesheets/*.css'
     ]);
 

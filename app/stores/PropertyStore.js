@@ -25,7 +25,7 @@ class PropertyStore {
     this.contactSocial
     this.preferredContact
     this.bond
-    this.availableStart = moment()
+    this.availableStart = moment().format('YYYY-MM-DD')
     this.minTerm
     this.propertyFeature = []
     this.geolocation = {}
@@ -39,7 +39,9 @@ class PropertyStore {
     this.detailsValidateState
     this.detailsHelpBlock
     this.propertyTypeValidateState
+    this.propertyTypeHelpBlock
     this.roomTypeValidateState
+    this.roomTypeHelpBlock
     this.contactNameValidateState
     this.contactNameHelpBlock
     this.contactNumberValidateState
@@ -56,6 +58,7 @@ class PropertyStore {
     this.minTermValidateState
     this.minTermHelpBlock
     this.propertyFeatureValidateState
+    this.propertyFeatureHelpBlock
     this.bondValidateState
 
     this.photos

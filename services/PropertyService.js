@@ -27,10 +27,6 @@ class PropertyService {
       if (!property) {
         return res.status(404).send({ message: 'Property not found.' });
       }
-      // convert number to string for component
-      property.price = property.price ? property.price.toString() : property.price;
-      property.minTerm = property.minTerm ? property.minTerm.toString() : property.minTerm;
-      property.bond = property.bond ? property.bond.toString() : property.bond;
       res.send(property);
     });
   }
