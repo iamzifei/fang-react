@@ -27,7 +27,7 @@ class PropertyStore {
     this.bond
     this.availableStart = moment().format('YYYY-MM-DD')
     this.minTerm
-    this.propertyFeature = []
+    this.propertyFeature
     this.geolocation = {}
 
     this.priceValidateState
@@ -74,6 +74,11 @@ class PropertyStore {
 
   onUpdateSuburbSearchSuccess(keyword) {
     this.suburbSearch = keyword
+    if (keyword.indexOf(',') > -1) {
+      var suburbArr = keyword.split(',')
+      this.suburb = suburbArr[0].trim()
+      this.postcode = suburbArr[1].trim()
+    }
   }
 
   onGetPropertySuccess(data) {
@@ -94,10 +99,6 @@ class PropertyStore {
 
   onFieldValueChanges(change) {
     this[change.fieldName] = change.fieldValue
-  }
-
-  onCheckboxValueChanges(change) {
-    this[change.fieldName].push(change.fieldValue)
   }
 
   onSelectFilesToUpload(files) {

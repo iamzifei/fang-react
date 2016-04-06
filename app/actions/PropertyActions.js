@@ -9,7 +9,7 @@ class PropertyActions {
       'displayFailMessage',
       'updateGeoLocation',
       'fieldValueChanges',
-      'checkboxValueChanges',
+      'multiValueChanges',
       'addPropertySuccess',
       'selectFilesToUpload',
       'getSuburbsSuccess',

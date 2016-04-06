@@ -191,7 +191,7 @@ Property.propTypes = {
   bond: React.PropTypes.string,
   availableStart: React.PropTypes.string,
   minTerm: React.PropTypes.string,
-  propertyFeature: React.PropTypes.array,
+  propertyFeature: React.PropTypes.string,
   imageCount: React.PropTypes.number,
   geolocation: React.PropTypes.object,
   photos: React.PropTypes.array

@@ -4,7 +4,6 @@ import Navbar from './Navbar'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import PropertyStore from '../stores/PropertyStore'
 import PropertyActions from '../actions/PropertyActions'
-import _ from 'underscore'
 import counterpart from 'counterpart'
 import AutoSuggest from 'react-autosuggest'
 import DatePicker from 'react-datepicker'
@@ -52,33 +51,55 @@ class AddProperty extends React.Component {
   }
 
   onChange(event) {
-    console.log(event.target.value)
-    //PropertyActions.fieldValueChanges({
-    //  fieldName: event.target.name,
-    //  fieldValue: event.target.value
-    //})
+    PropertyActions.fieldValueChanges({
+      fieldName: event.target.name,
+      fieldValue: event.target.value
+    })
+  }
+
+  onDateChange(date) {
+    PropertyActions.fieldValueChanges({
+      fieldName: 'availableStart',
+      fieldValue: date.format('YYYY-MM-DD')
+    })
   }
 
   onSuburbSearchChange(event, object) {
     PropertyActions.updateSuburbSearch(object.newValue.trim())
   }
 
+  onBondChange(option) {
+    PropertyActions.fieldValueChanges({
+      fieldName: 'bond',
+      fieldValue: option.value
+    })
+  }
+
+  onTermChange(option) {
+    PropertyActions.fieldValueChanges({
+      fieldName: 'minTerm',
+      fieldValue: option.value
+    })
+  }
+
   onPropertyTypeChange(option) {
-    console.log(option)
+    PropertyActions.fieldValueChanges({
+      fieldName: 'propertyType',
+      fieldValue: option.value
+    })
   }
 
   onRoomTypeChange(option) {
-    console.log(option)
+    PropertyActions.fieldValueChanges({
+      fieldName: 'roomType',
+      fieldValue: option.value
+    })
   }
 
   onPropertyFeatureChange(option) {
-    console.log(option)
-  }
-
-  onCheckboxChange(event) {
-    PropertyActions.checkboxValueChanges({
-      fieldName: event.target.name,
-      fieldValue: event.target.value
+    PropertyActions.fieldValueChanges({
+      fieldName: 'propertyFeature',
+      fieldValue: option
     })
   }
 
@@ -90,23 +111,23 @@ class AddProperty extends React.Component {
     // TODO: process the value, assign to suburb and postcode
   }
 
+  onDrop(files) {
+    PropertyActions.selectFilesToUpload(files)
+  }
+
   getSuggestionValue(suggestion) {
     return suggestion.value
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    PropertyActions.addProperty(this.props)
   }
 
   renderSuggestion(suggestion) {
     return (
       <span>{suggestion.label}</span>
     )
-  }
-
-  onDrop(files) {
-    PropertyActions.selectFilesToUpload(files)
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    PropertyActions.addProperty(this.props)
   }
 
   render() {
@@ -123,27 +144,43 @@ class AddProperty extends React.Component {
       placeholder: counterpart('nav.search.placeholder')
     }
 
+    const bondOptions = [
+      { value: '0', label: 'No bond required' },
+      { value: '2', label: '2 weeks bond' },
+      { value: '4', label: '4 weeks bond' }
+    ]
+
+    const termOptions = [
+      { value: '0', label: 'No minimum term' },
+      { value: '1', label: 'At least 1 month' },
+      { value: '2', label: 'At least 2 months' },
+      { value: '4', label: 'At least 4 months' },
+      { value: '6', label: 'At least 6 months' },
+      { value: '8', label: 'At least 8 months' },
+      { value: '12', label: 'At least 1 year' }
+    ]
+
     const propertyTypeOptions = [
-      {value: 'apartment', label: 'Apartment/Unit'},
-      {value: 'studio', label: 'Studio'},
-      {value: 'house', label: 'House/Townhouse'},
-      {value: 'whole', label: 'Entire flat'}
+      { value: 'apartment', label: 'Apartment/Unit' },
+      { value: 'studio', label: 'Studio' },
+      { value: 'house', label: 'House/Townhouse' },
+      { value: 'whole', label: 'Entire flat' }
     ]
 
     const roomTypeOptions = [
-      {value: 'private', label: 'Single Room'},
-      {value: 'shared', label: 'Shared Room'},
-      {value: 'living', label: 'Living Room'},
-      {value: 'master', label: 'Master Room'}
+      { value: 'private', label: 'Single Room' },
+      { value: 'shared', label: 'Shared Room' },
+      { value: 'living', label: 'Living Room' },
+      { value: 'master', label: 'Master Room' }
     ]
 
     const propertyFeatureOptions = [
-      {value: 'furnished', label: 'Furnished'},
-      {value: 'femalePrefer', label: 'Female Prefer'},
-      {value: 'nonSmoker', label: 'Non Smoker'},
-      {value: 'petAllowed', label: 'Pet Allowed'},
-      {value: 'billInclude', label: 'Bill Included'},
-      {value: 'fastInternet', label: 'Fast Internet'}
+      { value: 'furnished', label: 'Furnished' },
+      { value: 'femalePrefer', label: 'Female Prefer' },
+      { value: 'nonSmoker', label: 'Non Smoker' },
+      { value: 'petAllowed', label: 'Pet Allowed' },
+      { value: 'billInclude', label: 'Bill Included' },
+      { value: 'fastInternet', label: 'Fast Internet' }
     ]
 
     return (
@@ -161,15 +198,16 @@ class AddProperty extends React.Component {
                   onChange={this.onChange}
                   helpBlock={this.props.priceHelpBlock}
                 />
-                <InputText
+                <SelectInput
+                  multi={false}
                   validateSate={this.props.bondValidateState}
                   label="How many weeks bond"
-                  model={this.props.price}
+                  model={this.props.bond}
                   fieldName="bond"
-                  onChange={this.onChange}
+                  options={bondOptions}
+                  onChange={this.onBondChange}
                   helpBlock={this.props.bondHelpBlock}
                 />
-
                 <div className={`form-group ${this.props.availableStartValidateState}`}>
                   <label className="col-sm-3 control-label">Available Date</label>
                   <div className="col-sm-9">
@@ -177,18 +215,19 @@ class AddProperty extends React.Component {
                       className="form-control"
                       selected={moment(this.props.availableStart, 'YYYY-MM-DD')}
                       dateFormat="YYYY-MM-DD"
-                      onChange={this.onChange}
+                      onChange={this.onDateChange}
                     />
                     <span className="help-block">{this.props.availableStartHelpBlock}</span>
                   </div>
                 </div>
-
-                <InputText
+                <SelectInput
+                  multi={false}
                   validateSate={this.props.minTermValidateState}
                   label="Minimum Terms"
                   model={this.props.minTerm}
                   fieldName="minTerm"
-                  onChange={this.onChange}
+                  options={termOptions}
+                  onChange={this.onTermChange}
                   helpBlock={this.props.minTermHelpBlock}
                 />
               </section>
@@ -260,10 +299,10 @@ class AddProperty extends React.Component {
                   helpBlock={this.props.roomTypeHelpBlock}
                 />
                 <SelectInput
-                  multi={true}
+                  multi
                   validateSate={this.props.propertyFeatureValidateState}
                   label="Property Feature"
-                  model={this.props.propertyFeature.toString()}
+                  model={this.props.propertyFeature}
                   fieldName="propertyFeature"
                   options={propertyFeatureOptions}
                   onChange={this.onPropertyFeatureChange}
@@ -284,7 +323,7 @@ class AddProperty extends React.Component {
                             {
                               this.props.files.map((file, i) =>
                                 <img key={`image-preview-${i}`}
-                                     src={file.preview} style={ImagePreviewStyles}
+                                  src={file.preview} style={ImagePreviewStyles}
                                 />
                               )
                             }
@@ -358,7 +397,8 @@ AddProperty.propTypes = {
   bond: React.PropTypes.string,
   availableStart: React.PropTypes.string,
   minTerm: React.PropTypes.string,
-  propertyFeature: React.PropTypes.array,
+  propertyFeature: React.PropTypes.string,
+  suburbs: React.PropTypes.array,
 
   priceValidateState: React.PropTypes.string,
   priceHelpBlock: React.PropTypes.string,

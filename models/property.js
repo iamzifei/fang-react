@@ -20,7 +20,7 @@ var propertySchema = new Schema({
   bond: { type: Number },
   availableStart: String,
   minTerm: { type: Number, default: 4 },
-  propertyFeature: [],
+  propertyFeature: String,
   photos: []
 });
 

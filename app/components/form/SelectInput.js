@@ -8,6 +8,7 @@ class SelectInput extends React.Component {
         <label className="col-sm-3 control-label">{this.props.label}</label>
         <div className="col-sm-9">
           <Select
+            simpleValue={this.props.multi}
             multi={this.props.multi}
             value={this.props.model}
             options={this.props.options}
