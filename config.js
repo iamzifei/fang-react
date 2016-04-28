@@ -1,6 +1,6 @@
 module.exports = {
-    //database: process.env.MONGO_URI || 'localhost/nef',
-    database: process.env.MONGO_URI || 'mongodb://test:password@ds021969.mlab.com:21969/heroku_sjlzp0w9',
+    database: process.env.MONGO_URI || 'localhost/nef',
+    //database: process.env.MONGO_URI || 'mongodb://test:password@ds021969.mlab.com:21969/heroku_sjlzp0w9',
     perPage: 5,
     rentalBuffer: 20,
     rentalMin: 0,

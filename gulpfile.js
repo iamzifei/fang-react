@@ -55,7 +55,9 @@ gulp.task('browserify-vendor', function() {
     .bundle()
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulpif(production, uglify({ mangle: false })))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public/js'));
 });
 
@@ -139,6 +141,8 @@ gulp.task('styles', function() {
   var cssStream = gulp.src([
     'node_modules/lightgallery/dist/css/lightgallery.min.css',
     'node_modules/font-awesome/css/font-awesome.min.css',
+    'node_modules/react-datepicker/dist/react-datepicker.css',
+    'node_modules/react-select/dist/react-select.css',
     'app/stylesheets/*.css'
     ]);
 

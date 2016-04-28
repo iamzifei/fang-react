@@ -60,6 +60,7 @@
         "l": "Long-term (6+ months)"
       },
       "room": {
+        "undefined": "",
         "label": "Room type",
         "any": "All room",
         "private": "Private rooms",
@@ -69,6 +70,7 @@
         "car": "Car Space/Garage"
       },
       "property": {
+        "undefined": "",
         "label": "Accommodation type",
         "any": "All Accommodation",
         "house": "Shared House",

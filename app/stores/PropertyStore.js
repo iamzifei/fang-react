@@ -2,6 +2,7 @@ import { assign } from 'underscore'
 import alt from '../alt'
 import PropertyActions from '../actions/PropertyActions'
 import { browserHistory } from 'react-router'
+import moment from 'moment'
 import toastr from 'toastr'
 
 class PropertyStore {
@@ -24,15 +25,11 @@ class PropertyStore {
     this.contactSocial
     this.preferredContact
     this.bond
-    this.availableStart
+    this.availableStart = moment().format('YYYY-MM-DD')
     this.minTerm
-    this.propertyFeature = []
+    this.propertyFeature
     this.geolocation = {}
 
-    this.suburbValidateState
-    this.suburbHelpBlock
-    this.postcodeValidateState
-    this.postcodeHelpBlock
     this.priceValidateState
     this.priceHelpBlock
     this.addressValidateState
@@ -42,7 +39,9 @@ class PropertyStore {
     this.detailsValidateState
     this.detailsHelpBlock
     this.propertyTypeValidateState
+    this.propertyTypeHelpBlock
     this.roomTypeValidateState
+    this.roomTypeHelpBlock
     this.contactNameValidateState
     this.contactNameHelpBlock
     this.contactNumberValidateState
@@ -59,16 +58,39 @@ class PropertyStore {
     this.minTermValidateState
     this.minTermHelpBlock
     this.propertyFeatureValidateState
+    this.propertyFeatureHelpBlock
     this.bondValidateState
+
     this.photos
+    this.suburbSearch = ''
+    this.suburbSearchValidateState
+    this.suburbSearchHelpBlock
+    this.suburbs = []
+  }
+
+  onGetSuburbsSuccess(data) {
+    this.suburbs = data
+  }
+
+  onUpdateSuburbSearchSuccess(keyword) {
+    this.suburbSearch = keyword
+    if (keyword.indexOf(',') > -1) {
+      var suburbArr = keyword.split(',')
+      this.suburb = suburbArr[0].trim()
+      this.postcode = suburbArr[1].trim()
+    }
   }
 
   onGetPropertySuccess(data) {
-    assign(this, data)
+    var property = data
+    property.price = data.price.toString()
+    property.bond = data.bond.toString()
+    property.minTerm = data.minTerm.toString()
+    assign(this, property)
   }
 
-  onGetPropertyFail(jqXhr) {
-    toastr.error(jqXhr.responseJSON.message)
+  onDisplayFailMessage(error) {
+    toastr.error(error)
   }
 
   onUpdateGeoLocation(location) {
@@ -79,10 +101,6 @@ class PropertyStore {
     this[change.fieldName] = change.fieldValue
   }
 
-  onCheckboxValueChanges(change) {
-    this[change.fieldName].push(change.fieldValue)
-  }
-
   onSelectFilesToUpload(files) {
     this.files = files
   }
@@ -91,10 +109,6 @@ class PropertyStore {
     browserHistory.push({
       pathname: `/property/${id}`
     })
-  }
-
-  onAddPropertyFail(error) {
-    toastr.error(error)
   }
 
 }

@@ -82,19 +82,21 @@ class Property extends React.Component {
      ]
      **/
     var images = []
-    for(var i in this.props.photos) {
-      var photo = this.props.photos[i];
-      var imageObj = {}
-      imageObj.src = photo
-      imageObj.thumb = photo
-      imageObj.mobileSrc = photo
-      images.push(imageObj)
+    for (var i in this.props.photos) {
+      if (this.props.photos.hasOwnProperty(i)) {
+        var photo = this.props.photos[i]
+        var imageObj = {}
+        imageObj.src = photo
+        imageObj.thumb = photo
+        imageObj.mobileSrc = photo
+        images.push(imageObj)
+      }
     }
 
     return (
       <div>
         <Navbar pageFlag="property" />
-        <div className=".container-fluid property-details-container">
+        <div className="container-fluid property-details-container">
           <LightGallery images={images} />
           <div className="row top-section">
             <div className="property-info col-xs-12 col-sm-8">
@@ -189,9 +191,10 @@ Property.propTypes = {
   bond: React.PropTypes.string,
   availableStart: React.PropTypes.string,
   minTerm: React.PropTypes.string,
-  propertyFeature: React.PropTypes.array,
+  propertyFeature: React.PropTypes.string,
   imageCount: React.PropTypes.number,
-  geolocation: React.PropTypes.object
+  geolocation: React.PropTypes.object,
+  photos: React.PropTypes.array
 }
 
 export default connectToStores(Property)

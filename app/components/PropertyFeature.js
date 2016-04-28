@@ -7,30 +7,32 @@ class PropertyFeature extends React.Component {
   render() {
     if (this.props.propertyFeatures) {
       var from = this.props.from ? this.props.from : ''
-      var propertyFeatureNodes = this.props.propertyFeatures.map(
+      var featureArray = this.props.propertyFeatures.split(',')
+      var propertyFeatureNodes = featureArray.map(
         (propertyFeature, index) => {
+          var pf = propertyFeature.trim()
           var feature
           switch (from) {
             case 'refine':
               feature = (
-                <li key={propertyFeature}>
+                <li key={pf}>
                   <a>
-                    <Translate content={propertyFeature} />
+                    <Translate content={pf} />
                   </a>
                 </li>
               )
               break
             case 'property':
               feature = (
-                <li key={propertyFeature}>
-                  <i className={`property-icon ${config.iconMapping[propertyFeature]}`} />
-                  <Translate content={propertyFeature} />
+                <li key={pf}>
+                  <i className={`property-icon ${config.iconMapping[pf]}`} />
+                  <Translate content={pf} />
                 </li>
               )
               break
             default:
               feature =
-                <li key={propertyFeature}><Translate content={propertyFeature} /></li>
+                <li key={pf}><Translate content={pf} /></li>
           }
           return feature
         }
@@ -45,7 +47,7 @@ class PropertyFeature extends React.Component {
 }
 
 PropertyFeature.propTypes = {
-  propertyFeatures: React.PropTypes.array,
+  propertyFeatures: React.PropTypes.string,
   from: React.PropTypes.string
 }
 
