@@ -55,7 +55,9 @@ gulp.task('browserify-vendor', function() {
     .bundle()
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulpif(production, uglify({ mangle: false })))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public/js'));
 });
 
