@@ -47,6 +47,7 @@ class PropertyActions {
   }
 
   addProperty(property) {
+    
     var req = request.post('/api/properties')
       .set('Accept', 'application/json')
 
