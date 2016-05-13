@@ -1,16 +1,11 @@
-import React from 'react'
-import Dropzone from 'react-dropzone'
+import React, {Component, PropTypes} from 'react'
 import Navbar from './Navbar'
-import connectToStores from 'alt-utils/lib/connectToStores'
-import PropertyStore from '../stores/PropertyStore'
-import PropertyActions from '../actions/PropertyActions'
-import counterpart from 'counterpart'
+import Select from 'react-select'
 import AutoSuggest from 'react-autosuggest'
 import DatePicker from 'react-datepicker'
+import counterpart from 'counterpart'
+import Dropzone from 'react-dropzone'
 import moment from 'moment'
-import InputText from './form/InputText'
-import TextArea from './form/TextArea'
-import SelectInput from './form/SelectInput'
 
 const DropzoneStyles = {
   width: '100%',
@@ -31,119 +26,72 @@ const ImagePreviewStyles = {
   margin: '2px',
 }
 
-class AddProperty extends React.Component {
-  static getStores() {
-    return [PropertyStore]
+export default class AddProperty extends Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
+  componentWillMount() {
+
   }
 
-  static getPropsFromStores() {
-    return PropertyStore.getState()
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.property.property && !nextProps.property.error) {
+      this.context.router.push('/');
+    }
   }
 
-  constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.onDrop = this.onDrop.bind(this)
-    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(this)
-    this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
-    this.getSuggestionValue = this.getSuggestionValue.bind(this)
-    this.renderSuggestion = this.renderSuggestion.bind(this)
-  }
-
-  onChange(event) {
-    PropertyActions.fieldValueChanges({
-      fieldName: event.target.name,
-      fieldValue: event.target.value
-    })
-  }
-
-  onDateChange(date) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'availableStart',
-      fieldValue: date.format('YYYY-MM-DD')
-    })
-  }
-
-  onSuburbSearchChange(event, object) {
-    PropertyActions.updateSuburbSearch(object.newValue.trim())
-  }
-
-  onBondChange(option) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'bond',
-      fieldValue: option.value
-    })
-  }
-
-  onTermChange(option) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'minTerm',
-      fieldValue: option.value
-    })
-  }
-
-  onPropertyTypeChange(option) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'propertyType',
-      fieldValue: option.value
-    })
-  }
-
-  onRoomTypeChange(option) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'roomType',
-      fieldValue: option.value
-    })
-  }
-
-  onPropertyFeatureChange(option) {
-    PropertyActions.fieldValueChanges({
-      fieldName: 'propertyFeature',
-      fieldValue: option
-    })
-  }
-
-  onSuggestionsUpdateRequested(object) {
-    PropertyActions.getSuburbs(object.value)
-  }
-
-  onSuggestionSelected(event, object) {
-    // TODO: process the value, assign to suburb and postcode
-  }
-
-  onDrop(files) {
-    PropertyActions.selectFilesToUpload(files)
-  }
-
-  getSuggestionValue(suggestion) {
-    return suggestion.value
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    PropertyActions.addProperty(this.props)
+  renderError(property) {
+    if(property && property.error && property.error.message) {
+      return (
+          <div className="alert alert-danger">
+            {property ? property.error.message : ''}
+          </div>
+      );
+    } else {
+      return <span></span>
+    }
   }
 
   renderSuggestion(suggestion) {
     return (
-      <span>{suggestion.label}</span>
+        <span>{suggestion.label}</span>
     )
   }
 
+  getSuggestionValue(suggestion) {
+    return suggestion.value;
+  }
+
   render() {
+
+    const {fields: { price, bond, availableStart, minTerm, suburb, postcode, suburbSearch, address, title, details, propertyType, roomType,
+        propertyFeature, files, imageCount, contactName, contactNumber, contactEmail, contactSocial, preferredContact }, 
+        handleSubmit, submitting, property, onChange, onSuggestionsUpdateRequested, onFormChange, onBondChange, onAvailableStartChange,
+        onMintermChange, onPropertyTypeChange, onRoomTypeChange, onPropertyFeatureChange, onDropFiles } = this.props;
+
+    console.log(this.props);
+
+    const value = property.suggestions.value.trim();
+    if (value.indexOf(',') > -1) {
+      var suburbArr = value.split(',');
+      property.suburb = suburbArr[0].trim();
+      property.postcode = suburbArr[1].trim();
+    }
+
     const theme = {
       input: 'form-control',
       suggestionsContainer: 'search-results',
       suggestion: 'search-list-item'
     }
-
     const inputProps = {
-      value: this.props.suburbSearch,
-      onChange: this.onSuburbSearchChange,
-      type: 'search',
-      placeholder: counterpart('nav.search.placeholder')
+      placeholder: counterpart('nav.search.placeholder'),
+      value: property.suggestions.value,
+      onChange,
+      type: 'search'
     }
-
+    
     const bondOptions = [
       { value: '0', label: 'No bond required' },
       { value: '2', label: '2 weeks bond' },
@@ -184,252 +132,206 @@ class AddProperty extends React.Component {
     ]
 
     return (
-      <div>
-        <Navbar pageFlag="addProperty" />
-        <div className="container">
-          <h2>Add Property</h2>
-            <form onSubmit={this.handleSubmit} className="form-horizontal" >
+        <div>
+          <Navbar pageFlag="addProperty" />
+          <div className="container">
+            {
+                property.loading ? <div className="loading">Loading&#8230;</div> : ''
+            }
+
+            <h2>Add Property</h2>
+            {this.renderError(property)}
+            <form onSubmit={handleSubmit(this.props.addProperty.bind(this))} onChange={(e)=>onFormChange(e)} className="form-horizontal">
               <section className="basic">
-                <InputText
-                  validateSate={this.props.priceValidateState}
-                  label="Rent per week $"
-                  model={this.props.price}
-                  fieldName="price"
-                  onChange={this.onChange}
-                  helpBlock={this.props.priceHelpBlock}
-                />
-                <SelectInput
-                  multi={false}
-                  validateSate={this.props.bondValidateState}
-                  label="How many weeks bond"
-                  model={this.props.bond}
-                  fieldName="bond"
-                  options={bondOptions}
-                  onChange={this.onBondChange}
-                  helpBlock={this.props.bondHelpBlock}
-                />
-                <div className={`form-group ${this.props.availableStartValidateState}`}>
+                <div className={`form-group ${price.touched && price.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Rent per week $(*)</label>
+                  <div className="col-sm-9">
+                    <input type="number" className="form-control" autofocus {...price}/>
+                    <span className="help-block">{price.touched ? price.error : ''}</span>
+                  </div>
+                </div>
+                <div className={`form-group`}>
+                  <label className="col-sm-3 control-label">How many weeks bond</label>
+                  <div className="col-sm-9">
+                    <Select
+                        simpleValue
+                        value={bond.value}
+                        options={bondOptions}
+                        {...bond}
+                        onBlur={() => bond.onBlur(bond.value)}
+                        onChange={onBondChange}
+                    />
+                  </div>
+                </div>
+                <div className={`form-group`}>
                   <label className="col-sm-3 control-label">Available Date</label>
                   <div className="col-sm-9">
                     <DatePicker
-                      className="form-control"
-                      selected={moment(this.props.availableStart, 'YYYY-MM-DD')}
-                      dateFormat="YYYY-MM-DD"
-                      onChange={this.onDateChange}
+                        className="form-control"
+                        dateFormat="YYYY-MM-DD"
+                        minDate={moment()}
+                        selected={availableStart.value ? moment(availableStart.value) : moment() }
+                        {...availableStart}
+                        onChange={onAvailableStartChange}
                     />
-                    <span className="help-block">{this.props.availableStartHelpBlock}</span>
                   </div>
                 </div>
-                <SelectInput
-                  multi={false}
-                  validateSate={this.props.minTermValidateState}
-                  label="Minimum Terms"
-                  model={this.props.minTerm}
-                  fieldName="minTerm"
-                  options={termOptions}
-                  onChange={this.onTermChange}
-                  helpBlock={this.props.minTermHelpBlock}
-                />
+                <div className={`form-group`}>
+                  <label className="col-sm-3 control-label">Minimum Terms</label>
+                  <div className="col-sm-9">
+                    <Select
+                        simpleValue
+                        value={minTerm.value}
+                        options={termOptions}
+                        {...minTerm}
+                        onBlur={() => minTerm.onBlur(minTerm.value)}
+                        onChange={onMintermChange}
+                    />
+                  </div>
+                </div>
               </section>
 
               <section className="address">
-                <div className={`form-group ${this.props.suburbSearchValidateState}`}>
-                  <label className="col-sm-3 control-label">Suburb or postcode</label>
+                <div className={`form-group ${suburbSearch.touched && suburbSearch.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Suburb or postcode(*)</label>
                   <div className="col-sm-9">
                     <AutoSuggest
                       theme={theme}
-                      suggestions={this.props.suburbs}
-                      onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
-                      onSuggestionSelected={this.onSuggestionSelected}
+                      suggestions={property.suggestions.suburbs}
+                      onSuggestionsUpdateRequested={onSuggestionsUpdateRequested}
                       getSuggestionValue={this.getSuggestionValue}
                       renderSuggestion={this.renderSuggestion}
                       inputProps={inputProps}
-                    />
-                    <span className="help-block">{this.props.suburbSearchHelpBlock}</span>
+                      />
+                    <span className="help-block">{suburbSearch.touched ? suburbSearch.error : ''}</span>
                   </div>
                 </div>
 
-                <InputText
-                  // TODO: make the address auto suggest and process [lat, lng] with google map
-                  // and save geocode to DB
-                  validateSate={this.props.addressValidateState}
-                  label="Address"
-                  model={this.props.address}
-                  fieldName="address"
-                  onChange={this.onChange}
-                  helpBlock={this.props.addressHelpBlock}
-                />
+                <div className={`form-group ${address.touched && address.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Address(*)</label>
+                  <div className="col-sm-9">
+                    <input type="text" className="form-control" {...address}/>
+                    <span className="help-block">{address.touched ? address.error : ''}</span>
+                  </div>
+                </div>
               </section>
 
               <section className="details">
-                <InputText
-                  validateSate={this.props.titleValidateState}
-                  label="Title"
-                  model={this.props.title}
-                  fieldName="title"
-                  onChange={this.onChange}
-                  helpBlock={this.props.titleHelpBlock}
-                />
-                <TextArea
-                  validateSate={this.props.detailsValidateState}
-                  label="Details"
-                  model={this.props.details}
-                  fieldName="details"
-                  onChange={this.onChange}
-                  helpBlock={this.props.detailsHelpBlock}
-                />
-                <SelectInput
-                  multi={false}
-                  validateSate={this.props.propertyTypeValidateState}
-                  label="Property Type"
-                  model={this.props.propertyType}
-                  fieldName="propertyType"
-                  options={propertyTypeOptions}
-                  onChange={this.onPropertyTypeChange}
-                  helpBlock={this.props.propertyTypeHelpBlock}
-                />
-                <SelectInput
-                  multi={false}
-                  validateSate={this.props.roomTypeValidateState}
-                  label="Room Type"
-                  model={this.props.roomType}
-                  fieldName="propertyType"
-                  options={roomTypeOptions}
-                  onChange={this.onRoomTypeChange}
-                  helpBlock={this.props.roomTypeHelpBlock}
-                />
-                <SelectInput
-                  multi
-                  validateSate={this.props.propertyFeatureValidateState}
-                  label="Property Feature"
-                  model={this.props.propertyFeature}
-                  fieldName="propertyFeature"
-                  options={propertyFeatureOptions}
-                  onChange={this.onPropertyFeatureChange}
-                  helpBlock={this.props.propertyFeatureHelpBlock}
-                />
+                <div className={`form-group`}>
+                  <label className="col-sm-3 control-label">Title</label>
+                  <div className="col-sm-9">
+                    <input type="text" className="form-control" {...title}/>
+                  </div>
+                </div>
+                <div className={`form-group`}>
+                  <label className="col-sm-3 control-label">Details</label>
+                  <div className="col-sm-9">
+                    <textarea
+                        rows="4"
+                        className="form-control"
+                        {...details}
+                    />
+                  </div>
+                </div>
+                <div className={`form-group ${propertyType.touched && propertyType.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Property Type(*)</label>
+                  <div className="col-sm-9">
+                    <Select
+                        simpleValue
+                        value={propertyType.value}
+                        options={propertyTypeOptions}
+                        {...propertyType}
+                        onBlur={() => propertyType.onBlur(propertyType.value)}
+                        onChange={onPropertyTypeChange}
+                    />
+                    <span className="help-block">{propertyType.touched ? propertyType.error : ''}</span>
+                  </div>
+                </div>
+                <div className={`form-group ${roomType.touched && roomType.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Room Type(*)</label>
+                  <div className="col-sm-9">
+                    <Select
+                        simpleValue
+                        value={roomType.value}
+                        options={roomTypeOptions}
+                        {...roomType}
+                        onBlur={() => roomType.onBlur(roomType.value)}
+                        onChange={onRoomTypeChange}
+                    />
+                    <span className="help-block">{roomType.touched ? roomType.error : ''}</span>
+                  </div>
+                </div>
+                <div className={`form-group`}>
+                  <label className="col-sm-3 control-label">Property Feature</label>
+                  <div className="col-sm-9">
+                    <Select
+                        multi
+                        value={propertyFeature.value}
+                        options={propertyFeatureOptions}
+                        {...propertyFeature}
+                        onBlur={() => propertyFeature.onBlur(propertyFeature.value)}
+                        onChange={onPropertyFeatureChange}
+                    />
+                  </div>
+                </div>
                 <div className="form-group">
                   <label className="col-sm-3 control-label">Property Images</label>
                   <div className="col-sm-9">
-                    <Dropzone onDrop={this.onDrop} style={DropzoneStyles}>
+                    <Dropzone {...files} onDrop={onDropFiles} style={DropzoneStyles}>
                       <div style={TextCenterDivStyles}>
                         Drop photos here or click to select photos to upload.
                       </div>
                     </Dropzone>
                     {
-                      this.props.files ?
-                        <div>
+                      property.files ?
                           <div>
-                            {
-                              this.props.files.map((file, i) =>
-                                <img key={`image-preview-${i}`}
-                                  src={file.preview} style={ImagePreviewStyles}
-                                />
-                              )
-                            }
-                          </div>
-                        </div> : null
+                            <div>
+                              {
+                                property.files.map((file, i) =>
+                                    <img key={`image-preview-${i}`}
+                                         src={file.preview} style={ImagePreviewStyles}
+                                    />
+                                )
+                              }
+                            </div>
+                          </div> : null
                     }
                   </div>
                 </div>
               </section>
               <section className="contact">
-                <InputText
-                  validateSate={this.props.contactNameValidateState}
-                  label="Contact Name"
-                  model={this.props.contactName}
-                  fieldName="contactName"
-                  onChange={this.onChange}
-                  helpBlock={this.props.contactNameHelpBlock}
-                />
-                <InputText
-                  validateSate={this.props.contactNumberValidateState}
-                  label="Contact Number"
-                  model={this.props.contactNumber}
-                  fieldName="contactNumber"
-                  onChange={this.onChange}
-                  helpBlock={this.props.contactNumberHelpBlock}
-                />
-                <InputText
-                  validateSate={this.props.contactEmailValidateState}
-                  label="Contact Email"
-                  model={this.props.contactEmail}
-                  fieldName="contactEmail"
-                  onChange={this.onChange}
-                  helpBlock={this.props.contactEmailHelpBlock}
-                />
-                <InputText
-                  validateSate={this.props.contactSocialValidateState}
-                  label="Wechat"
-                  model={this.props.contactSocial}
-                  fieldName="contactSocial"
-                  onChange={this.onChange}
-                  helpBlock={this.props.contactSocialHelpBlock}
-                />
+                <div className={`form-group ${contactName.touched && contactName.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Contact Name(*)</label>
+                  <div className="col-sm-9">
+                    <input type="text" className="form-control" {...contactName}/>
+                    <span className="help-block">{contactName.touched ? contactName.error : ''}</span>
+                  </div>
+                </div>
+                <div className={`form-group ${contactNumber.touched && contactNumber.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Contact Number(*)</label>
+                  <div className="col-sm-9">
+                    <input type="text" className="form-control" {...contactNumber}/>
+                  </div>
+                </div>
+                <div className={`form-group ${contactEmail.touched && contactEmail.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Contact Email(*)</label>
+                  <div className="col-sm-9">
+                    <input type="email" className="form-control" {...contactEmail}/>
+                  </div>
+                </div>
+                <div className={`form-group ${contactSocial.touched && contactSocial.invalid ? 'has-error' : ''}`}>
+                  <label className="col-sm-3 control-label">Wechat(*)</label>
+                  <div className="col-sm-9">
+                    <input type="text" className="form-control" {...contactSocial}/>
+                    <span className="help-block">{contactSocial.touched ? contactSocial.error : ''}</span>
+                  </div>
+                </div>
               </section>
-
-
-              <button type="submit" className="btn btn-primary pull-right">Submit</button>
+              <button type="submit" className="add-property-submit btn btn-primary pull-right" disabled={submitting} >Submit</button>
             </form>
+          </div>
         </div>
-      </div>
     )
   }
 }
 
-AddProperty.propTypes = {
-  suburbSearch: React.PropTypes.string,
-  suburbSearchValidateState: React.PropTypes.string,
-  suburbSearchHelpBlock: React.PropTypes.string,
-  suburb: React.PropTypes.string,
-  postcode: React.PropTypes.string,
-  price: React.PropTypes.string,
-  address: React.PropTypes.string,
-  title: React.PropTypes.string,
-  details: React.PropTypes.string,
-  propertyType: React.PropTypes.string,
-  roomType: React.PropTypes.string,
-  contactName: React.PropTypes.string,
-  contactNumber: React.PropTypes.string,
-  contactEmail: React.PropTypes.string,
-  contactSocial: React.PropTypes.string,
-  preferredContact: React.PropTypes.string,
-  bond: React.PropTypes.string,
-  availableStart: React.PropTypes.string,
-  minTerm: React.PropTypes.string,
-  propertyFeature: React.PropTypes.string,
-  suburbs: React.PropTypes.array,
-
-  priceValidateState: React.PropTypes.string,
-  priceHelpBlock: React.PropTypes.string,
-  addressValidateState: React.PropTypes.string,
-  addressHelpBlock: React.PropTypes.string,
-  titleValidateState: React.PropTypes.string,
-  titleHelpBlock: React.PropTypes.string,
-  detailsValidateState: React.PropTypes.string,
-  detailsHelpBlock: React.PropTypes.string,
-  propertyTypeValidateState: React.PropTypes.string,
-  propertyTypeHelpBlock: React.PropTypes.string,
-  roomTypeValidateState: React.PropTypes.string,
-  roomTypeHelpBlock: React.PropTypes.string,
-  contactNameValidateState: React.PropTypes.string,
-  contactNameHelpBlock: React.PropTypes.string,
-  contactNumberValidateState: React.PropTypes.string,
-  contactNumberHelpBlock: React.PropTypes.string,
-  contactEmailValidateState: React.PropTypes.string,
-  contactEmailHelpBlock: React.PropTypes.string,
-  contactSocialValidateState: React.PropTypes.string,
-  contactSocialHelpBlock: React.PropTypes.string,
-  preferredContactValidateState: React.PropTypes.string,
-  bondValidateState: React.PropTypes.string,
-  bondHelpBlock: React.PropTypes.string,
-  availableStartValidateState: React.PropTypes.string,
-  availableStartHelpBlock: React.PropTypes.string,
-  minTermValidateState: React.PropTypes.string,
-  minTermHelpBlock: React.PropTypes.string,
-  propertyFeatureValidateState: React.PropTypes.string,
-  propertyFeatureHelpBlock: React.PropTypes.string,
-  files: React.PropTypes.array
-}
-
-export default connectToStores(AddProperty)

@@ -84,8 +84,8 @@ class PropertyStore {
   onGetPropertySuccess(data) {
     var property = data
     property.price = data.price.toString()
-    property.bond = data.bond.toString()
-    property.minTerm = data.minTerm.toString()
+    property.bond = data.bond
+    property.minTerm = data.minTerm
     assign(this, property)
   }
 

@@ -1,10 +1,10 @@
-// Babel ES6/JSX Compiler
-require('babel-register');
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { Provider } from 'react-redux'
+import { RouterContext, Router, match } from 'react-router'
+import configureStore from './app/stores/configureStore'
 
 var swig  = require('swig');
-var React = require('react');
-var ReactDOM = require('react-dom/server');
-var Router = require('react-router');
 var routes = require('./app/routes');
 
 var express = require('express');
@@ -102,13 +102,18 @@ app.post('/api/properties', function(req, res, next) {
 
 // React middleware
 app.use(function(req, res) {
-  Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
+  match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
       res.status(500).send(err.message)
     } else if (redirectLocation) {
       res.status(302).redirect(redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      var html = ReactDOM.renderToString(React.createElement(Router.RouterContext, renderProps));
+      const store = configureStore()
+      const html = renderToString(
+        <Provider store={store}>
+          <RouterContext {...renderProps}/>
+        </Provider>
+      )
       var title = counterpart('site.title');
       var desc = counterpart('site.desc');
       var page = swig.renderFile('views/index.html', { html: html, title: title, desc: desc });

@@ -34,6 +34,7 @@ class PropertyService {
   addProperty(req, res, next) {
     var thisPropertyService = this;
 
+    console.log(req);
     upload(req, res, function (err) {
       if (err) {
         return res.end(err);
