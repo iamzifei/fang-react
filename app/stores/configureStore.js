@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from '../reducers'
 import thunk from 'redux-thunk';
+import { routerMiddleware } from 'react-router-redux'
+import { browserHistory } from 'react-router'
 
 // Middleware you want to use in production:
 function thunkMiddleware(_ref) {
@@ -14,7 +16,9 @@ function thunkMiddleware(_ref) {
     };
 }
 
-const enhancer = applyMiddleware(thunkMiddleware);
+const routingMiddleware = routerMiddleware(browserHistory)
+
+const enhancer = applyMiddleware(thunkMiddleware, routingMiddleware);
 
 export default function configureStore(initialState) {
 

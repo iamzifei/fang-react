@@ -49,3 +49,4 @@ public/js/*
 data/property_images
 public/property_images/*
 !public/property_images/README.md
+public/fonts/*
