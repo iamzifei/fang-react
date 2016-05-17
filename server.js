@@ -23,6 +23,18 @@ const locationService = new LocationService();
 const SearchService = require('./services/SearchService');
 const searchService = new SearchService();
 
+//zack user related
+const UserService = require('./services/UserService');
+const userService = new UserService();
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import passport  from 'passport'
+var LocalStrategy = require('passport-local').Strategy;
+//zack to fix server render warning
+//import configStore from './app/stores/configStore'
+const rootReducer = require('./app/reducers')
+import User from './models/user'
+
 var async = require('async');
 var request = require('request');
 var xml2js = require('xml2js');
@@ -49,6 +61,35 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+//zack Passport module config
+app.use(session({
+  secret: 'keyboard cat',
+  cookie : {maxAge : 3600000}
+}));
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  userService.passportLoginStrategy
+));
+passport.serializeUser(function(user, done){
+  console.log('serializeUser')
+   	  done(null, user.email);
+});
+passport.deserializeUser(function(userEmail, done){
+  console.log('deserializeUser')
+  User.findOne({email : userEmail}, function(err, user){
+    if(err){
+      return done(err, null);
+    }
+    user.password = '';
+    done(null, user);
+  });
+});
 
 /**
  * GET /api/suburb
