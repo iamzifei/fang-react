@@ -31,8 +31,7 @@ import cookieParser from 'cookie-parser'
 import passport  from 'passport'
 var LocalStrategy = require('passport-local').Strategy;
 //zack to fix server render warning
-//import configStore from './app/stores/configStore'
-const rootReducer = require('./app/reducers')
+//const rootReducer = require('./app/reducers')
 import User from './models/user'
 
 var async = require('async');
@@ -140,6 +139,62 @@ app.get('/api/property/:id', function(req, res, next) {
 app.post('/api/properties', function(req, res, next) {
   propertyService.addProperty(req, res, next);
 });
+
+/**
+ * GET /api/find_user
+ * find user by email.
+ */
+app.get('/api/find_user', function(req, res, next){
+     userService.findUserWithEmail(req, res, next);
+})
+
+/**
+  * POST /api/signup_user
+  * save new user to database.
+  */
+app.post('/api/signup_user', function(req, res, next){
+  userService.signupUser(req, res, next);
+})
+
+/**
+ * POST /api/login
+ * authenticate user login.
+ */
+ app.post('/api/login', function(req, res, next){
+      passport.authenticate('local', function(err, user, info){
+        if (err) {return next(err)}
+        if (!user)
+          return res.send(info)
+       //logIn() is attached by passport middleware
+       req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.send({
+            isAuthenticated: true,
+            email : user.email,
+            name : user.name
+          })
+        })
+      })(req, res, next)
+    })
+
+/**
+ * GET /api/logout
+ * logout and remove user from session.
+ */
+app.get('/api/logout', function(req, res){
+    req.logout();
+    res.send(true)
+})
+
+/**
+ * GET /api/loadUserFromSession
+ * check is user exist in passport session,
+ * if user exist in session, passport middleware will attach user to req.user
+ * then send user info back
+ */
+ app.get('/api/loadUserFromSession', function(req, res){
+    res.send(req.user)
+ })
 
 // React middleware
 app.use(function(req, res) {
