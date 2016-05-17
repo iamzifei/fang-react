@@ -30,8 +30,6 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import passport  from 'passport'
 var LocalStrategy = require('passport-local').Strategy;
-//zack to fix server render warning
-//const rootReducer = require('./app/reducers')
 import User from './models/user'
 
 var async = require('async');
@@ -75,12 +73,12 @@ passport.use(new LocalStrategy({
   },
   userService.passportLoginStrategy
 ));
+//save user to session
 passport.serializeUser(function(user, done){
-  console.log('serializeUser')
    	  done(null, user.email);
 });
+//get user from session
 passport.deserializeUser(function(userEmail, done){
-  console.log('deserializeUser')
   User.findOne({email : userEmail}, function(err, user){
     if(err){
       return done(err, null);

@@ -37,6 +37,8 @@
     "toggle": "Toggle navigation",
     "home": "Home",
     "add": "Add",
+    "login": "Login",
+    "signup": "Signup",
     "search": {
       "placeholder": "Enter postcode or suburb"
     }
