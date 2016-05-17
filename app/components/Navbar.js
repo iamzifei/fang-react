@@ -3,8 +3,17 @@ import { Link } from 'react-router'
 import Translate from 'react-translate-component'
 import counterpart from 'counterpart'
 import SearchBox from './SearchBox'
+import { connect } from 'react-redux'
+import { loadUserFromSession, logoutUser } from '../actions/UserActions'
 
 class Navbar extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+  }
+
+  componentWillMount() {
+    this.props.loadUser()
+  }
 
   render() {
     return (
@@ -29,6 +38,17 @@ class Navbar extends React.Component {
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="/"><Translate content="nav.home" /></Link></li>
               <li><Link to="/add"><Translate content="nav.add" /></Link></li>
+              {/*toggle view after user login or signup*/}
+              {this.props.isAuthenticated ?
+                <ul className="nav navbar-nav navbar-right">
+                  <li><Link to="/">hello!  {this.props.currentUser.name}</Link></li>
+                  <li><button onClick={this.props.logout}>logout</button></li>
+                </ul>
+                :<ul className="nav navbar-nav navbar-right">
+                  <li><Link to="/login"><Translate content="nav.login" /></Link></li>
+                  <li><Link to="/signup"><Translate content="nav.signup" /></Link></li>
+                </ul>
+              }
             </ul>
           </div>
         </div>
@@ -37,8 +57,21 @@ class Navbar extends React.Component {
   }
 }
 
-Navbar.propTypes = {
-  pageFlag: React.PropTypes.string
+function mapStateToProps(state){
+  return{
+    isAuthenticated : state.userState.isAuthenticated,
+    currentUser : state.userState.currentUser
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    logout : () => {
+      dispatch(logoutUser())
+    },
+    loadUser : () =>{
+      dispatch(loadUserFromSession())
+    }
+  }
 }
 
-export default Navbar
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

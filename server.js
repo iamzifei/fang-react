@@ -23,6 +23,15 @@ const locationService = new LocationService();
 const SearchService = require('./services/SearchService');
 const searchService = new SearchService();
 
+//zack user related
+const UserService = require('./services/UserService');
+const userService = new UserService();
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import passport  from 'passport'
+var LocalStrategy = require('passport-local').Strategy;
+import User from './models/user'
+
 var async = require('async');
 var request = require('request');
 var xml2js = require('xml2js');
@@ -49,6 +58,35 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+//zack Passport module config
+app.use(session({
+  secret: 'keyboard cat',
+  cookie : {maxAge : 3600000}
+}));
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  userService.passportLoginStrategy
+));
+//save user to session
+passport.serializeUser(function(user, done){
+   	  done(null, user.email);
+});
+//get user from session
+passport.deserializeUser(function(userEmail, done){
+  User.findOne({email : userEmail}, function(err, user){
+    if(err){
+      return done(err, null);
+    }
+    user.password = '';
+    done(null, user);
+  });
+});
 
 /**
  * GET /api/suburb
@@ -99,6 +137,62 @@ app.get('/api/property/:id', function(req, res, next) {
 app.post('/api/properties', function(req, res, next) {
   propertyService.addProperty(req, res, next);
 });
+
+/**
+ * GET /api/find_user
+ * find user by email.
+ */
+app.get('/api/find_user', function(req, res, next){
+     userService.findUserWithEmail(req, res, next);
+})
+
+/**
+  * POST /api/signup_user
+  * save new user to database.
+  */
+app.post('/api/signup_user', function(req, res, next){
+  userService.signupUser(req, res, next);
+})
+
+/**
+ * POST /api/login
+ * authenticate user login.
+ */
+ app.post('/api/login', function(req, res, next){
+      passport.authenticate('local', function(err, user, info){
+        if (err) {return next(err)}
+        if (!user)
+          return res.send(info)
+       //logIn() is attached by passport middleware
+       req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.send({
+            isAuthenticated: true,
+            email : user.email,
+            name : user.name
+          })
+        })
+      })(req, res, next)
+    })
+
+/**
+ * GET /api/logout
+ * logout and remove user from session.
+ */
+app.get('/api/logout', function(req, res){
+    req.logout();
+    res.send(true)
+})
+
+/**
+ * GET /api/loadUserFromSession
+ * check is user exist in passport session,
+ * if user exist in session, passport middleware will attach user to req.user
+ * then send user info back
+ */
+ app.get('/api/loadUserFromSession', function(req, res){
+    res.send(req.user)
+ })
 
 // React middleware
 app.use(function(req, res) {

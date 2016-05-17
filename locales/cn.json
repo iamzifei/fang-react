@@ -37,6 +37,8 @@
     "toggle": "展开菜单",
     "home": "首页",
     "add": "添加房源信息",
+    "login": "登录",
+    "signup": "注册",
     "search": {
       "placeholder": "请输入邮编或地区名"
     }
