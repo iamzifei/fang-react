@@ -166,10 +166,12 @@ app.post('/api/signup_user', function(req, res, next){
        //logIn() is attached by passport middleware
        req.logIn(user, function(err) {
           if (err) { return next(err); }
+          var token = userService.generateToken({email : user.email})
           return res.send({
             isAuthenticated: true,
             email : user.email,
-            name : user.name
+            name : user.name,
+            token
           })
         })
       })(req, res, next)

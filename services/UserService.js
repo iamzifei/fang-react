@@ -1,5 +1,7 @@
 'use strict';
 const User = require('../models/user');
+var jwt = require('jsonwebtoken')
+const TOKEN_SECRET = 'orris'
 
 class UserService {
     //for signup validation
@@ -66,6 +68,15 @@ class UserService {
           return done(null, user);
         })
       })
+    }
+
+    generateToken(payload){
+      //expire in 2 days
+      return jwt.sign(payload, TOKEN_SECRET, { expiresIn : 172800 })
+    }
+
+    verifyToken(token){
+      return jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false })
     }
 
 }

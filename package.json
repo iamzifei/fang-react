@@ -58,6 +58,7 @@
     "gulp-util": "^3.0.7",
     "history": "^1.13.0",
     "jquery": "^2.2.2",
+    "jsonwebtoken": "^7.0.0",
     "lightgallery": "^1.2.15",
     "merge-stream": "^1.0.0",
     "moment": "^2.12.0",
@@ -96,6 +97,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.0",
+    "whatwg-fetch": "^1.0.0",
     "xml2js": "^0.4.15"
   },
   "devDependencies": {

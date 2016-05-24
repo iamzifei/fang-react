@@ -1,6 +1,7 @@
 import request from 'superagent';
 import toastr from 'toastr'
 import { push } from 'react-router-redux'
+import 'whatwg-fetch'
 
 import {LOGIN_USER, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_USER, SIGNUP_USER,
 SIGNUP_SUCCESS, SIGNUP_FAIL, USER_NOT_FOUND, USER_FOUND, USER_EXIST_IN_SESSION, USER_NOT_IN_SESSION
@@ -12,23 +13,33 @@ export function loginUser(values){
       email : values.email,
       password : values.password
     }
-    return request.post('/api/login')
-    .query(userInfo)
-    .end((err, res) =>{
-      if(err){
-        console.log(err)
-      }else if (res.body.message){
-        dispatch(login_fail(res.body.message))
+    fetch('/api/login', {
+      method : 'post',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify(userInfo)
+    })
+    .then(function(response){
+      return response.json()
+    })
+    .then(function(json){
+      if (json.message){
+        dispatch(login_fail(json.message))
         dispatch(push('/login'))
       }else{
-        dispatch(login_success(res.body))
+        saveTokenToStorage(json.token)
+        dispatch(login_success(json))
         dispatch(push('/'))
       }
+    })
+    .catch(function(ex){
+      console.log('parsing failed', ex)
     })
   }
 }
 function login_success(user){
-  saveUserToStorage(user)
   return{
     type : LOGIN_SUCCESS,
     currentUser : {
@@ -51,7 +62,7 @@ export function logoutUser(){
       if(err){
         displayFailMessage(err.response)
       } else{
-        removeUserFromStorage()
+        removeTokenFromStorage()
         dispatch(logoutComplete())
         dispatch(push('/'))
       }
@@ -125,15 +136,11 @@ function signup_fail(){
   }
 }
 
-function saveUserToStorage(user){
-  sessionStorage.isAuthenticated = true
-  sessionStorage.currentUserEmail = user.email
-  sessionStorage.currentUserName = user.name
+function saveTokenToStorage(token){
+  localStorage.access_token = token
 }
-function removeUserFromStorage(){
-  sessionStorage.isAuthenticated = false
-  sessionStorage.currentUserEmail = ''
-  sessionStorage.currentUserName = ''
+function removeTokenFromStorage(){
+  localStorage.access_token = null
 }
 
 export function loadUserFromSession(){
@@ -146,6 +153,16 @@ export function loadUserFromSession(){
         dispatch(login_success(res.body))
       }
     })
+  }
+}
+
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
   }
 }
 

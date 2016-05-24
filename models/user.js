@@ -1,5 +1,5 @@
-//import bcrypt from 'bcrypt-nodejs'
 import bcrypt from 'bcrypt-nodejs'
+
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
