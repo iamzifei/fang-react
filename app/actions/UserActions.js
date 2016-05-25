@@ -28,10 +28,13 @@ export function loginUser(values){
       if (json.message){
         dispatch(login_fail(json.message))
         dispatch(push('/login'))
-      }else{
+      }else if(json.token){
         saveTokenToStorage(json.token)
         dispatch(login_success(json))
         dispatch(push('/'))
+      }else {
+        //other error
+        console.log(json)
       }
     })
     .catch(function(ex){
@@ -57,15 +60,13 @@ function login_fail(message){
 
 export function logoutUser(){
   return (dispatch) =>{
-    return request.get('api/logout')
-    .end((err, res) =>{
-      if(err){
-        displayFailMessage(err.response)
-      } else{
-        removeTokenFromStorage()
-        dispatch(logoutComplete())
-        dispatch(push('/'))
-      }
+    fetch('/api/logout', {
+      method : 'get'
+    })
+    .then(()=>{
+      removeTokenFromStorage()
+      dispatch(logoutComplete())
+      dispatch(push('/'))
     })
   }
 }
@@ -110,24 +111,32 @@ export function signupUser(values){
       name : values.name,
       password : values.password
     }
-    return request.post('api/signup_user')
-    .accept('application/json')
-    .query(newUser)
-    .end((err, res) =>{
-      if(err){
-        displayFailMessage(err.response)
+    fetch('/api/signup_user', {
+      method : 'post',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify(newUser)
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(json => {
+      if(json.currentUser){
+        dispatch(signup_success(json.currentUser))
+        dispatch(loginUser(newUser))
+      }
+      else {
         dispatch(signup_fail())
         dispatch(push('/signup'))
-      } else{
-        dispatch(loginUser(newUser))
       }
     })
   }
 }
 function signup_success(currentUser){
   return {
-    type : SIGNUP_SUCCESS,
-    currentUser : currentUser
+    type : SIGNUP_SUCCESS
   }
 }
 function signup_fail(){
@@ -139,20 +148,36 @@ function signup_fail(){
 function saveTokenToStorage(token){
   localStorage.access_token = token
 }
+function readTokenFromStorage(){
+  return localStorage.access_token
+}
 function removeTokenFromStorage(){
-  localStorage.access_token = null
+  localStorage.removeItem('access_token')
 }
 
-export function loadUserFromSession(){
+export function loadUserFromToken(){
   return (dispatch) =>{
-    return request.get('api/loadUserFromSession')
-    .end((err, res) =>{
-      if(err){
-        console.log(err)
-      } else if (res.body){
-        dispatch(login_success(res.body))
-      }
-    })
+    var token = readTokenFromStorage()
+    if(typeof(token) != 'undefined'){
+      fetch('/api/loadUserFromToken', {
+        method : 'post',
+        headers : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({token})
+      })
+      .then(res =>{
+        return res.json()
+      })
+      .then(json =>{
+        if (json.email){
+          dispatch(login_success(json))
+        }else {
+          console.log(json)
+        }
+      })
+    }
   }
 }
 

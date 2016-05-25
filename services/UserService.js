@@ -32,9 +32,9 @@ class UserService {
     signupUser(req, res, next){
       try{
         var newUser = new User({
-          email : req.query.email,
-          name : req.query.name,
-          password : req.query.password
+          email : req.body.email,
+          name : req.body.name,
+          password : req.body.password
         })
         newUser.save(function(err, newUser){
           if(err) return console.error(err);
@@ -75,8 +75,15 @@ class UserService {
       return jwt.sign(payload, TOKEN_SECRET, { expiresIn : 172800 })
     }
 
-    verifyToken(token){
-      return jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false })
+    verifyToken(token, callback){
+      jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false }, function(err, decoded){
+        if(err){
+          callback(err, null)
+        }
+        else {
+          callback(null, decoded)
+        }
+      })
     }
 
 }

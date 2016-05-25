@@ -159,14 +159,17 @@ app.post('/api/signup_user', function(req, res, next){
  * authenticate user login.
  */
  app.post('/api/login', function(req, res, next){
-      passport.authenticate('local', function(err, user, info){
+      passport.authenticate('local', {session : false}, function(err, user, info){
         if (err) {return next(err)}
         if (!user)
           return res.send(info)
        //logIn() is attached by passport middleware
        req.logIn(user, function(err) {
           if (err) { return next(err); }
-          var token = userService.generateToken({email : user.email})
+          var token = userService.generateToken({
+            email : user.email,
+            name : user.name
+          })
           return res.send({
             isAuthenticated: true,
             email : user.email,
@@ -186,15 +189,23 @@ app.get('/api/logout', function(req, res){
     res.send(true)
 })
 
-/**
- * GET /api/loadUserFromSession
- * check is user exist in passport session,
- * if user exist in session, passport middleware will attach user to req.user
- * then send user info back
- */
- app.get('/api/loadUserFromSession', function(req, res){
-    res.send(req.user)
- })
+ /**
+  * GET /api/loadUserFromToken
+  * varify token from client, decode user info and send info back
+  */
+  app.post('/api/loadUserFromToken', function(req, res){
+     userService.verifyToken(req.body.token, function(err, decoded){
+       if(err){
+         res.send(err)
+       }else {
+         res.send({
+           isAuthenticated : true,
+           email : decoded.email,
+           name : decoded.name
+         })
+       }
+     })
+  })
 
 // React middleware
 app.use(function(req, res) {

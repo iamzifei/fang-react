@@ -47,8 +47,7 @@ export default function(state = {}, action){
       })
     case SIGNUP_SUCCESS:
       return Object.assign({}, state, {
-        isAuthenticated : true,
-        currentUser : action.currentUser
+        
       })
     case SIGNUP_FAIL:
       return Object.assign({}, state, {

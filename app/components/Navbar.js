@@ -4,14 +4,14 @@ import Translate from 'react-translate-component'
 import counterpart from 'counterpart'
 import SearchBox from './SearchBox'
 import { connect } from 'react-redux'
-import { loadUserFromSession, logoutUser } from '../actions/UserActions'
+import { loadUserFromToken, logoutUser } from '../actions/UserActions'
 
 class Navbar extends React.Component {
   constructor(props, context) {
     super(props, context)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadUser()
   }
 
@@ -69,7 +69,7 @@ function mapDispatchToProps(dispatch){
       dispatch(logoutUser())
     },
     loadUser : () =>{
-      dispatch(loadUserFromSession())
+      dispatch(loadUserFromToken())
     }
   }
 }
