@@ -75,15 +75,24 @@ class UserService {
       return jwt.sign(payload, TOKEN_SECRET, { expiresIn : 172800 })
     }
 
-    verifyToken(token, callback){
-      jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false }, function(err, decoded){
-        if(err){
-          callback(err, null)
+    verifyToken(req, res, next){
+      // check header or url parameters or post parameters for token
+      var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+      // decode token
+      if (token) {
+        try{
+          const user = jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false })
+          req.query.user = user;
+          return next();
+        } catch(err){
+          console.log(err.message)
+          return res.status(401).json({ success: false, message: err.message });
         }
-        else {
-          callback(null, decoded)
-        }
-      })
+      } else {
+        console.log('no token')
+        return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });
+      }
     }
 
 }

@@ -88,6 +88,23 @@ passport.deserializeUser(function(userEmail, done){
   });
 });
 
+//token verification moddleware
+const PROTECTED_ENDPOINT_LIST = [
+  '/api/loadUserFromToken',
+  '/api/logout'
+]
+app.use(function(req, res, next){
+  console.log('request token: ' + req.body.token)
+  for(var i =0; i < PROTECTED_ENDPOINT_LIST.length; i++){
+    if (req.url.indexOf(PROTECTED_ENDPOINT_LIST[i]) !== -1){
+      userService.verifyToken(req, res, next)
+    }
+  }
+  if(!res.headersSent){
+    next()
+  }
+})
+
 /**
  * GET /api/suburb
  * Looks up a suburb auto suggestions.
@@ -184,27 +201,17 @@ app.post('/api/signup_user', function(req, res, next){
  * GET /api/logout
  * logout and remove user from session.
  */
-app.get('/api/logout', function(req, res){
+app.post('/api/logout', function(req, res){
     req.logout();
-    res.send(true)
+    res.send({success: true})
 })
 
  /**
   * GET /api/loadUserFromToken
   * varify token from client, decode user info and send info back
   */
-  app.post('/api/loadUserFromToken', function(req, res){
-     userService.verifyToken(req.body.token, function(err, decoded){
-       if(err){
-         res.send(err)
-       }else {
-         res.send({
-           isAuthenticated : true,
-           email : decoded.email,
-           name : decoded.name
-         })
-       }
-     })
+  app.post('/api/loadUserFromToken', function(req, res, next){
+     res.send(req.query.user)
   })
 
 // React middleware
@@ -230,6 +237,8 @@ app.use(function(req, res) {
     }
   });
 });
+
+
 
 var server = require('http').createServer(app);
 

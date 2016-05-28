@@ -60,13 +60,27 @@ function login_fail(message){
 
 export function logoutUser(){
   return (dispatch) =>{
+    const token = readTokenFromStorage()
     fetch('/api/logout', {
-      method : 'get'
+      method : 'post',
+      headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify({ token })
     })
-    .then(()=>{
-      removeTokenFromStorage()
-      dispatch(logoutComplete())
-      dispatch(push('/'))
+    .then(function(response){
+      return response.json()
+    })
+    .then((json)=>{
+      if(json.success){
+        removeTokenFromStorage()
+        dispatch(logoutComplete())
+        dispatch(push('/'))
+      }else{
+        //handle err
+        console.log(json)
+      }
     })
   }
 }
@@ -165,7 +179,7 @@ export function loadUserFromToken(){
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body : JSON.stringify({token})
+        body : JSON.stringify({ token })
       })
       .then(res =>{
         return res.json()
