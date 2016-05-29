@@ -84,11 +84,11 @@ class UserService {
         try{
           const user = jwt.verify(token, TOKEN_SECRET, { ignoreExpiration: false })
           req.query.user = user;
-          return next();
         } catch(err){
           console.log(err.message)
           return res.status(401).json({ success: false, message: err.message });
         }
+
       } else {
         console.log('no token')
         return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });
